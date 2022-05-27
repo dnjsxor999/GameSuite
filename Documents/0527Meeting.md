@@ -1,11 +1,11 @@
 05.27
 
-Project end time: 08/23
+Project end time: 08/23  
 TODO//
 
-Requirements
+Requirements  
 1. You must have a graphical user interface for the user to select a game to play. (As a user I want to select a game to play using a graphical user interface so that I can improve my game playing skills.)
-2. You must implement three games, including game logic, from at least two of the following categories:
+2. You must implement three games, including game logic, from at least two of the following categories: 
     a. Card Games (solitaire or multiplayer)
     b. Board Game (checkers, battleship, etc)
     c. Logic Games (crossword, wordle, brain teasers)
@@ -18,14 +18,14 @@ Requirements
 9. You may use a game logic engine for one of your games. This is for the logic and rules of game play not the game GUI itself.
 
 
-Game (Req 2)
-    Card:  Blackjack (Easy), <같은그림찾기(Easy)>, Poker(배팅X Easy, 배팅O Medium)
-    Board: <Battleship (Easy)>, 
-    Logic: <2048 (Easy)>, 
-    Neat: 탄막슈팅겜(Medium), 포트리스류(Medium), 길건너기겜(Medium)
-    3개 6주 안에 끝내기
+Game (Req 2)  
+- Card:  Blackjack (Easy), <같은그림찾기(Easy)>, Poker(배팅X Easy, 배팅O Medium)
+- Board: <Battleship (Easy)>, 
+- Logic: <2048 (Easy)>, 
+- Neat: 탄막슈팅겜(Medium), 포트리스류(Medium), 길건너기겜(Medium) 
+3개 6주 안에 끝내기
 
-Our Requirements
+Our Requirements  
     - 메인화면 (1차 Deadline 월요일 11:59PM, 2차 Deadline 수요일 수업전)
         - Horizontal
         - 메인게임 하나, 버튼먼저 구현, 좌우로 넘기기 (optional)
@@ -36,10 +36,10 @@ Our Requirements
     - 게임내에서 Quit Button -> Main화면
 
 
-Requirements analysis
-    What requirement analysis have you done?
-    What are your requirement priorities?
-    Have you added any requirements?
-    What is their priority?
-    At a minimum you will need to present the games that you will be implementing and the order that you will be implementing this (I would start with simplest).
+Requirements analysis  
+- What requirement analysis have you done?
+- What are your requirement priorities?
+- Have you added any requirements?
+- What is their priority?
+- At a minimum you will need to present the games that you will be implementing and the order that you will be implementing this (I would start with simplest).
 
