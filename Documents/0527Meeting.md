@@ -26,14 +26,14 @@ Game (Req 2)
 3개 6주 안에 끝내기
 
 Our Requirements  
-    - 메인화면 (1차 Deadline 월요일 11:59PM, 2차 Deadline 수요일 수업전)
-        - Horizontal
-        - 메인게임 하나, 버튼먼저 구현, 좌우로 넘기기 (optional)
-        - 첫화면: 
-        - Team information
-        - Exit
-    - Help page, 인게임. 첫 로딩시 띄우기 & 게임내에 아이콘으로 열람가능 (Req 5)
-    - 게임내에서 Quit Button -> Main화면
+- 메인화면 (1차 Deadline 월요일 11:59PM, 2차 Deadline 수요일 수업전)
+    - Horizontal
+    - 메인게임 하나, 버튼먼저 구현, 좌우로 넘기기 (optional)
+    - 첫화면: 
+    - Team information
+    - Exit
+- Help page, 인게임. 첫 로딩시 띄우기 & 게임내에 아이콘으로 열람가능 (Req 5)
+- 게임내에서 Quit Button -> Main화면
 
 
 Requirements analysis  
