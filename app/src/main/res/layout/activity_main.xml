@@ -6,13 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
+    <Button
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Team Info"
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        android:onClick="button1_TeamInfo"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit"
+        tools:layout_editor_absoluteX="627dp"
+        tools:layout_editor_absoluteY="347dp"
+        android:onClick="buttonExit"/>
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="507dp"
+        android:layout_height="281dp"
+        tools:layout_editor_absoluteX="119dp"
+        tools:layout_editor_absoluteY="64dp"
+        tools:srcCompat="@tools:sample/avatars"
+        android:onClick="imagebutton"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Left"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="181dp"
+        android:onClick="buttonLeft"/>
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Right"
+        tools:layout_editor_absoluteX="630dp"
+        tools:layout_editor_absoluteY="181dp"
+        android:onClick="buttonRight"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
