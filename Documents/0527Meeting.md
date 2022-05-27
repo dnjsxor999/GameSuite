@@ -1,14 +1,14 @@
-05.27
+05.27  
+TODO// 1. Documentations on task analysis, 2. Finish Main Screen GUI (By 05.30 11:59 PM)
 
-Project end time: 08/23  
-TODO//
+Project end time: 08/23
 
 Requirements  
 1. You must have a graphical user interface for the user to select a game to play. (As a user I want to select a game to play using a graphical user interface so that I can improve my game playing skills.)
-2. You must implement three games, including game logic, from at least two of the following categories: 
-    a. Card Games (solitaire or multiplayer)
-    b. Board Game (checkers, battleship, etc)
-    c. Logic Games (crossword, wordle, brain teasers)
+2. You must implement three games, including game logic, from at least two of the following categories:
+- Card Games (solitaire or multiplayer)
+- Board Game (checkers, battleship, etc)
+- Logic Games (crossword, wordle, brain teasers)
 3. You must provide the user with a way to end the game and return to the game selection screen.
 4. You must provide the user with a way to exit the Game Suite application from within the GUI of the application.
 5. You must include help text for each game including instructions/rules for game play.
