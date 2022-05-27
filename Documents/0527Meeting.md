@@ -1,5 +1,7 @@
 05.27  
-TODO// 1. Documentations on task analysis, 2. Finish Main Screen GUI (By 05.30 11:59 PM)
+TODO//
+1. Documentations on Requirements analysis (By 06.01 11:59 PM)
+2. Finish Main Screen GUI (By 05.30 11:59 PM)  
 
 Project end time: 08/23
 
