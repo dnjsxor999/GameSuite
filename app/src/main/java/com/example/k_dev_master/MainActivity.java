@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,9 +21,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
 
         //super.onCreate(savedInstanceState);
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
 
@@ -61,14 +64,36 @@ public class MainActivity extends AppCompatActivity {
 //            }
         });
 
-    }
+        Button btTeamInfo = (Button) findViewById(R.id.teamInfo); // TeamInfo button
+        btTeamInfo.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ShowTeamInfo.class);
+                startActivity(intent);
+            }
+        });
 
-
-
-
-
-
-    public void button1_TeamInfo(View view) {
+        //
+//        Button startGame1 = findViewById(R.id.startGame1);
+//        startGame1.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//
+//        Button startGame2 = findViewById(R.id.startGame2);
+//        startGame1.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//
+//        Button startGame3 = findViewById(R.id.startGame3);
+//        startGame1.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//
+//            }
+//        });
     }
 }
