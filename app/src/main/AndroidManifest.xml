@@ -26,6 +26,13 @@
 
         <activity
             android:name=".ShowTeamInfo" android:screenOrientation="landscape"
+            android:exported="true"
+            android:parentActivityName=".MainActivity">
+
+        </activity>
+
+        <activity
+            android:name=".CardGame" android:screenOrientation="landscape"
             android:exported="true">
 
         </activity>

@@ -13,13 +13,6 @@
         android:background="#FFCDD2"
         tools:layout_editor_absoluteX="91dp"
         tools:layout_editor_absoluteY="73dp"/>
-    <Button
-        android:id="@+id/startGame3"
-        android:text="touch image to start"
-        android:background="#00FFFFFF"
-        android:layout_width="543dp"
-        android:layout_height="280dp"
-        tools:layout_editor_absoluteX="91dp"
-        tools:layout_editor_absoluteY="73dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

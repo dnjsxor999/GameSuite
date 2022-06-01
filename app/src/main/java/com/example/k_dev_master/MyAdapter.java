@@ -1,5 +1,6 @@
 package com.example.k_dev_master;
 
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -15,9 +16,15 @@ public class MyAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         int index = getRealPosition(position);
-        if(index==0) return new Fragment_1();
-        else if(index==1) return new Fragment_2();
-        else return new Fragment_3();
+        if(index==0) {
+            return new Fragment_1();
+        }
+        else if(index==1) {
+            return new Fragment_2();
+        }
+        else {
+            return new Fragment_3();
+        }
         //else return new Fragment_4();
     }
     @Override

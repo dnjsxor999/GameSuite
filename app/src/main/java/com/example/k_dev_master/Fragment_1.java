@@ -1,4 +1,6 @@
 package com.example.k_dev_master;
+import static com.example.k_dev_master.MainActivity.gameSelect;
+
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +15,9 @@ public class Fragment_1 extends Fragment {
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.frame_1, container, false);
+        gameSelect = 1;
         return rootView;
     }
+
+
 }
