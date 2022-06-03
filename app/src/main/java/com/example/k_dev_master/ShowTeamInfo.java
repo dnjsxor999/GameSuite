@@ -26,16 +26,15 @@ public class ShowTeamInfo extends AppCompatActivity {
         btBack.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 System.out.println("Button Clicked");
-                // goBack(v);
+                goBack(v);
             }
         });
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        Toast.makeText(this, "Back button pressed.", Toast.LENGTH_SHORT).show();
-//        super.onBackPressed();
-//    }
+    public void goBack(View v) {
+        Intent intent = new Intent(this, MainActivity.class);
+        v.getContext().startActivity(intent);
+    }
 
 
 }

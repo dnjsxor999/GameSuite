@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //
         Button commonStart = findViewById(R.id.commonStart);
         commonStart.setOnClickListener(new View.OnClickListener() {
             @Override
