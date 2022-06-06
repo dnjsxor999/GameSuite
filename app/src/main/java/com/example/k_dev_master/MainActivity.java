@@ -23,11 +23,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-
-        //super.onCreate(savedInstanceState);
-
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
 
         /**         * 가로 슬라이드 뷰 Fragment         */
@@ -36,10 +31,6 @@ public class MainActivity extends AppCompatActivity {
         //Adapter
         pagerAdapter = new MyAdapter(this, num_page);
         mPager.setAdapter(pagerAdapter);
-        //Indicator
-//        mIndicator = findViewById(R.id.indicator);
-//        mIndicator.setViewPager(mPager);
-//        mIndicator.createIndicators(num_page,0);
         //ViewPager Setting
         mPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
         /**
@@ -67,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button btTeamInfo = (Button) findViewById(R.id.teamInfo); // TeamInfo button
+        Button commonStart = findViewById(R.id.commonStart); // GameStart button
+        Button quitButton = findViewById(R.id.exit); // exit button
+
         btTeamInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button commonStart = findViewById(R.id.commonStart);
         commonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,19 +80,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-//
-//        Button startGame2 = findViewById(R.id.startGame2);
-//        startGame1.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-//            }
-//        });
-//
-//        Button startGame3 = findViewById(R.id.startGame3);
-//        startGame1.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-//            }
-//        });
+
+        quitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                System.exit(0);
+            }
+        });
     }
 }
