@@ -7,8 +7,13 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.PopupMenu;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -81,19 +86,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (gameSelect == 1) {
-                    Intent intent = new Intent(getApplicationContext(), CardGame.class);
+                    Intent intent = new Intent(getApplicationContext(), Game2048.class);
                     startActivity(intent);
                 }
 
             }
         });
-//
-//        Button startGame2 = findViewById(R.id.startGame2);
-//        startGame1.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//
-//            }
-//        });
+
+  //      String[] settingMenu = new String[] {"New Game", "Instruction", "Exit"};
+  //      ListView list = (ListView) findViewById(R.id.listView2048);
+
+   //     ArrayAdapter<String> adapter;
+
+   //     adapter = new ArrayAdapter<String>(this,
+    //            android.R.layout.simple_list_item_1, settingMenu);
+
+    //    ImageButton setting2048 = findViewById(R.id.ListViewBtn2048);
+    //    setting2048.setOnClickListener(new View.OnClickListener() {
+    //        public void onClick(View v) {
+
+       //     }
+      //  });
 //
 //        Button startGame3 = findViewById(R.id.startGame3);
 //        startGame1.setOnClickListener(new View.OnClickListener() {
