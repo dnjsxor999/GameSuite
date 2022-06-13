@@ -27,10 +27,10 @@ public class Game2048 extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch(item.getItemId()) {
                             case R.id.pop_2048_ng:
-                                startActivity(new Intent());
+
 
                             case R.id.pop_2048_inst:
-                                startActivity(new Intent());
+
 
                             case R.id.pop_2048_exit:
                                 goBack(view);
