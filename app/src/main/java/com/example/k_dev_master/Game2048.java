@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,19 +21,19 @@ public class Game2048 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(Game2048.this, view);
-                popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.popup_2048, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch(item.getItemId()) {
-                            case R.id.item1:
+                            case R.id.pop_2048_ng:
                                 startActivity(new Intent());
 
-                            case R.id.item2:
+                            case R.id.pop_2048_inst:
                                 startActivity(new Intent());
 
-                            case R.id.item3:
-                                startActivity(new Intent());
+                            case R.id.pop_2048_exit:
+                                goBack(view);
 
                             default:
                                 return false;
@@ -45,6 +43,11 @@ public class Game2048 extends AppCompatActivity {
                 popupMenu.show();
             }
         });
+    }
+
+    public void goBack(View v) {
+        Intent intent = new Intent(this, MainActivity.class);
+        v.getContext().startActivity(intent);
     }
 
 }
