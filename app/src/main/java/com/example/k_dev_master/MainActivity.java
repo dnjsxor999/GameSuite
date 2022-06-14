@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (gameSelect == 1) {
-                    Intent intent = new Intent(getApplicationContext(), CardGame.class);
+                    Intent intent = new Intent(getApplicationContext(), LogicGame2048.class);
                     startActivity(intent);
                 }
 
