@@ -104,9 +104,9 @@ public class Grid {
     }
 
     /**
-     * Perform undo?
+     * Perform undo
      */
-    public void revertCells() {
+    public void revertCell() {
         for (int xx = 0; xx < 4; xx++) {
             for (int yy = 0; yy < 4; yy++) {
                 if (undoField[xx][yy] == null) {

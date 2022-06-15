@@ -30,7 +30,10 @@ public class LogicGame2048 extends AppCompatActivity {
         view = new MainView2048(this);
 
         setContentView(R.layout.activity_main_2048game);
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         ImageButton openMenu = findViewById(R.id.ListViewBtn2048);
 
         openMenu.setOnClickListener(new View.OnClickListener(){
@@ -42,6 +45,7 @@ public class LogicGame2048 extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch(item.getItemId()) {
+<<<<<<< Updated upstream
                             case R.id.item1:
                                 startActivity(new Intent());
 
@@ -49,6 +53,15 @@ public class LogicGame2048 extends AppCompatActivity {
                                 startActivity(new Intent());
 
                             case R.id.item3:
+=======
+                            case R.id.pop_2048:
+                                startActivity(new Intent());
+
+                            case R.id.pop_2048_inst:
+                                startActivity(new Intent());
+
+                            case R.id.pop_2048_exit:
+>>>>>>> Stashed changes
                                 startActivity(new Intent());
 
                             default:
