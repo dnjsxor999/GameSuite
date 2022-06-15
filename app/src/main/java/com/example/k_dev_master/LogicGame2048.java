@@ -28,11 +28,10 @@ public class LogicGame2048 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = new MainView2048(this);
-
         setContentView(R.layout.activity_main_2048game);
         ImageButton openMenu = findViewById(R.id.ListViewBtn2048);
-        System.out.println("In Logicgame activity");
-        openMenu.setOnClickListener(new View.OnClickListener(){
+        view.invalidate();
+        openMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(LogicGame2048.this, view);

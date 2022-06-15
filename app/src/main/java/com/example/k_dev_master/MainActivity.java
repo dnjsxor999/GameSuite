@@ -50,11 +50,6 @@ public class MainActivity extends AppCompatActivity {
                     mPager.setCurrentItem(position);
                 }
             }
-//            @Override
-//            public void onPageSelected(int position) {
-//                super.onPageSelected(position);
-//                mIndicator.animatePageSelected(position%num_page);
-//            }
         });
 
         Button btTeamInfo = (Button) findViewById(R.id.teamInfo); // TeamInfo button
