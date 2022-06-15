@@ -3,19 +3,7 @@ package com.example.k_dev_master;
 import android.content.Context;
 
 public class MainGame2048 {
-<<<<<<< Updated upstream
-    public static final int SPAWN_ANIMATION = -1;
-    public static final int MOVE_ANIMATION = 0;
-    public static final int MERGE_ANIMATION = 1;
 
-    public static final int FADE_GLOBAL_ANIMATION = 0;
-    private static final long MOVE_ANIMATION_TIME = MainView2048.BASE_ANIMATION_TIME;
-    private static final long SPAWN_ANIMATION_TIME = MainView2048.BASE_ANIMATION_TIME;
-    private static final long NOTIFICATION_DELAY_TIME = MOVE_ANIMATION_TIME + SPAWN_ANIMATION_TIME;
-    private static final long NOTIFICATION_ANIMATION_TIME = MainView2048.BASE_ANIMATION_TIME * 5;
-=======
-
->>>>>>> Stashed changes
     private static final int maxValue = 2048;
     //Odd state = game is not active
     //Even state = game is active
@@ -26,13 +14,10 @@ public class MainGame2048 {
     public int gameState = GAME_NORMAL;
     public int lastGameState = GAME_NORMAL;
     private int bufferGameState = GAME_NORMAL;
-<<<<<<< Updated upstream
     private static final int GAME_ENDLESS = 2;
     private static final int GAME_ENDLESS_WON = 3;
-=======
 //    private static final int GAME_ENDLESS = 2;
 //    private static final int GAME_ENDLESS_WON = 3;
->>>>>>> Stashed changes
     private static final String HIGH_SCORE = "high score";
     private static final String FIRST_RUN = "first run";
     final int numSquaresX = 4;
@@ -40,29 +25,17 @@ public class MainGame2048 {
     private final Context mContext;
     private final MainView2048 mView;
     public Grid grid = null;
-<<<<<<< Updated upstream
     public AnimationGrid aGrid;
     public boolean canUndo;
-    public long score = 0;
-    public long highScore = 0;
-    public long lastScore = 0;
-    private long bufferScore = 0;
-=======
-//    public AnimationGrid aGrid;
-    public boolean canUndo;
+
     public int score = 0;
     public int lastScore = 0;
     public int bufferScore = 0;
->>>>>>> Stashed changes
-
     public MainGame2048(Context context, MainView2048 view) {
         mContext = context;
         mView = view;
     }
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
     public void newGame() {
         if (grid == null) {
             grid = new Grid(numSquaresX, numSquaresY);
@@ -71,31 +44,15 @@ public class MainGame2048 {
             saveUndoState();
             grid.clearGrid();
         }
-<<<<<<< Updated upstream
-        aGrid = new AnimationGrid(numSquaresX, numSquaresY);
-=======
-//        aGrid = new AnimationGrid(numSquaresX, numSquaresY);
->>>>>>> Stashed changes
-        // animation*
-//        highScore = getHighScore();
-//        if (score >= highScore) {
-//            highScore = score;
-<<<<<<< Updated upstream
-//            recordHighScore();
-=======
->>>>>>> Stashed changes
-//        }
+
         score = 0;
         gameState = GAME_NORMAL;
         addStartTiles();
 //        mView.showHelp = firstRun();
 //        mView.refreshLastTime = true;
 //        mView.resyncTime();
-<<<<<<< Updated upstream
         mView.invalidate();
-=======
 //        mView.invalidate();
->>>>>>> Stashed changes
     }
 
 
@@ -120,14 +77,7 @@ public class MainGame2048 {
      */
     private void spawnCell(Cell cell) {
         grid.insertCell(cell);
-<<<<<<< Updated upstream
-        aGrid.startAnimation(cell.getX(), cell.getY(), cell.getValue(), SPAWN_ANIMATION,
-                SPAWN_ANIMATION_TIME, MOVE_ANIMATION_TIME, null); //Direction: -1 = EXPANDING
-=======
-//        aGrid.startAnimation(cell.getX(), cell.getY(), cell.getValue(), SPAWN_ANIMATION,
-//                SPAWN_ANIMATION_TIME, MOVE_ANIMATION_TIME, null); //Direction: -1 = EXPANDING
->>>>>>> Stashed changes
-        // animation*
+
     }
 
     private void saveUndoState() {
@@ -142,8 +92,6 @@ public class MainGame2048 {
         bufferScore = score;
         bufferGameState = gameState;
     }
-<<<<<<< Updated upstream
-=======
     public void revertUndoState() {
         if (canUndo) {
             canUndo = false;
@@ -167,27 +115,18 @@ public class MainGame2048 {
     public boolean isActive() {
         return !(gameWon() || gameLost());
     }
->>>>>>> Stashed changes
 
     /**
      * Cells are actually moved to direction and merged.
      * @param direction
      */
     public void move(int direction) {
-<<<<<<< Updated upstream
-        aGrid.cancelAnimations();
-=======
-//        aGrid.cancelAnimations();
->>>>>>> Stashed changes
+
         // animation*
         prepareUndoState();
 
         //move direction :
         // 0: up, 1: right, 2: down, 3: left
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
         for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
                 Cell temp = grid.getCellContent(x, y);
@@ -202,10 +141,7 @@ public class MainGame2048 {
                                  Cell cell = new Cell(x, j, 2 * temp.getValue());
                                  grid.insertCell(cell);
                                  merged = true;
-<<<<<<< Updated upstream
-=======
                                  score += temp.getValue();
->>>>>>> Stashed changes
                              }
                              break;
                          }
@@ -226,10 +162,7 @@ public class MainGame2048 {
                                 Cell cell = new Cell(i, y, 2 * temp.getValue());
                                 grid.insertCell(cell);
                                 merged = true;
-<<<<<<< Updated upstream
-=======
                                 score += temp.getValue();
->>>>>>> Stashed changes
                             }
                             break;
                         }
@@ -250,10 +183,7 @@ public class MainGame2048 {
                                 Cell cell = new Cell(x, j, 2 * temp.getValue());
                                 grid.insertCell(cell);
                                 merged = true;
-<<<<<<< Updated upstream
-=======
                                 score += temp.getValue();
->>>>>>> Stashed changes
                             }
                             break;
                         }
@@ -274,11 +204,7 @@ public class MainGame2048 {
                                 Cell cell = new Cell(i, y, 2 * temp.getValue());
                                 grid.insertCell(cell);
                                 moved = true;
-<<<<<<< Updated upstream
-=======
                                 score += temp.getValue();
-
->>>>>>> Stashed changes
                             }
                             break;
                         }
@@ -294,11 +220,8 @@ public class MainGame2048 {
             }
         }
     }
-<<<<<<< Updated upstream
-=======
 
     public int getScore() {
         return score;
     }
->>>>>>> Stashed changes
 }

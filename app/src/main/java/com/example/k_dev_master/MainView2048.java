@@ -69,7 +69,7 @@ public class MainView2048 extends View {
     private int eYAll;
     private int titleWidthHighScore;
     private int titleWidthScore;
-    
+
     public MainView2048(Context context) {
         super(context);
 

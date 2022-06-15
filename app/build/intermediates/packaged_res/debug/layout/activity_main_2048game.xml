@@ -186,109 +186,118 @@
         android:id="@+id/cell1"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="321dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell2"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="321dp"></ImageView>
+        app:layout_constraintStart_toEndOf="@+id/cell1"
+        app:layout_constraintTop_toTopOf="@+id/background"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell3"
         android:layout_width="69dp"
         android:layout_height="67dp"
+        android:layout_marginStart="20dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="194dp"
-        tools:layout_editor_absoluteY="321dp"></ImageView>
+        app:layout_constraintStart_toEndOf="@+id/cell2"
+        app:layout_constraintTop_toTopOf="@+id/cell2"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell4"
         android:layout_width="69dp"
         android:layout_height="67dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="293dp"
-        tools:layout_editor_absoluteY="321dp"></ImageView>
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@+id/cell3"
+        app:layout_constraintTop_toTopOf="@+id/cell3"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell5"
         android:layout_width="69dp"
         android:layout_height="67dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="407dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/background"
+        app:layout_constraintTop_toBottomOf="@+id/cell1"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell6"
         android:layout_width="69dp"
         android:layout_height="67dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="407dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/cell2"
+        app:layout_constraintTop_toTopOf="@+id/cell5"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell7"
         android:layout_width="69dp"
         android:layout_height="67dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="197dp"
-        tools:layout_editor_absoluteY="407dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/cell3"
+        app:layout_constraintTop_toTopOf="@+id/cell6"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell8"
         android:layout_width="69dp"
         android:layout_height="67dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="296dp"
-        tools:layout_editor_absoluteY="407dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/cell4"
+        app:layout_constraintTop_toTopOf="@+id/cell7"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell9"
         android:layout_width="69dp"
         android:layout_height="67dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="500dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/cell5"
+        app:layout_constraintTop_toBottomOf="@+id/cell5"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell10"
         android:layout_width="69dp"
         android:layout_height="67dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="500dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/cell6"
+        app:layout_constraintTop_toTopOf="@+id/cell9"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell11"
         android:layout_width="69dp"
         android:layout_height="67dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="196dp"
-        tools:layout_editor_absoluteY="500dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/cell7"
+        app:layout_constraintTop_toTopOf="@+id/cell10"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell12"
         android:layout_width="69dp"
         android:layout_height="67dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="297dp"
-        tools:layout_editor_absoluteY="500dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/cell8"
+        app:layout_constraintTop_toTopOf="@+id/cell11"
+        tools:ignore="MissingConstraints"></ImageView>
 
 
     <ImageView
@@ -296,41 +305,41 @@
         android:layout_width="69dp"
         android:layout_height="67dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="597dp"></ImageView>
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="@+id/cell9"
+        app:layout_constraintTop_toBottomOf="@+id/cell9"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell14"
         android:layout_width="69dp"
         android:layout_height="67dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="101dp"
-        tools:layout_editor_absoluteY="597dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/cell10"
+        app:layout_constraintTop_toTopOf="@+id/cell13"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell15"
         android:layout_width="69dp"
         android:layout_height="67dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="197dp"
-        tools:layout_editor_absoluteY="597dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/cell11"
+        app:layout_constraintTop_toTopOf="@+id/cell14"
+        tools:ignore="MissingConstraints"></ImageView>
 
     <ImageView
         android:id="@+id/cell16"
         android:layout_width="69dp"
         android:layout_height="67dp"
         android:background="@drawable/tilebackground"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="294dp"
-        tools:layout_editor_absoluteY="597dp"></ImageView>
+        app:layout_constraintStart_toStartOf="@+id/cell12"
+        app:layout_constraintTop_toTopOf="@+id/cell15"
+        tools:ignore="MissingConstraints"></ImageView>
 
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
 <!--<?xml version="1.0" encoding="utf-8"?>-->
 <!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
