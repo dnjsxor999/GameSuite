@@ -1,9 +1,7 @@
 package com.example.k_dev_master;
 
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -13,15 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LogicGame2048 extends AppCompatActivity {
     // 2048 Game
-    private static final String WIDTH = "width";
-    private static final String HEIGHT = "height";
-    private static final String SCORE = "score";
-    private static final String HIGH_SCORE = "high score temp";
-    private static final String UNDO_SCORE = "undo score";
-    private static final String CAN_UNDO = "can undo";
-    private static final String UNDO_GRID = "undo";
-    private static final String GAME_STATE = "game state";
-    private static final String UNDO_GAME_STATE = "undo game state";
     private MainView2048 view;
 
     @Override
@@ -39,19 +28,20 @@ public class LogicGame2048 extends AppCompatActivity {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch(item.getItemId()) {
+                        switch (item.getItemId()) {
                             case R.id.pop_2048:
-                                startActivity(new Intent());
 
+                                startActivity(new Intent(getApplicationContext(), LogicGame2048.class));
+                                break;
                             case R.id.pop_2048_inst:
-                                startActivity(new Intent());
-
+                                break;
                             case R.id.pop_2048_exit:
-                                startActivity(new Intent());
-
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                finish();
+                                break;
                             default:
-                                return false;
                         }
+                        return false;
                     }
                 });
                 popupMenu.show();
@@ -59,6 +49,9 @@ public class LogicGame2048 extends AppCompatActivity {
         });
 //        findViewById(R.layout.activity_main_2048game).setOnTouchListener(this);
     }
+//    protected void newGame2048() {
+//        view.game = new MainGame2048(this, new MainView2048(this));
+//    }
 
 
 

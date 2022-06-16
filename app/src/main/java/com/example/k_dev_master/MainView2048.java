@@ -33,18 +33,11 @@ public class MainView2048 extends View {
     public int startingY;
     public int endingX;
     public int endingY;
-    //Icon variables
-    public int sYIcons;
-    public int sXNewGame;
-    public int sXUndo;
-    public int iconSize;
     //Misc
     boolean showHelp;
-    //Timing
-    private long lastFPSTime = System.nanoTime();
     //Layout variables
-    private int cellSize = 80;
-    private int gridWidth = 10;
+    private int cellSize;
+    private int gridWidth;
     //Assets
     private Bitmap background = null;
 
@@ -85,7 +78,6 @@ public class MainView2048 extends View {
         //Reset the transparency of the screen
         super.onDraw(canvas);
         canvas.drawBitmap(background, 0, 0, paint);
-
 //      drawScoreText();
         drawCells(canvas);
         invalidate();
@@ -108,13 +100,6 @@ public class MainView2048 extends View {
         background = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(background);
         drawBackgroundGrid(canvas);
-//
-//        mBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888); // 비트맵 객체 생성
-//        mCanvas = new Canvas(); //캔버스 객체 생성
-//        mCanvas.setBitmap(mBitmap); //캔버스를 비트맵에 붙이기 -> 이후 캔버스에 그리는 그래픽은 모두 mBitap에 적용된다.
-//
-//        paint.setColor(Color.RED);
-//        mCanvas.drawRect(100, 100, 200, 200, paint); //캔버스에 빨간 사각형 그리기
     }
     private void setDraw(Canvas canvas, Drawable draw, int startingX, int startingY, int endingX, int endingY) {
         draw.setBounds(startingX, startingY, endingX, endingY);
@@ -122,13 +107,10 @@ public class MainView2048 extends View {
     }
 
     private void drawScoreText() {
-        TextView textView = this.findViewById(R.id.scoretext);
-        textView.setText(String.valueOf(game.score));
+//        TextView textView = this.findViewById(R.id.scoretext);
+//        textView.setText(String.valueOf(game.score));
     }
 
-//    private void drawBackground(Canvas canvas) {
-//        drawDrawable(canvas, backgroundRectangle, startingX, startingY, endingX, endingY);
-//    }
 
     //Renders the set of 16 background squares.
     private void drawBackgroundGrid(Canvas canvas) {
@@ -148,10 +130,6 @@ public class MainView2048 extends View {
     }
 //
     private void drawCells(Canvas canvas) {
-//        paint.setTextSize(textSize);
-//        paint.setTextAlign(Paint.Align.CENTER);
-        // Outputting the individual cells
-//        int[] cellIds = getCellRectangleIds();
         for (int xx = 0; xx < game.numSquaresX; xx++) {
             for (int yy = 0; yy < game.numSquaresY; yy++) {
 
@@ -166,7 +144,6 @@ public class MainView2048 extends View {
                     int index = log2(value);
                     bitmapCells[index].setBounds(sX, sY, eX, eY);
                     bitmapCells[index].draw(canvas);
-
                 }
             }
         }
@@ -174,7 +151,6 @@ public class MainView2048 extends View {
     private void createBitmapCells() {
         Resources resources = getResources();
         int[] cellRectangleIds = getCellRectangleIds();
-        paint.setTextAlign(Paint.Align.CENTER);
         for (int xx = 0; xx < bitmapCells.length; xx++) {
             Bitmap cellBitmap = Bitmap.createBitmap(cellSize, cellSize, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(cellBitmap);
@@ -198,9 +174,6 @@ public class MainView2048 extends View {
         cellRectangleIds[9] = R.drawable.cell_tile_512;
         cellRectangleIds[10] = R.drawable.cell_tile_1024;
         cellRectangleIds[11] = R.drawable.cell_tile_2048;
-//        for (int xx = 12; xx < cellRectangleIds.length; xx++) {
-//            cellRectangleIds[xx] = R.drawable.cell_rectangle_4096;
-//        }
         return cellRectangleIds;
     }
 

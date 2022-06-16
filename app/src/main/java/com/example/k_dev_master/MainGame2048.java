@@ -29,7 +29,6 @@ public class MainGame2048 {
     private final Context mContext;
     private final MainView2048 mView;
     public Grid grid = null;
-    public AnimationGrid aGrid;
     public boolean canUndo;
 
     public int score = 0;
@@ -56,7 +55,6 @@ public class MainGame2048 {
 //        mView.refreshLastTime = true;
 //        mView.resyncTime();
         mView.invalidate();
-//        mView.invalidate();
     }
 
 
@@ -98,12 +96,10 @@ public class MainGame2048 {
     public void revertUndoState() {
         if (canUndo) {
             canUndo = false;
-//            aGrid.cancelAnimations();
             grid.revertCell();
             score = lastScore;
             gameState = lastGameState;
-//            mView.refreshLastTime = true;
-//            mView.invalidate();
+            mView.invalidate();
         }
     }
 
