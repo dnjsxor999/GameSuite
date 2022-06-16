@@ -2,6 +2,10 @@ package com.example.k_dev_master;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
 public class MainGame2048 {
 
     private static final int maxValue = 2048;
@@ -77,7 +81,6 @@ public class MainGame2048 {
      */
     private void spawnCell(Cell cell) {
         grid.insertCell(cell);
-
     }
 
     private void saveUndoState() {
@@ -121,104 +124,142 @@ public class MainGame2048 {
      * @param direction
      */
     public void move(int direction) {
-
         // animation*
         prepareUndoState();
-
         //move direction :
         // 0: up, 1: right, 2: down, 3: left
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 4; y++) {
-                Cell temp = grid.getCellContent(x, y);
-                if (direction == 3 && y != 0) { // when press left direction
-                    int final_index = y;
-                    boolean merged = false;
-                    for (int j = y - 1; j >= 0; j--) {
-                         if (grid.getCellContent(x, j) != null) {
-                             final_index = j + 1;
-                             if (grid.getCellContent(x, j).getValue() == temp.getValue()) {
-                                 grid.removeCell(temp);
-                                 Cell cell = new Cell(x, j, 2 * temp.getValue());
-                                 grid.insertCell(cell);
-                                 merged = true;
-                                 score += temp.getValue();
-                             }
-                             break;
-                         }
-                    }
-                    if (!merged) {
-                        grid.removeCell(temp);
-                        temp.setY(final_index);
-                        grid.insertCell(temp);
-                    }
-                } else if (direction == 2 && x != 3) { // when press down direction
-                    int final_index = x;
-                    boolean merged = false;
-                    for (int i = x + 1; i < 4; i++) {
-                        if (grid.getCellContent(i, y) != null) {
-                            final_index = i - 1;
-                            if (grid.getCellContent(i, y).getValue() == temp.getValue()) {
-                                grid.removeCell(temp);
-                                Cell cell = new Cell(i, y, 2 * temp.getValue());
-                                grid.insertCell(cell);
-                                merged = true;
-                                score += temp.getValue();
+        boolean moved = false; // got input but there is no change on grid
+        if (direction == 0 || direction == 3) {
+            for (int x = 0; x < 4; x++) {
+                for (int y = 0; y < 4; y++) {
+                    Cell temp = grid.getCellContent(x, y);
+                    if (temp != null) {
+                        if (temp.getValue() == 2048) gameWon();
+                        if (direction == 0 && y != 0) { // when press up direction
+                            int final_index = 0;
+                            int moved_buffer = temp.getY();
+                            boolean merged = false;
+                            for (int j = y - 1; j >= 0; j--) {
+                                if (grid.getCellContent(x, j) != null) {
+                                    final_index = j + 1;
+                                    if (grid.getCellContent(x, j).getValue() == temp.getValue()) {
+                                        grid.removeCell(temp);
+                                        Cell cell = new Cell(x, j, 2 * temp.getValue());
+                                        grid.insertCell(cell);
+                                        merged = true;
+                                        moved = true;
+
+                                        score += temp.getValue();
+                                    }
+                                    break;
+                                }
                             }
-                            break;
-                        }
-                    }
-                    if (!merged) {
-                        grid.removeCell(temp);
-                        temp.setY(final_index);
-                        grid.insertCell(temp);
-                    }
-                } else if (direction == 1 && y != 3) { // when press down direction
-                    int final_index = y;
-                    boolean merged = false;
-                    for (int j = y + 1; j < 4; j++) {
-                        if (grid.getCellContent(x, j) != null) {
-                            final_index = j - 1;
-                            if (grid.getCellContent(x, j).getValue() == temp.getValue()) {
+                            if (!merged) {
                                 grid.removeCell(temp);
-                                Cell cell = new Cell(x, j, 2 * temp.getValue());
-                                grid.insertCell(cell);
-                                merged = true;
-                                score += temp.getValue();
-                            }
-                            break;
-                        }
-                    }
-                    if (!merged) {
-                        grid.removeCell(temp);
-                        temp.setY(final_index);
-                        grid.insertCell(temp);
-                    }
-                } else if (direction == 0 && x != 0) { // when press up direction
-                    int final_index = x;
-                    boolean moved = false;
-                    for (int i = x - 1; i >= 0; i--) {
-                        if (grid.getCellContent(i, y) != null) {
-                            final_index = i - 1;
-                            if (grid.getCellContent(i, y).getValue() == temp.getValue()) {
-                                grid.removeCell(temp);
-                                Cell cell = new Cell(i, y, 2 * temp.getValue());
-                                grid.insertCell(cell);
+                                temp.setY(final_index);
+                                grid.insertCell(temp);
                                 moved = true;
-                                score += temp.getValue();
                             }
-                            break;
+                            if (!merged && temp.getY() == moved_buffer) moved = false;
+                        } else if (direction == 3 && x != 0) { // when press left direction
+                            int final_index = 0;
+                            int moved_buffer = temp.getX();
+                            boolean merged = false;
+                            for (int i = x - 1; i >= 0; i--) {
+                                if (grid.getCellContent(i, y) != null) {
+                                    final_index = i + 1;
+                                    if (grid.getCellContent(i, y).getValue() == temp.getValue()) {
+                                        grid.removeCell(temp);
+                                        Cell cell = new Cell(i, y, 2 * temp.getValue());
+                                        grid.insertCell(cell);
+                                        merged = true;
+                                        moved = true;
+
+                                        score += temp.getValue();
+                                    }
+                                    break;
+                                }
+                            }
+                            if (!merged) {
+                                grid.removeCell(temp);
+                                temp.setX(final_index);
+                                grid.insertCell(temp);
+                                moved = true;
+                            }
+                            if (!merged && temp.getX() == moved_buffer) moved = false;
                         }
-                    }
-                    if (!moved) {
-                        grid.removeCell(temp);
-                        temp.setY(final_index);
-                        grid.insertCell(temp);
                     }
                 }
+            }
+        } else {
+            for (int x = 3; x >= 0; x--) {
+                for (int y = 3; y >= 0; y--) {
+                    Cell temp = grid.getCellContent(x, y);
+                    if (temp != null) {
+                        if (temp.getValue() == 2048) gameWon();
+                        if (direction == 1 && x != 3) {
+                            int final_index = 3;
+                            int moved_buffer = temp.getX();
+                            boolean merged = false;
+                            for (int i = x + 1; i < 4; i++) {
+                                if (grid.getCellContent(i, y) != null) {
+                                    final_index = i - 1;
+                                    if (grid.getCellContent(i, y).getValue() == temp.getValue()) {
+                                        grid.removeCell(temp);
+                                        Cell cell = new Cell(i, y, 2 * temp.getValue());
+                                        grid.insertCell(cell);
+                                        merged = true;
+                                        moved = true;
+                                        score += temp.getValue();
+                                    }
+                                    break;
+                                }
+                            }
+                            if (!merged) {
+                                grid.removeCell(temp);
+                                temp.setX(final_index);
+                                grid.insertCell(temp);
+                                moved = true;
+                            }
+                            if (!merged && temp.getX() == moved_buffer) moved = false;
+                        } else if (direction == 2 && y != 3) {
+                            int final_index = 3;
+                            int moved_buffer = temp.getY();
+                            boolean merged = false;
+                            for (int j = y + 1; j < 4; j++) {
+                                if (grid.getCellContent(x, j) != null) {
+                                    final_index = j - 1;
+                                    if (grid.getCellContent(x, j).getValue() == temp.getValue()) {
+                                        grid.removeCell(temp);
+                                        Cell cell = new Cell(x, j, 2 * temp.getValue());
+                                        grid.insertCell(cell);
+                                        merged = true;
+                                        moved = true;
 
-        // Merge and realigning cells depending on direction
+                                        score += temp.getValue();
+                                    }
+                                    break;
+                                }
+                            }
+                            if (!merged) {
+                                grid.removeCell(temp);
+                                temp.setY(final_index);
+                                grid.insertCell(temp);
+                                moved = true;
+                            }
+                            if (!merged && temp.getY() == moved_buffer) moved = false;
+                        }
+                    }
+                }
             }
         }
+        if (moved && grid.isCellsAvailable()) {
+            int value = Math.random() < 0.9 ? 2 : 4;
+            Cell cell = grid.randomAvailableCell();
+            cell.setValue(value);
+            spawnCell(cell);
+        }
+        if (!grid.isCellsAvailable()) gameLost();
     }
 
     public int getScore() {

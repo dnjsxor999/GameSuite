@@ -114,6 +114,7 @@ class InputListener implements View.OnTouchListener {
                 y = event.getY();
                 previousDirection = 1;
                 veryLastDirection = 1;
+
                 //"Menu" inputs
 //                if (!hasMoved) {
 //                    if (iconPressed(mView.sXNewGame, mView.sYIcons)) {

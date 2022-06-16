@@ -22,7 +22,7 @@ public class Grid {
         return null;
     }
 
-    private ArrayList<Cell> getAvailableCells() {
+    public ArrayList<Cell> getAvailableCells() {
         ArrayList<Cell> availableCells = new ArrayList<>();
         for (int xx = 0; xx < 4; xx++) {
             for (int yy = 0; yy < 4; yy++) {
@@ -132,5 +132,9 @@ public class Grid {
                 undoField[xx][yy] = null;
             }
         }
+    }
+
+    public Cell[][] getBufferGrid() {
+        return bufferField;
     }
 }
