@@ -115,7 +115,7 @@
             android:backgroundTint="#bbada0"/>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/undobutton"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_weight="2"

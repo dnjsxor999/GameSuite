@@ -1,10 +1,8 @@
 package com.example.k_dev_master;
 
+import android.app.AlertDialog;
 import android.content.Context;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import android.content.DialogInterface;
 
 public class MainGame2048 {
 
@@ -18,8 +16,6 @@ public class MainGame2048 {
     public int gameState = GAME_NORMAL;
     public int lastGameState = GAME_NORMAL;
     private int bufferGameState = GAME_NORMAL;
-    private static final int GAME_ENDLESS = 2;
-    private static final int GAME_ENDLESS_WON = 3;
 //    private static final int GAME_ENDLESS = 2;
 //    private static final int GAME_ENDLESS_WON = 3;
     private static final String HIGH_SCORE = "high score";
@@ -103,16 +99,36 @@ public class MainGame2048 {
         }
     }
 
-    public boolean gameWon() {
-        return (gameState > 0 && gameState % 2 != 0);
+    public void gameWon() {
+        new AlertDialog.Builder(mView.getContext())
+                .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mView.game.newGame();
+                    }
+                })
+                .setNegativeButton(R.string.continue_game, null)
+                .setTitle(R.string.reset_dialog_title)
+                .setMessage(R.string.win)
+                .show();
     }
 
-    public boolean gameLost() {
-        return (gameState == GAME_LOST);
+    public void gameLost() {
+        new AlertDialog.Builder(mView.getContext())
+                .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mView.game.newGame();
+                    }
+                })
+                .setNegativeButton(R.string.continue_game, null)
+                .setTitle(R.string.reset_dialog_title)
+                .setMessage(R.string.lose)
+                .show();
     }
 
     public boolean isActive() {
-        return !(gameWon() || gameLost());
+        return gameState == GAME_NORMAL;
     }
 
     /**
@@ -120,7 +136,9 @@ public class MainGame2048 {
      * @param direction
      */
     public void move(int direction) {
-        // animation*
+        if (!isActive()) {
+            return ;
+        }
         prepareUndoState();
         //move direction :
         // 0: up, 1: right, 2: down, 3: left
@@ -130,7 +148,7 @@ public class MainGame2048 {
                 for (int y = 0; y < 4; y++) {
                     Cell temp = grid.getCellContent(x, y);
                     if (temp != null) {
-                        if (temp.getValue() == 2048) gameWon();
+                        if (temp.getValue() == 32) gameWon();
                         if (direction == 0 && y != 0) { // when press up direction
                             int final_index = 0;
                             int moved_buffer = temp.getY();
@@ -192,7 +210,7 @@ public class MainGame2048 {
                 for (int y = 3; y >= 0; y--) {
                     Cell temp = grid.getCellContent(x, y);
                     if (temp != null) {
-                        if (temp.getValue() == 2048) gameWon();
+                        if (temp.getValue() == 32) gameWon();
                         if (direction == 1 && x != 3) {
                             int final_index = 3;
                             int moved_buffer = temp.getX();
@@ -255,7 +273,9 @@ public class MainGame2048 {
             cell.setValue(value);
             spawnCell(cell);
         }
-        if (!grid.isCellsAvailable()) gameLost();
+        if (!grid.isCellsAvailable() && !moved) { // game lost case
+            gameLost();
+        }
     }
 
     public int getScore() {

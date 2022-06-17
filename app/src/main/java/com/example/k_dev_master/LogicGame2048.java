@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
@@ -30,7 +31,6 @@ public class LogicGame2048 extends AppCompatActivity {
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.pop_2048:
-
                                 startActivity(new Intent(getApplicationContext(), LogicGame2048.class));
                                 break;
                             case R.id.pop_2048_inst:
@@ -47,7 +47,18 @@ public class LogicGame2048 extends AppCompatActivity {
                 popupMenu.show();
             }
         });
+        Button undo = findViewById(R.id.undobutton);
+        undo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getGame().revertUndoState();
+                }
+        });
+
 //        findViewById(R.layout.activity_main_2048game).setOnTouchListener(this);
+    }
+    private MainGame2048 getGame() {
+        return view.game;
     }
 //    protected void newGame2048() {
 //        view.game = new MainGame2048(this, new MainView2048(this));
