@@ -26,7 +26,7 @@ public class Game2048 extends AppCompatActivity {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch(item.getItemId()) {
-                            case R.id.pop_2048_ng:
+                            case R.id.pop_2048:
 
 
                             case R.id.pop_2048_inst:
