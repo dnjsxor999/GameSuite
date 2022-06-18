@@ -119,8 +119,8 @@ public class Grid {
     }
 
     public void clearGrid() {
-        for (int xx = 0; xx < field.length; xx++) {
-            for (int yy = 0; yy < field[0].length; yy++) {
+        for (int xx = 0; xx < 4; xx++) {
+            for (int yy = 0; yy < 4; yy++) {
                 field[xx][yy] = null;
             }
         }

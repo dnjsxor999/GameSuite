@@ -1,6 +1,5 @@
 package com.example.k_dev_master;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -9,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -18,15 +18,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LogicGame2048 extends AppCompatActivity {
     // 2048 Game
-    private static final String WIDTH = "width";
-    private static final String HEIGHT = "height";
-    private static final String SCORE = "score";
-    private static final String HIGH_SCORE = "high score temp";
-    private static final String UNDO_SCORE = "undo score";
-    private static final String CAN_UNDO = "can undo";
-    private static final String UNDO_GRID = "undo";
-    private static final String GAME_STATE = "game state";
-    private static final String UNDO_GAME_STATE = "undo game state";
     private MainView2048 view;
 
     @Override
@@ -44,10 +35,10 @@ public class LogicGame2048 extends AppCompatActivity {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch(item.getItemId()) {
+                        switch (item.getItemId()) {
                             case R.id.pop_2048:
-                                startActivity(new Intent());
-
+                                startActivity(new Intent(getApplicationContext(), LogicGame2048.class));
+                                break;
                             case R.id.pop_2048_inst:
                                 LayoutInflater inflater = (LayoutInflater)
                                         getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -74,19 +65,35 @@ public class LogicGame2048 extends AppCompatActivity {
 
 
 
+                                break;
                             case R.id.pop_2048_exit:
-                                //view.getContext().startActivity();
-
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                finish();
+                                break;
                             default:
-                                return false;
                         }
+                        return false;
                     }
                 });
                 popupMenu.show();
             }
         });
+        Button undo = findViewById(R.id.undobutton);
+        undo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getGame().revertUndoState();
+                }
+        });
+
 //        findViewById(R.layout.activity_main_2048game).setOnTouchListener(this);
     }
+    private MainGame2048 getGame() {
+        return view.game;
+    }
+//    protected void newGame2048() {
+//        view.game = new MainGame2048(this, new MainView2048(this));
+//    }
 
 
 
