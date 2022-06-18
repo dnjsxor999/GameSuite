@@ -61,10 +61,6 @@ public class LogicGame2048 extends AppCompatActivity {
                                         return true;
                                     }
                                 });
-
-
-
-
                                 break;
                             case R.id.pop_2048_exit:
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
