@@ -10,6 +10,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.TextView;
+
 import androidx.annotation.Nullable;
 
 @SuppressWarnings("deprecation")
@@ -72,7 +74,7 @@ public class MainView2048 extends View {
         //Reset the transparency of the screen
         super.onDraw(canvas);
         canvas.drawBitmap(background, 0, 0, paint);
-//      drawScoreText();
+        drawScoreText(canvas);
         drawCells(canvas);
         invalidate();
     }
@@ -100,9 +102,13 @@ public class MainView2048 extends View {
         draw.draw(canvas);
     }
 
-    private void drawScoreText() {
-//        TextView textView = this.findViewById(R.id.scoretext);
-//        textView.setText(String.valueOf(game.score));
+    private void drawScoreText(Canvas canvas) {
+        paint.setTextSize(50);
+        paint.setTextAlign(Paint.Align.CENTER);
+
+        paint.setColor(getResources().getColor(R.color.text_black));
+        canvas.drawText(String.valueOf(game.score), startingX + (cellSize + gridWidth) * 3 + gridWidth * 6,200, paint);
+
     }
 
 

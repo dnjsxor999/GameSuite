@@ -12,8 +12,7 @@
 
     <com.example.k_dev_master.MainView2048
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.example.k_dev_master.MainView2048>
+        android:layout_height="match_parent"></com.example.k_dev_master.MainView2048>
 
 
     <LinearLayout
@@ -80,7 +79,7 @@
             android:layout_marginBottom="5dp"
             android:layout_weight="2"
             android:backgroundTint="#cdc1b5"
-            android:text=""
+            android:text="Score"
             tools:ignore="SpeakableTextPresentCheck" />
 
     </LinearLayout>

@@ -87,9 +87,6 @@ public class LogicGame2048 extends AppCompatActivity {
     private MainGame2048 getGame() {
         return view.game;
     }
-//    protected void newGame2048() {
-//        view.game = new MainGame2048(this, new MainView2048(this));
-//    }
 
 
 
