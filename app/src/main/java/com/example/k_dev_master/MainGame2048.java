@@ -6,7 +6,7 @@ import android.content.DialogInterface;
 
 public class MainGame2048 {
 
-    private static final int maxValue = 2048;
+    private static final int maxValue = 32;
     //Odd state = game is not active
     //Even state = game is active
     //Win state = active state + 1
@@ -16,10 +16,6 @@ public class MainGame2048 {
     public int gameState = GAME_NORMAL;
     public int lastGameState = GAME_NORMAL;
     private int bufferGameState = GAME_NORMAL;
-//    private static final int GAME_ENDLESS = 2;
-//    private static final int GAME_ENDLESS_WON = 3;
-    private static final String HIGH_SCORE = "high score";
-    private static final String FIRST_RUN = "first run";
     final int numSquaresX = 4;
     final int numSquaresY = 4;
     private final Context mContext;
@@ -47,6 +43,7 @@ public class MainGame2048 {
         score = 0;
         gameState = GAME_NORMAL;
         addStartTiles();
+
 //        mView.showHelp = firstRun();
 //        mView.refreshLastTime = true;
 //        mView.resyncTime();
@@ -148,7 +145,6 @@ public class MainGame2048 {
                 for (int y = 0; y < 4; y++) {
                     Cell temp = grid.getCellContent(x, y);
                     if (temp != null) {
-                        if (temp.getValue() == 32) gameWon();
                         if (direction == 0 && y != 0) { // when press up direction
                             int final_index = 0;
                             int moved_buffer = temp.getY();
@@ -202,6 +198,7 @@ public class MainGame2048 {
                             }
                             if (!merged && temp.getX() == moved_buffer) moved = false;
                         }
+                        if (temp.getValue() == maxValue) gameWon();
                     }
                 }
             }
@@ -210,7 +207,6 @@ public class MainGame2048 {
                 for (int y = 3; y >= 0; y--) {
                     Cell temp = grid.getCellContent(x, y);
                     if (temp != null) {
-                        if (temp.getValue() == 32) gameWon();
                         if (direction == 1 && x != 3) {
                             int final_index = 3;
                             int moved_buffer = temp.getX();
@@ -263,9 +259,13 @@ public class MainGame2048 {
                             }
                             if (!merged && temp.getY() == moved_buffer) moved = false;
                         }
+                        if (temp.getValue() == maxValue) gameWon();
                     }
                 }
             }
+        }
+        if (moved) {
+            saveUndoState();
         }
         if (moved && grid.isCellsAvailable()) {
             int value = Math.random() < 0.9 ? 2 : 4;
