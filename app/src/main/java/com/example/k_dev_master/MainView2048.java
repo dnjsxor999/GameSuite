@@ -20,7 +20,7 @@ public class MainView2048 extends View {
     //Internal Constants
     public final int numCellTypes = 12; // 2048 = 2^11
     private final BitmapDrawable[] bitmapCells = new BitmapDrawable[12];
-    public final MainGame2048 game;
+    public MainGame2048 game;
     //Internal variables
     private final Paint paint = new Paint();
     public boolean hasSaveState = false;
