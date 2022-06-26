@@ -58,16 +58,6 @@ public class Grid {
         return field[x][y];
     }
 
-    //    public boolean isCellWithinBounds(Cell cell) {
-    //        return 0 <= cell.getX() && cell.getX() < field.length
-    //                && 0 <= cell.getY() && cell.getY() < field[0].length;
-    //    }
-    //
-    //    private boolean isCellWithinBounds(int x, int y) {
-    //        return 0 <= x && x < field.length
-    //                && 0 <= y && y < field[0].length;
-    //    }
-
     public void insertCell(Cell cell) {
         field[cell.getX()][cell.getY()] = cell;
     }

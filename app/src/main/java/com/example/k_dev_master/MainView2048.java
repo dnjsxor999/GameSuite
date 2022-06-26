@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-@SuppressWarnings("deprecation")
 public class MainView2048 extends View {
 
     //Internal Constants

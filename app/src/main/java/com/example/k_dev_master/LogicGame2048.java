@@ -74,46 +74,8 @@ public class LogicGame2048 extends AppCompatActivity {
                 popupMenu.show();
             }
         });
-        Button undo = findViewById(R.id.undobutton);
-        undo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    getGame().revertUndoState();
-                }
-        });
-
-//        findViewById(R.layout.activity_main_2048game).setOnTouchListener(this);
     }
     private MainGame2048 getGame() {
         return view.game;
     }
-
-
-
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_MENU) {
-//            //Do nothing
-//            return true;
-//        } else if (keyCode == KeyEvent.KEYCODE_DPAD_DOWN) {
-//            view.game.move(2);
-//            return true;
-//        } else if (keyCode == KeyEvent.KEYCODE_DPAD_UP) {
-//            view.game.move(0);
-//            return true;
-//        } else if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
-//            view.game.move(3);
-//            return true;
-//        } else if (keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
-//            view.game.move(1);
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
-
-    //    @Override
-    //    public void onBackPressed() {
-    //        Toast.makeText(this, "Back button pressed.", Toast.LENGTH_SHORT).show();
-    //        super.onBackPressed();
-    //    }
 }

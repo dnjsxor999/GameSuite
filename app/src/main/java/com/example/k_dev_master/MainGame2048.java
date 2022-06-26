@@ -43,10 +43,6 @@ public class MainGame2048 {
         score = 0;
         gameState = GAME_NORMAL;
         addStartTiles();
-
-//        mView.showHelp = firstRun();
-//        mView.refreshLastTime = true;
-//        mView.resyncTime();
         mView.invalidate();
     }
 
