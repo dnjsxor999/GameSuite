@@ -82,15 +82,6 @@ public class MainGame2048 {
         bufferScore = score;
         bufferGameState = gameState;
     }
-    public void revertUndoState() {
-        if (canUndo) {
-            canUndo = false;
-            grid.revertCell();
-            score = lastScore;
-            gameState = lastGameState;
-            mView.invalidate();
-        }
-    }
 
     public void gameWon() {
         new AlertDialog.Builder(mView.getContext())
