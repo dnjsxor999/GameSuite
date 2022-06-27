@@ -75,7 +75,4 @@ public class LogicGame2048 extends AppCompatActivity {
             }
         });
     }
-    private MainGame2048 getGame() {
-        return view.game;
-    }
 }
