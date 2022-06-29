@@ -76,9 +76,6 @@ public class Grid {
         field[cell.getX()][cell.getY()] = null;
     }
 
-    /**
-     *
-     */
     public void saveCells() {
         for (int xx = 0; xx < 4; xx++) {
             for (int yy = 0; yy < 4; yy++) {

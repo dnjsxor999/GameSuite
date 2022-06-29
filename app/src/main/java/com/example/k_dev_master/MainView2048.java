@@ -10,7 +10,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
+
 
 import androidx.annotation.Nullable;
 
@@ -108,7 +108,6 @@ public class MainView2048 extends View {
 
         paint.setColor(getResources().getColor(R.color.text_black));
         canvas.drawText(String.valueOf(game.score), startingX + (cellSize + gridWidth) * 3 + gridWidth * 6,200, paint);
-
     }
 
 
