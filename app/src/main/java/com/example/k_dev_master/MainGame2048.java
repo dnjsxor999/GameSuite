@@ -26,6 +26,7 @@ public class MainGame2048 {
     public int score = 0;
     public int lastScore = 0;
     public int bufferScore = 0;
+
     public MainGame2048(Context context, MainView2048 view) {
         mContext = context;
         mView = view;

@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), LogicGame2048.class);
                     startActivity(intent);
                 }
-
             }
         });
 
