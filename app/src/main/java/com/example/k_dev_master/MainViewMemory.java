@@ -14,12 +14,12 @@ import androidx.annotation.Nullable;
 
 public class MainViewMemory extends View {
 
-    MainGameMemory game;
+    public MainGameMemory game;
     private Bitmap background = null;
     private final Paint paint = new Paint();
-    private int cardSizeX = 150;
-    private int cardSizeY = 200;
-    private int gridWidth = 20;
+    private int cardSizeX = 170;
+    private int cardSizeY = 250;
+    private int gridWidth = 50;
     private int startingX;
     private int endingX;
     private int startingY;
@@ -36,6 +36,7 @@ public class MainViewMemory extends View {
 
         game.newGame();
     }
+
     public MainViewMemory(Context context, AttributeSet attrs) {
         super(context, attrs);
         Resources resources = context.getResources();
@@ -63,8 +64,8 @@ public class MainViewMemory extends View {
         //Reset the transparency of the screen
         super.onDraw(canvas);
         canvas.drawBitmap(background, 0, 0, paint);
-//        drawTime(canvas);
-
+        drawTime(canvas);
+        drawStage(canvas);
         drawCards(canvas);
 
         invalidate();
@@ -106,7 +107,21 @@ public class MainViewMemory extends View {
             }
         }
     }
+    public void drawStage(Canvas canvas) {
+        paint.setTextSize(50);
+        paint.setTextAlign(Paint.Align.CENTER);
 
+        paint.setColor(getResources().getColor(R.color.white));
+        canvas.drawText(String.valueOf(game.stage.getStageLevel()), 300,200, paint);
+    }
+
+    public void drawTime(Canvas canvas) {
+        paint.setTextSize(50);
+        paint.setTextAlign(Paint.Align.CENTER);
+
+        paint.setColor(getResources().getColor(R.color.white));
+        canvas.drawText(String.valueOf(game.stage.getStageTime(game.stage.getStageLevel()) / 1000), 500,400, paint);
+    }
     private void drawCards(Canvas canvas) {
         for (int xx = 0; xx < 4; xx++) {
             for (int yy = 0; yy < 4; yy++) {

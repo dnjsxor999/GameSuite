@@ -1,7 +1,7 @@
 package com.example.k_dev_master;
 
 public class Card {
-    private boolean hidden = true;
+    private boolean hidden = false;
     private int value;
     private int x;
     private int y;
