@@ -36,7 +36,11 @@
             android:exported="true">
 
         </activity>
+        <activity
+            android:name=".MemoryGame" android:screenOrientation="portrait"
+            android:exported="true">
 
+        </activity>
     </application>
 
 
