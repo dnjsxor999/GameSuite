@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
                 if (gameSelect == 1) {
                     Intent intent = new Intent(getApplicationContext(), LogicGame2048.class);
                     startActivity(intent);
+                } else if (gameSelect == 2) {
+                    Intent intent = new Intent(getApplicationContext(), MemoryGame.class);
+                    startActivity(intent);
                 }
             }
         });
