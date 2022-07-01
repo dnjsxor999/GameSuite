@@ -15,14 +15,14 @@ public class Stage {
         clearCards(blank);
         this.stageLevel = stage_int;
     }
-
-    public Card getCard(Card card) {
-        if (card != null) {
-            return field[card.getX()][card.getY()];
-        } else {
-            return null;
-        }
-    }
+//
+//    public Card getCard(Card card) {
+//        if (card != null) {
+//            return field[card.getX()][card.getY()];
+//        } else {
+//            return null;
+//        }
+//    }
 
     public Card getCard(int x, int y) {
         return field[x][y];

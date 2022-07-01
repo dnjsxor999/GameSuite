@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.k_dev_master">
-
     <application
+        tools:replace="android:appComponentFactory"
+        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"

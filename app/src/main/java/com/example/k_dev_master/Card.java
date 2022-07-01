@@ -1,49 +1,36 @@
 package com.example.k_dev_master;
 
 public class Card {
-    private boolean hidden = false;
-    private int value;
-    private int x;
-    private int y;
+    private int display;
+    private String tag;
+    private int check = 0;
 
-    /**
-     * Constructor.
-     */
-    public Card(int x, int y, int value) {
-        this.x = x;
-        this.y = y;
-        this.value = value;
+    Card(int display, String tag) {
+        this.display = display;
+        this.tag = tag;
     }
 
-    public int getX() {
-        return this.x;
+    int getDisplay() {
+        return display;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    String getTag() {
+        return tag;
     }
 
-    public int getValue() {
-        return value;
+    int getCheck() {
+        return check;
     }
 
-    void setX(int x) {
-        this.x = x;
+    void setDisplay(int display) {
+        this.display = display;
     }
 
-    public int getY() {
-        return this.y;
+    void setTag(String tag) {
+        this.tag = tag;
     }
 
-    void setY(int y) {
-        this.y = y;
-    }
-
-    public void setHidden(boolean hidden) {
-        this.hidden = hidden;
-    }
-
-    public boolean isHidden() {
-        return hidden;
+    void setCheck(int check) {
+        this.check = check;
     }
 }
