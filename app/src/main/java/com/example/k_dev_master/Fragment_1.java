@@ -17,7 +17,7 @@ public class Fragment_1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.game_2048, container, false);
+                R.layout.activity_main_2048game, container, false);
         gameSelect = 1;
         return rootView;
     }

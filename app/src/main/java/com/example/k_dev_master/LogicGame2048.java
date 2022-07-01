@@ -2,6 +2,7 @@ package com.example.k_dev_master;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -13,12 +14,15 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class LogicGame2048 extends AppCompatActivity {
     // 2048 Game
     private MainView2048 view;
+    //Timer Change 1
+    private TextView textTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +30,23 @@ public class LogicGame2048 extends AppCompatActivity {
         view = new MainView2048(this);
         setContentView(R.layout.activity_main_2048game);
         ImageButton openMenu = findViewById(R.id.ListViewBtn2048);
-        view.invalidate();
+        //Timer Change 2
+        textTimer = (TextView) findViewById(R.id.timerText);
+        new CountDownTimer(60000, 100) {
+
+            public void onTick(long millisUntilFinished) {
+                textTimer.setText("Seconds remaining: " + millisUntilFinished / 1000 + "."
+                        + millisUntilFinished % 100);
+            }
+
+            public void onFinish() {
+                textTimer.setText("done!");
+            }
+        }.start();
         openMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 PopupMenu popupMenu = new PopupMenu(LogicGame2048.this, view);
                 popupMenu.getMenuInflater().inflate(R.menu.popup_2048, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
