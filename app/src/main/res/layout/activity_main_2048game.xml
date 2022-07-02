@@ -10,9 +10,9 @@
     android:layout_weight="7">
 
 
-    <com.example.k_dev_master.MainView2048
+    <com.example.k_dev_master.game2048.MainView2048
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.example.k_dev_master.MainView2048>
+        android:layout_height="match_parent"></com.example.k_dev_master.game2048.MainView2048>
 
 
     <LinearLayout

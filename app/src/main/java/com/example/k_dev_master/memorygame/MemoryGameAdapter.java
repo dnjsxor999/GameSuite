@@ -1,4 +1,4 @@
-package com.example.k_dev_master;
+package com.example.k_dev_master.memorygame;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Vector;
 
+import com.example.k_dev_master.R;
 import com.example.k_dev_master.databinding.ItemCardBinding;
 
 public class MemoryGameAdapter extends RecyclerView.Adapter<MemoryGameAdapter.ViewHolder>{

@@ -1,4 +1,4 @@
-package com.example.k_dev_master;
+package com.example.k_dev_master.game2048;
 //
 //import android.app.AlertDialog;
 //import android.content.DialogInterface;

@@ -1,4 +1,4 @@
-package com.example.k_dev_master;
+package com.example.k_dev_master.memorygame;
 
 
 import android.os.Bundle;
@@ -8,7 +8,6 @@ import android.view.ViewTreeObserver;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 //import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -28,6 +27,9 @@ import com.example.k_dev_master.databinding.ActivityMemorygameBinding;
 
 public class MemoryGame extends AppCompatActivity {
 
+    private final long TIME_DISPLAY_STAGE1 = 20000;
+    private final long TIME_DISPLAY_STAGE2 = 10000;
+    private final long TIME_DISPLAY_STAGE3 = 5000;
     ActivityMemorygameBinding binding;
 
     Vector<Card> cards;

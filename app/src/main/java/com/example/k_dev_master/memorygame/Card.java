@@ -1,4 +1,4 @@
-package com.example.k_dev_master;
+package com.example.k_dev_master.memorygame;
 
 public class Card {
     private int display;

@@ -1,12 +1,10 @@
-package com.example.k_dev_master;
+package com.example.k_dev_master.memorygame;
 
 public class Stage {
     public Card[][] field;
     public Card[][] blank;
     private int stageLevel;
-    private final long TIME_DISPLAY_STAGE1 = 20000;
-    private final long TIME_DISPLAY_STAGE2 = 10000;
-    private final long TIME_DISPLAY_STAGE3 = 5000;
+
 
     public Stage(int sizeX, int sizeY, int stage_int) {
         field = new Card[sizeX][sizeY];
@@ -36,16 +34,16 @@ public class Stage {
         }
     }
 
-    public long getStageTime(int stageLevel) {
-        if (stageLevel == 1) {
-            return TIME_DISPLAY_STAGE1;
-        } else if (stageLevel == 2) {
-            return TIME_DISPLAY_STAGE2;
-        } else if (stageLevel == 3) {
-            return TIME_DISPLAY_STAGE3;
-        }
-        return 0;
-    }
+//    public long getStageTime(int stageLevel) {
+//        if (stageLevel == 1) {
+//            return TIME_DISPLAY_STAGE1;
+//        } else if (stageLevel == 2) {
+//            return TIME_DISPLAY_STAGE2;
+//        } else if (stageLevel == 3) {
+//            return TIME_DISPLAY_STAGE3;
+//        }
+//        return 0;
+//    }
 
     public int getStageLevel() {
         return stageLevel;
