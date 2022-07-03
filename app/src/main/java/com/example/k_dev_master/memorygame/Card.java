@@ -3,11 +3,12 @@ package com.example.k_dev_master.memorygame;
 public class Card {
     private int display;
     private String tag;
-    private int check = 0;
+    private int check;
 
     Card(int display, String tag) {
         this.display = display;
         this.tag = tag;
+        this.check = 0;
     }
 
     int getDisplay() {

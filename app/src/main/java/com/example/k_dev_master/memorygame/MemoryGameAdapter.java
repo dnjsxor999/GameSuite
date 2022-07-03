@@ -58,7 +58,7 @@ public class MemoryGameAdapter extends RecyclerView.Adapter<MemoryGameAdapter.Vi
         // display에 해당하는 사진으로 set image
         Log.e("check[" + position + "] = ", String.valueOf(check));
         // 첫시작
-        if(check == 0 && startAnimate) {
+        if (check == 0 && startAnimate) {
             binding.cardTxtView.animate()
                     .rotationY(90)
                     .setDuration(200)
@@ -84,10 +84,11 @@ public class MemoryGameAdapter extends RecyclerView.Adapter<MemoryGameAdapter.Vi
                     .start();
         } else if (check == 2) {
             binding.cardTxtView.setBackgroundColor(Color.BLACK);
-            // if these cards are already right matched, set color black
+            // if these cards are already correctly matched, set color black
         } else {
 
         }
+
     }
 
     @Override
