@@ -1,4 +1,4 @@
-package com.example.k_dev_master;
+package com.example.k_dev_master.memorygame;
 
 
 import android.os.Bundle;
@@ -7,8 +7,6 @@ import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-//import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -21,6 +19,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Collections;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 import com.example.k_dev_master.R;
@@ -28,13 +28,23 @@ import com.example.k_dev_master.databinding.ActivityMemorygameBinding;
 
 public class MemoryGame extends AppCompatActivity {
 
+    private final long TIME_DISPLAY_STAGE1 = 2000;
+    private final long TIME_DISPLAY_STAGE2 = 5000;
+    private final long TIME_DISPLAY_STAGE3 = 3000;
     ActivityMemorygameBinding binding;
-
+    private int stageLevel = 0;
     Vector<Card> cards;
-
+    Timer timer;
+    private long recordTime = 0;
+    private long currTimer = 0;
+    private int gameState;
+    private static final int GAME_ONGOING = 0;
+    private static final int GAME_DONE = 1;
     Vector<Integer> selectedPos;
     // 골라 놓은 카드들 벡터로 저장
 
+    // count 100ms
+    TimerTask tt;
     MemoryGameAdapter adapter;
 
     @Override
@@ -47,30 +57,15 @@ public class MemoryGame extends AppCompatActivity {
         adapter = new MemoryGameAdapter(this);
         binding.cardViews.setAdapter(adapter);
 
-
+        gameState = GAME_ONGOING;
+        recordTime = 0;
+        currTimer = 0;
+        stageLevel = 1;
+        setTask();
         selectedPos = new Vector<>();
         //비교할 후보들 저장
-        cards = new Vector<>();
-        cards.add(new Card(R.drawable.card_clubs1, "1"));
-        cards.add(new Card(R.drawable.card_clubs1, "1"));
-        cards.add(new Card(R.drawable.card_clubs2, "2"));
-        cards.add(new Card(R.drawable.card_clubs2, "2"));
-        cards.add(new Card(R.drawable.card_clubs3, "3"));
-        cards.add(new Card(R.drawable.card_clubs3, "3"));
-        cards.add(new Card(R.drawable.card_clubs4, "4"));
-        cards.add(new Card(R.drawable.card_clubs4, "4"));
-        cards.add(new Card(R.drawable.card_clubs5, "5"));
-        cards.add(new Card(R.drawable.card_clubs5, "5"));
-        cards.add(new Card(R.drawable.card_clubs6, "6"));
-        cards.add(new Card(R.drawable.card_clubs6, "6"));
-        cards.add(new Card(R.drawable.card_clubs7, "7"));
-        cards.add(new Card(R.drawable.card_clubs7, "7"));
-        cards.add(new Card(R.drawable.card_clubs8, "8"));
-        cards.add(new Card(R.drawable.card_clubs8, "8"));
-        Collections.shuffle(cards);
-        //섞기
+        addCards();
         adapter.setUpPicture(cards);
-
         binding.cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -83,11 +78,10 @@ public class MemoryGame extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 // recycleView alert
                 Handler handler = new Handler();
-                handler.postDelayed(MemoryGame.this::start, 1000); // timer need to be implemented
+                handler.postDelayed(MemoryGame.this::start, 100); // timer need to be implemented
                 binding.cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
-
     }
 
 
@@ -109,7 +103,7 @@ public class MemoryGame extends AppCompatActivity {
                     // 그 카드객체 (index of vector)의 check 가져오기
                     if(check == 1) { // 뒤집혔다면, 눌려졌다면,
                         txtView.animate()
-                                .rotationYBy(180)
+                                .rotationYBy(360)
                                 .rotationY(90)
                                 .setDuration(200) // 카드 보여주는 시간
                                 .setListener(new AnimatorListenerAdapter() {
@@ -142,13 +136,20 @@ public class MemoryGame extends AppCompatActivity {
                                                                 String display2 = cards.get(pos2).getTag();
                                                                 Log.e("display1", display);
                                                                 Log.e("display2", display2);
-                                                                if (display.equals(display2)) { // 맞춤 -> check == 2
+                                                                if (display.equals(display2)) {
                                                                     Toast.makeText(MemoryGame.this, "Correct!", Toast.LENGTH_SHORT).show();
                                                                     adapter.update(pos1, 2);
                                                                     adapter.update(pos2, 2);
+                                                                    Log.e("Matched!", display);
+                                                                    if (matchedAll(cards)) {
+                                                                        Log.e("In if statement", "yes!");
+                                                                        timer.cancel();
+                                                                        stageUp();
+                                                                    }
                                                                 } else { // 틀림
                                                                     adapter.update(pos1, 0);
                                                                     adapter.update(pos2, 0);
+                                                                    Log.e("UnMatched..", display);
                                                                 }
                                                             } else { // 포지션 같으므로 pos1의 카드 check 초기화 (선택안한상태로 되돌림)
                                                                 adapter.update(pos1, 0);
@@ -157,7 +158,6 @@ public class MemoryGame extends AppCompatActivity {
                                                             selectedPos.clear();
                                                         }
                                                     }
-
                                                 })
                                                 .start();
                                     }
@@ -166,6 +166,8 @@ public class MemoryGame extends AppCompatActivity {
                     }
                     break;
             }
+
+
             return false;
         }
 
@@ -180,20 +182,132 @@ public class MemoryGame extends AppCompatActivity {
         }
     };
 
-    private void timer() {
-        binding.timerTxtView.setVisibility(View.VISIBLE);
-        //timer implement needed
-        //stage 1 2 3 will be initiated in here
+
+    private boolean matchedAll(Vector<Card> cards) {
+        for (Card card : cards) {
+//            Log.e("passed the card", card.getTag());
+//            Log.e("check value", "" + card.getCheck());
+            if (card.getCheck() != 2) { // if a card is matched, the check value is 2
+//                Log.e("All matched?", "false");
+                return false;
+            }
+        }
+//        Log.e("All matched?", "true");
+        return true;
+    }
+
+    private void regame() {
+        for (Card card : cards) {
+            card.setCheck(0);
+        }
+        Collections.shuffle(cards);
     }
 
     private void start() {
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             // 정답 보여주기
-            binding.cardViews.addOnItemTouchListener(onItemTouchListener);
+            if (stageLevel == 1) {
+                binding.cardViews.addOnItemTouchListener(onItemTouchListener);
+            }
             adapter.setStartAnimate(true);
             //첫시작할때 모두 뒤집기
-        }, 1000);
-        handler.postDelayed(this::timer, 1000);
+        }, getTimeDisplay()); // show answer for 10 secs
+        handler.postDelayed(this::timer, getTimeDisplay());
+    }
+
+    private void timer() {
+        binding.timerTxtView.setVisibility(View.VISIBLE);
+        //timer implement needed
+        //stage 1 2 3 will be initiated in here
+        timer = new Timer();
+        timer.schedule(tt, 0,100); // count 100 each 100ms
+    }
+
+    private void setTask() { // set TimerTake again 만약 다시 세팅을 안하면 팅김
+        tt = new TimerTask() {
+            @Override
+            public void run() {
+                Log.e("Counting Time", String.valueOf(currTimer));
+                currTimer += 100;
+            }
+        };
+    }
+
+    public void stageUp() {
+        if (stageLevel == 1) {
+            stageLevel = 2;
+            Log.e("Curr time", String.valueOf(currTimer));
+            recordTime += currTimer;
+        } else if (stageLevel == 2) {
+            stageLevel = 3;
+            Log.e("Curr time", String.valueOf(currTimer));
+            recordTime += currTimer;
+
+        } else if (stageLevel == 3) {
+            gameState = GAME_DONE;
+            recordTime += currTimer;
+            currTimer = 0;
+            Log.e("Total recorded time", String.valueOf(recordTime));
+            return ;
+        }
+        currTimer = 0;
+        setTask();
+        adapter.setStartAnimate(false);
+
+        regame();
+
+        binding.cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int width = binding.cardViews.getWidth() / 4 - 10;
+                int height = binding.cardViews.getHeight() / 4 - 10;
+                Log.e("width", String.valueOf(width));
+                Log.e("height", String.valueOf(height));
+                adapter.setLength(width, height);
+                // set length
+                adapter.notifyDataSetChanged();
+                // recycleView alert
+                Handler handler = new Handler();
+                handler.postDelayed(MemoryGame.this::start, 2000); // timer need to be implemented
+                binding.cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+    }
+
+    private void addCards() {
+        cards = new Vector<>();
+        cards.add(new Card(R.drawable.card_clubs1, "1"));
+        cards.add(new Card(R.drawable.card_clubs1, "1"));
+        cards.add(new Card(R.drawable.card_clubs2, "2"));
+        cards.add(new Card(R.drawable.card_clubs2, "2"));
+        cards.add(new Card(R.drawable.card_clubs3, "3"));
+        cards.add(new Card(R.drawable.card_clubs3, "3"));
+        cards.add(new Card(R.drawable.card_clubs4, "4"));
+        cards.add(new Card(R.drawable.card_clubs4, "4"));
+        cards.add(new Card(R.drawable.card_clubs5, "5"));
+        cards.add(new Card(R.drawable.card_clubs5, "5"));
+        cards.add(new Card(R.drawable.card_clubs6, "6"));
+        cards.add(new Card(R.drawable.card_clubs6, "6"));
+        cards.add(new Card(R.drawable.card_clubs7, "7"));
+        cards.add(new Card(R.drawable.card_clubs7, "7"));
+        cards.add(new Card(R.drawable.card_clubs8, "8"));
+        cards.add(new Card(R.drawable.card_clubs8, "8"));
+        boolean shuffle = false;
+        if (shuffle) {
+            Collections.shuffle(cards);
+        }
+    }
+
+    private long getTimeDisplay() {
+        if (stageLevel == 1) {
+            return TIME_DISPLAY_STAGE1;
+        } else if (stageLevel == 2) {
+            return TIME_DISPLAY_STAGE2;
+        } else if (stageLevel == 3) {
+            return TIME_DISPLAY_STAGE3;
+        } else {
+            return 0;
+        }
     }
 }

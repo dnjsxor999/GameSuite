@@ -5,10 +5,12 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.k_dev_master.game2048.LogicGame2048;
+import com.example.k_dev_master.memorygame.MemoryGame;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btTeamInfo = (Button) findViewById(R.id.teamInfo); // TeamInfo button
+        Button btTeamInfo = findViewById(R.id.teamInfo); // TeamInfo button
         Button commonStart = findViewById(R.id.commonStart); // GameStart button
         Button quitButton = findViewById(R.id.exit); // exit button
 

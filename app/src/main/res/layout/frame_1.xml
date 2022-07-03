@@ -8,10 +8,6 @@
         android:text=""
         android:layout_width="543dp"
         android:layout_height="280dp"
-
-
-        android:src="@drawable/gamememory_fragment"
+        android:src="@drawable/game2048_fragment"
         tools:ignore="MissingConstraints" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

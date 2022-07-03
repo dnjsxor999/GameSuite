@@ -1,4 +1,4 @@
-package com.example.k_dev_master;
+package com.example.k_dev_master.game2048;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,13 +8,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.k_dev_master.MainActivity;
+import com.example.k_dev_master.R;
 
 public class LogicGame2048 extends AppCompatActivity {
     // 2048 Game
