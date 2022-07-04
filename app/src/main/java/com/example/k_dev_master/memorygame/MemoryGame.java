@@ -59,6 +59,7 @@ public class MemoryGame extends AppCompatActivity {
     TimerTask tt;
     TextView timerText;
     MemoryGameAdapter adapter;
+    TextView stageText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +79,7 @@ public class MemoryGame extends AppCompatActivity {
         selectedPos = new Vector<>();
         //Timer
         timerText = (TextView) findViewById(R.id.timerTxtView);
+        stageText = (TextView) findViewById(R.id.stageTxtView);
 
         //비교할 후보들 저장
 
@@ -270,11 +272,14 @@ public class MemoryGame extends AppCompatActivity {
     }
 
     private void start() {
+        //Stage Text View
+        stageText.setText("Stage: " + stageLevel);
+        //Countdown Timer
         new CountDownTimer(getTimeDisplay(), 1000) {
             public void onTick(long millisUntilFinished) {
                 binding.timerTxtView.setVisibility(View.VISIBLE);
                 timerText.setTextColor(Color.RED);
-                timerText.setText("Remaining: " + millisUntilFinished / 1000);
+                timerText.setText("Memorize in: " + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
@@ -357,7 +362,7 @@ public class MemoryGame extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 // recycleView alert
                 Handler handler = new Handler();
-                handler.postDelayed(MemoryGame.this::start, 2000); // timer need to be implemented
+                handler.postDelayed(MemoryGame.this::start, 0); // timer need to be implemented
                 binding.cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
