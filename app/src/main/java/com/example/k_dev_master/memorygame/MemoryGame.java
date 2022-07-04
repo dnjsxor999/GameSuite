@@ -1,22 +1,25 @@
 package com.example.k_dev_master.memorygame;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.ViewTreeObserver;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,21 +29,20 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.k_dev_master.*;
+import com.example.k_dev_master.R;
+import com.example.k_dev_master.databinding.ActivityMemorygameBinding;
+
 import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
-import com.example.k_dev_master.MainActivity;
-import com.example.k_dev_master.R;
-import com.example.k_dev_master.databinding.ActivityMemorygameBinding;
-import com.example.k_dev_master.game2048.LogicGame2048;
-
 public class MemoryGame extends AppCompatActivity {
 
-    private final long TIME_DISPLAY_STAGE1 = 2000;
-    private final long TIME_DISPLAY_STAGE2 = 5000;
-    private final long TIME_DISPLAY_STAGE3 = 3000;
+    private final long TIME_DISPLAY_STAGE1 = 4000;
+    private final long TIME_DISPLAY_STAGE2 = 8000;
+    private final long TIME_DISPLAY_STAGE3 = 5000;
     ActivityMemorygameBinding binding;
     private int stageLevel = 0;
     Vector<Card> cards;
@@ -55,6 +57,7 @@ public class MemoryGame extends AppCompatActivity {
 
     // count 100ms
     TimerTask tt;
+    TextView timerText;
     MemoryGameAdapter adapter;
 
     @Override
@@ -73,7 +76,11 @@ public class MemoryGame extends AppCompatActivity {
         stageLevel = 1;
         setTask();
         selectedPos = new Vector<>();
+        //Timer
+        timerText = (TextView) findViewById(R.id.timerTxtView);
+
         //비교할 후보들 저장
+
         addCards();
         adapter.setUpPicture(cards);
         binding.cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -263,6 +270,18 @@ public class MemoryGame extends AppCompatActivity {
     }
 
     private void start() {
+        new CountDownTimer(getTimeDisplay(), 1000) {
+            public void onTick(long millisUntilFinished) {
+                binding.timerTxtView.setVisibility(View.VISIBLE);
+                timerText.setTextColor(Color.RED);
+                timerText.setText("Remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                timerText.setTextColor(Color.BLACK);
+            }
+        }.start();
+
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             // 정답 보여주기
@@ -280,20 +299,30 @@ public class MemoryGame extends AppCompatActivity {
         //timer implement needed
         //stage 1 2 3 will be initiated in here
         timer = new Timer();
-        timer.schedule(tt, 0,100); // count 100 each 100ms
+        timer.schedule(tt, 0,100); // count 100 each 10ms
     }
 
     private void setTask() { // set TimerTake again 만약 다시 세팅을 안하면 팅김
         tt = new TimerTask() {
             @Override
-            public void run() {
-                Log.e("Counting Time", String.valueOf(currTimer));
-                currTimer += 100;
+            public void run()
+            {
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Log.e("Counting Time", String.valueOf(currTimer));
+                        currTimer += 1;
+                        timerText.setText(getTimerText());
+                    }
+                });
             }
         };
     }
 
     public void stageUp() {
+        binding.timerTxtView.setVisibility(View.GONE);
         if (stageLevel == 1) {
             stageLevel = 2;
             Log.e("Curr time", String.valueOf(currTimer));
@@ -368,5 +397,20 @@ public class MemoryGame extends AppCompatActivity {
         } else {
             return 0;
         }
+    }
+
+    private String getTimerText()
+    {
+        int rounded = (int) Math.round(currTimer);
+
+        long milliseconds = currTimer % 10;
+        int seconds = rounded / 10;
+
+        return formatTime(milliseconds, seconds);
+    }
+
+    private String formatTime(long milliseconds, int seconds)
+    {
+        return String.format("%02d",seconds) + "." + String.format("%01d",milliseconds);
     }
 }
