@@ -1,8 +1,10 @@
-package com.example.k_dev_master;
+package com.example.k_dev_master.game2048;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+
+import com.example.k_dev_master.R;
 
 public class MainGame2048 {
 

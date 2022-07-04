@@ -4,15 +4,14 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
     android:orientation="landscape">
-    <TextView
-        android:text="third game: Logic Game"
+    <ImageView
+        android:text=""
         android:layout_width="543dp"
         android:layout_height="280dp"
-        android:textSize="50dp"
-        android:textColor="#000000"
-        android:background="#FFCDD2"
-        tools:layout_editor_absoluteX="91dp"
-        tools:layout_editor_absoluteY="73dp"/>
+
+
+        android:src="@drawable/game2048_fragment"
+        tools:ignore="MissingConstraints" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

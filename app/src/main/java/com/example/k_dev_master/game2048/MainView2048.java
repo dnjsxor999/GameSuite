@@ -1,4 +1,4 @@
-package com.example.k_dev_master;
+package com.example.k_dev_master.game2048;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +13,8 @@ import android.view.View;
 
 
 import androidx.annotation.Nullable;
+
+import com.example.k_dev_master.R;
 
 public class MainView2048 extends View {
 

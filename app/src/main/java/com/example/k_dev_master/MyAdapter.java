@@ -25,7 +25,6 @@ public class MyAdapter extends FragmentStateAdapter {
         else {
             return new Fragment_3();
         }
-        //else return new Fragment_4();
     }
     @Override
     public int getItemCount() {
