@@ -48,6 +48,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageButton
+            android:id="@+id/ListViewBtnMemory"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_weight="2"
+            android:background="@drawable/settingbutton"
+            android:onClick="showPopup"
+            tools:ignore="SpeakableTextPresentCheck"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
 
         <!--        <TextView-->
 <!--            android:visibility="gone"-->
