@@ -15,41 +15,13 @@
         android:layout_height="match_parent"></com.example.k_dev_master.game2048.MainView2048>
 
 
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="60dp">
-
-        <TextView
-            android:id="@+id/textView000"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="                              "
-            android:textColor="#776e65"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/textView001"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text=""
-            android:textColor="#776e65"
-            android:textSize="55dp" />
-
-    </LinearLayout>
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:layout_weight="1"
-        android:layout_centerHorizontal="true"
         android:orientation="horizontal"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="25dp">
@@ -67,7 +39,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="70dp"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:backgroundTint="#bbada0"
             android:text="2048"
             android:textAlignment="viewStart"
@@ -75,14 +48,14 @@
 
         <TextView
             android:id="@+id/scoretext"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="5dp"
-            android:layout_marginLeft="50dp"
             android:backgroundTint="#cdc1b5"
             android:text="Score"
             tools:ignore="SpeakableTextPresentCheck" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -97,7 +70,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Join the number and get to the "
+            android:text="Join the numbers and get to "
             android:textColor="#776e65"
             android:textSize="15dp" />
 
@@ -106,26 +79,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:fontFamily="cursive"
-            android:text="2048 tile! "
+            android:text="2048! "
             android:textColor="#776e65"
             android:textSize="18dp" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginTop="140dp"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:id="@+id/timerText"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textColor="#776e65"
-            android:textSize="15dp" />
     </LinearLayout>
 
 </android.widget.RelativeLayout>
