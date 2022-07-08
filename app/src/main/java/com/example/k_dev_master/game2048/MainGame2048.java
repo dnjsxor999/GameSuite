@@ -8,7 +8,7 @@ import com.example.k_dev_master.R;
 
 public class MainGame2048 {
 
-    private static final int maxValue = 32;
+    private static final int maxValue = 2048;
     //Odd state = game is not active
     //Even state = game is active
     //Win state = active state + 1

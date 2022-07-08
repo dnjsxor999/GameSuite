@@ -105,10 +105,10 @@ public class MainView2048 extends View {
 
     private void drawScoreText(Canvas canvas) {
         paint.setTextSize(50);
-        paint.setTextAlign(Paint.Align.CENTER);
+        paint.setTextAlign(Paint.Align.RIGHT);
 
         paint.setColor(getResources().getColor(R.color.text_black));
-        canvas.drawText(String.valueOf(game.score), startingX + (cellSize + gridWidth) * 3 + gridWidth * 6,200, paint);
+        canvas.drawText(String.valueOf(game.score), startingX + 220 + (cellSize + gridWidth) * 3 + gridWidth * 6,200, paint);
     }
 
 

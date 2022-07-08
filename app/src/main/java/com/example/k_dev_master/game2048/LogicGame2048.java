@@ -2,6 +2,7 @@ package com.example.k_dev_master.game2048;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Gravity;
 
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,16 +24,17 @@ public class LogicGame2048 extends AppCompatActivity {
     // 2048 Game
     private MainView2048 view;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         view = new MainView2048(this);
         setContentView(R.layout.activity_main_2048game);
         ImageButton openMenu = findViewById(R.id.ListViewBtn2048);
-        view.invalidate();
         openMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 PopupMenu popupMenu = new PopupMenu(LogicGame2048.this, view);
                 popupMenu.getMenuInflater().inflate(R.menu.popup_2048, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
