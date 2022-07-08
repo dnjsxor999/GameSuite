@@ -87,7 +87,6 @@ public class MainGame2048 {
     }
 
     public void gameWon() {
-        System.out.println("Won");
         new AlertDialog.Builder(mView.getContext())
                 .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
                     @Override
@@ -137,7 +136,7 @@ public class MainGame2048 {
                 for (int y = 0; y < 4; y++) {
                     Cell temp = grid.getCellContent(x, y);
                     if (temp != null) {
-                        if (temp.getValue() == maxValue) gameWon();
+
                         if (direction == 0 && y != 0) { // when press up direction
                             int final_index = 0;
                             int moved_buffer = temp.getY();
@@ -190,6 +189,7 @@ public class MainGame2048 {
                                 moved = true;
                             }
                             if (!merged && temp.getX() == moved_buffer) moved = false;
+                            if (temp.getValue() == maxValue) gameWon();
                         }
                     }
                 }
@@ -199,7 +199,6 @@ public class MainGame2048 {
                 for (int y = 3; y >= 0; y--) {
                     Cell temp = grid.getCellContent(x, y);
                     if (temp != null) {
-                        if (temp.getValue() == maxValue) gameWon();
                         if (direction == 1 && x != 3) {
                             int final_index = 3;
                             int moved_buffer = temp.getX();
