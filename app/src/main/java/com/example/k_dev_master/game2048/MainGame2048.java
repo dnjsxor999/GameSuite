@@ -127,7 +127,6 @@ public class MainGame2048 {
             return ;
         }
         prepareUndoState();
-
         //move direction :
         // 0: up, 1: right, 2: down, 3: left
         boolean moved = false; // got input but there is no change on grid
@@ -136,7 +135,6 @@ public class MainGame2048 {
                 for (int y = 0; y < 4; y++) {
                     Cell temp = grid.getCellContent(x, y);
                     if (temp != null) {
-
                         if (direction == 0 && y != 0) { // when press up direction
                             int final_index = 0;
                             int moved_buffer = temp.getY();
@@ -150,7 +148,6 @@ public class MainGame2048 {
                                         grid.insertCell(cell);
                                         merged = true;
                                         moved = true;
-
                                         score += temp.getValue();
                                     }
                                     break;
@@ -189,8 +186,8 @@ public class MainGame2048 {
                                 moved = true;
                             }
                             if (!merged && temp.getX() == moved_buffer) moved = false;
-                            if (temp.getValue() == maxValue) gameWon();
                         }
+                        if (temp.getValue() == maxValue) gameWon();
                     }
                 }
             }
