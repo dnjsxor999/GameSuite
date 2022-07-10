@@ -148,7 +148,6 @@ public class MainGame2048 {
                                         grid.insertCell(cell);
                                         merged = true;
                                         moved = true;
-
                                         score += temp.getValue();
                                     }
                                     break;

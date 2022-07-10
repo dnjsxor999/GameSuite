@@ -60,6 +60,7 @@ public class MemoryGame extends AppCompatActivity {
     TextView timerText;
     MemoryGameAdapter adapter;
     TextView stageText;
+    TextView recordText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,6 +81,7 @@ public class MemoryGame extends AppCompatActivity {
         //Timer
         timerText = (TextView) findViewById(R.id.timerTxtView);
         stageText = (TextView) findViewById(R.id.stageTxtView);
+        recordText = (TextView) findViewById(R.id.recordTxtView);
 
         //비교할 후보들 저장
 
@@ -341,6 +343,7 @@ public class MemoryGame extends AppCompatActivity {
             gameState = GAME_DONE;
             recordTime += currTimer;
             currTimer = 0;
+            recordText.setText("Record: " + recordTime);
             Log.e("Total recorded time", String.valueOf(recordTime));
             return ;
         }
