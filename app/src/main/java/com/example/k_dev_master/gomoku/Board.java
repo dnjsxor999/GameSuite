@@ -12,11 +12,11 @@ public class Board {
         clearBoard();
     }
 
-    public Stone getStoneContent(int x, int y) {
+    public Stone getStone(int x, int y) {
         return field[x][y];
     }
 
-    public Stone getStoneContent(Stone stone) {
+    public Stone getStone(Stone stone) {
         if (stone != null) {
             return field[stone.getX()][stone.getY()];
         } else {
@@ -28,16 +28,16 @@ public class Board {
         field[stone.getX()][stone.getY()] = stone;
     }
 
-    public ArrayList<Stone> getAvailableCells() {
-        ArrayList<Stone> availableCells = new ArrayList<>();
+    public ArrayList<Stone> getAvailableStones() {
+        ArrayList<Stone> availableStones = new ArrayList<>();
         for (int xx = 0; xx < row; xx++) {
             for (int yy = 0; yy < col; yy++) {
                 if (field[xx][yy] == null) {
-                    availableCells.add(new Stone(xx, yy, ""));
+                    availableStones.add(new Stone(xx, yy, Stone.Color.EMPTY));
                 }
             }
         }
-        return availableCells;
+        return availableStones;
     }
 
     public void clearBoard() {
@@ -48,13 +48,13 @@ public class Board {
         }
     }
 
-    public boolean isCellsAvailable() {
-        return (getAvailableCells().size() >= 1);
+    public boolean isStonesAvailable() {
+        return (getAvailableStones().size() >= 1);
     }
 
-    public boolean isCellAvailable(Stone cell) {
-        return !isCellOccupied(cell);
+    public boolean isStoneAvailable(Stone cell) {
+        return !isStoneOccupied(cell);
     }
 
-    public boolean isCellOccupied(Stone cell) { return (getStoneContent(cell) != null);}
+    public boolean isStoneOccupied(Stone cell) { return (getStone(cell) != null);}
 }
