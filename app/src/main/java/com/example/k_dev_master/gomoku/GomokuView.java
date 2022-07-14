@@ -92,17 +92,17 @@ public class GomokuView extends View {
         for (int xx = 0; xx < game.numSquaresX; xx++) {
             for (int yy = 0; yy < game.numSquaresY; yy++) {
 
-                Stone currCell = game.board.getStoneContent(xx, yy);
+                Stone currCell = game.board.getStone(xx, yy);
 
                 if (currCell != null) {
-                    int sX = currCell.getBoard_x() - 40;
+                    int sX = currCell.getCoordinateX() - 40;
                     int eX = sX + cellSize;
-                    int sY = currCell.getBoard_y() - 40;
+                    int sY = currCell.getCoordinateY() - 40;
                     int eY = sY + cellSize;
 
-                    if (currCell.getColor().equals("Black")) {
+                    if (currCell.getColor() == Stone.Color.BLACK) {
                         setDraw(canvas, bitmapCells[0], sX, sY, eX, eY);
-                    } else if (currCell.getColor().equals("White")) {
+                    } else if (currCell.getColor() == Stone.Color.WHITE) {
                         setDraw(canvas, bitmapCells[1], sX, sY, eX, eY);
                     }
                 }
@@ -123,8 +123,8 @@ public class GomokuView extends View {
 
     private int[] getCellRectangleIds() {
         int[] cellRectangleIds = new int[numCellTypes];
-        cellRectangleIds[0] = R.drawable.tilebackground;
-        cellRectangleIds[1] = R.drawable.cell_tile_2;;
+        cellRectangleIds[0] = R.drawable.black_stone;
+        cellRectangleIds[1] = R.drawable.white_stone;
         return cellRectangleIds;
     }
 }

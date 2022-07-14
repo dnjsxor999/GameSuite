@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.k_dev_master.game2048.LogicGame2048;
+import com.example.k_dev_master.gomoku.GomokuGame;
 import com.example.k_dev_master.memorygame.MemoryGame;
 
 
@@ -75,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else if (gameSelect == 2) {
                     Intent intent = new Intent(getApplicationContext(), MemoryGame.class);
+                    startActivity(intent);
+                } else if (gameSelect == 3) {
+                    Intent intent = new Intent(getApplicationContext(), GomokuGame.class);
                     startActivity(intent);
                 }
             }

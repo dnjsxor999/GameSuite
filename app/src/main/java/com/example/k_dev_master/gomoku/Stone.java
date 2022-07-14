@@ -1,55 +1,63 @@
 package com.example.k_dev_master.gomoku;
 
 public class Stone {
-    public GomokuView mView;
-
+    //x,y is for array
     private int x;
     private int y;
-    private int board_x;
-    private int board_y;
-    private String color;
+    //coordinatex, y is for drawing bitmap
+    private int coordinateX;
+    private int coordinateY;
+    private Color color;
 
-    public Stone(int x, int y, String color) {
+    enum Color {
+        BLACK,
+        WHITE,
+        EMPTY
+    }
+
+    public Stone(int x, int y, Color c) {
         this.x = x;
         this.y = y;
-        this.color = color;
-        this.board_x = board_x;
-        this.board_y = board_y;
+        this.color = c;
     }
-
-    public String getColor() { return this.color; }
-
-    void setColor(String color) {this.color = color;}
 
     public int getX() {
-        return this.x;
-    }
-
-    void setX(int x) {
-        this.x = x;
+        return x;
     }
 
     public int getY() {
-        return this.y;
+        return y;
     }
 
-    void setY(int y) {
+    public int getCoordinateX() {
+        return coordinateX;
+    }
+
+    public int getCoordinateY() {
+        return coordinateY;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
         this.y = y;
     }
 
-    public int getBoard_x() {
-        return this.board_x;
+    public void setCoordinateX(int coordinateX) {
+        this.coordinateX = coordinateX;
     }
 
-    void setBoard_x(int board_x) {
-        this.board_x = board_x;
+    public void setCoordinateY(int coordinateY) {
+        this.coordinateY = coordinateY;
     }
 
-    public int getBoard_y() {
-        return this.board_y;
-    }
-
-    void setBoard_y(int board_y) {
-        this.board_y = board_y;
+    public void setColor(Color color) {
+        this.color = color;
     }
 }

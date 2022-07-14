@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class GomokuGame extends AppCompatActivity {
-    private final Context mContext;
-    private final GomokuView mView;
+    private Context mContext = null;
+    private GomokuView mView = null;
     public Board board = null;
     public final int numSquaresX = 19;
     public final int numSquaresY = 19;
@@ -22,6 +22,9 @@ public class GomokuGame extends AppCompatActivity {
     public int board_x;
     public int board_y;
 
+    public GomokuGame() {
+    }
+
     public GomokuGame(Context context, GomokuView view) {
         mContext = context;
         mView = view;
@@ -30,6 +33,8 @@ public class GomokuGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mView = new GomokuView(this);
+        setContentView(mView);
 
     }
 
@@ -46,13 +51,14 @@ public class GomokuGame extends AppCompatActivity {
      * Adds stone when user locates a stone on the board.
      */
     public void addStone() {
-        if (board.isCellsAvailable()) {
-            String color = turn % 2 == 0 ? "Black" : "White";
+        if (board.isStonesAvailable()) {
+            Stone.Color color = turn % 2 == 0 ? Stone.Color.BLACK : Stone.Color.WHITE;
             Stone cell = new Stone(stone_x, stone_y, color);
-            cell.setBoard_x(board_x);
-            cell.setBoard_y(board_y);
+            //만나는 점 가운데로 정렬 필요
+            cell.setCoordinateX(board_x);
+            cell.setCoordinateY(board_y);
 
-            if (board.isCellAvailable(cell)) {
+            if (board.isStoneAvailable(cell)) {
                 spawnCell(cell);
             }
         }
@@ -64,5 +70,154 @@ public class GomokuGame extends AppCompatActivity {
      */
     private void spawnCell(Stone cell) {
         board.insertStone(cell);
+    }
+
+    private boolean checkWin(Stone stone) {
+        return checkWinLU(stone) || checkWinU(stone) || checkWinRU(stone) || checkWinR(stone)
+                || checkWinRD(stone) || checkWinD(stone) || checkWinLD(stone) || checkWinL(stone);
+    }
+
+    private boolean checkWinLU(Stone stone) {
+        int total;
+        //왼위확인
+        try {
+            total = 0;
+            for (int i = 0; i < 5; i++) {
+                if (board.getStone(stone.getX() - i, stone.getY() - i).getColor() == stone.getColor()) {
+                    total++;
+                }
+            }
+            return total == 5;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    private boolean checkWinU(Stone stone) {
+        int total;
+        //위확인
+        try {
+            total = 0;
+            for (int i = 0; i < 5; i++) {
+                if (board.getStone(stone.getX(), stone.getY() - i).getColor() == stone.getColor()) {
+                    total++;
+                }
+            }
+            return total == 5;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    private boolean checkWinRU(Stone stone) {
+        int total;
+        //오위확인
+        try {
+            total = 0;
+            for (int i = 0; i < 5; i++) {
+                if (board.getStone(stone.getX() + i, stone.getY() - i).getColor() == stone.getColor()) {
+                    total++;
+                }
+            }
+            return total == 5;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    private boolean checkWinR(Stone stone) {
+        int total;
+        //오확인
+        try {
+            total = 0;
+            for (int i = 0; i < 5; i++) {
+                if (board.getStone(stone.getX() + i, stone.getY()).getColor() == stone.getColor()) {
+                    total++;
+                }
+            }
+            return total == 5;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    private boolean checkWinRD(Stone stone) {
+        int total;
+        //오밑확인
+        try {
+            total = 0;
+            for (int i = 0; i < 5; i++) {
+                if (board.getStone(stone.getX() + i, stone.getY() + i).getColor() == stone.getColor()) {
+                    total++;
+                }
+            }
+            return total == 5;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    private boolean checkWinD(Stone stone) {
+        int total;
+        //밑확인
+        try {
+            total = 0;
+            for (int i = 0; i < 5; i++) {
+                if (board.getStone(stone.getX(), stone.getY() + i).getColor() == stone.getColor()) {
+                    total++;
+                }
+            }
+            return total == 5;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    private boolean checkWinLD(Stone stone) {
+        int total;
+        //왼밑확인
+        try {
+            total = 0;
+            for (int i = 0; i < 5; i++) {
+                if (board.getStone(stone.getX() - i, stone.getY() + i).getColor() == stone.getColor()) {
+                    total++;
+                }
+            }
+            return total == 5;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    private boolean checkWinL(Stone stone) {
+        int total;
+        //왼확인
+        try {
+            total = 0;
+            for (int i = 0; i < 5; i++) {
+                if (board.getStone(stone.getX() - i, stone.getY()).getColor() == stone.getColor()) {
+                    total++;
+                }
+            }
+            return total == 5;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return false;
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 }
