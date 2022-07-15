@@ -80,7 +80,7 @@ public class GomokuView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
         super.onSizeChanged(w, h, oldW, oldH);
-        cellSize = 70;
+        cellSize = (24 * this.getWidth() / 800);
         boardWidth = 69.1;
         createBitmapCells();
     }

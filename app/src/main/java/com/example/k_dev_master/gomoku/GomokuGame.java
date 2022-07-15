@@ -37,7 +37,6 @@ public class GomokuGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //mView = new GomokuView(this);
         setContentView(R.layout.activity_main_gomoku);
-
     }
 
     public void newGame() {
@@ -63,6 +62,11 @@ public class GomokuGame extends AppCompatActivity {
 
             if (board.isStoneAvailable(cell)) {
                 spawnCell(cell);
+            }
+
+            if (checkWin(cell)) {
+                //TODO: What to do when in
+                System.out.println("Win!!!");
             }
         }
     }

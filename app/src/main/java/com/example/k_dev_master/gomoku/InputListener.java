@@ -20,20 +20,31 @@ public class InputListener implements View.OnTouchListener{
 
             mView.game.start = true;
 
-            mView.game.stone_x = Math.round((mView.userX - 40) / 69);
-            mView.game.stone_y = Math.round(mView.userY - 650) / 69;
-            mView.game.board_x = mView.userX;
+            for(int i = 0; i < mView.game.numSquaresX; i++) {
+                for (int j = 0; j < mView.game.numSquaresY; j++) {
+                    double boardWidth = 69.1;
+
+                    int lowerRange_x = (int) (43 + boardWidth * i - (boardWidth / 2));
+                    int higherRange_x = (int) (lowerRange_x + boardWidth);
+                    int lowerRange_y = (int) (642 + boardWidth * j - (boardWidth / 2));
+                    int higherRange_y = (int) (lowerRange_y + boardWidth);
+
+                    if (mView.InRange(lowerRange_x, higherRange_x, mView.userX)
+                            && mView.InRange(lowerRange_y, higherRange_y, mView.userY)) {
+                        mView.game.stone_x = i;
+                        mView.game.stone_y = j;
+                    }
+                }
+            }
+
+            mView.game.board_x = (24 * mView.getWidth() / 800) + mView.game.stone_x * (42 * mView.getWidth() / 800);
+            //mView.game.board_x = mView.userX;
             mView.game.board_y = mView.userY;
 
-            mView.game.addStone();
-
-            mView.game.turn = mView.game.turn + 1;
-
-            System.out.println("X: " + mView.userX);
-            System.out.println("Y: " + mView.userY);
-            System.out.println("stone_X: " + mView.game.stone_x);
-            System.out.println("stone_Y: " + mView.game.stone_y);
-
+            if (mView.game.board.getStone(mView.game.stone_x, mView.game.stone_y) == null) {
+                mView.game.addStone();
+                mView.game.turn++;
+            }
         }
         return true;
     }
