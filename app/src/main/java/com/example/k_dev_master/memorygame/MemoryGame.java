@@ -64,6 +64,7 @@ public class MemoryGame extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_memorygame);
 //        binding.restartBtn.setOnClickListener(view -> recreate());
