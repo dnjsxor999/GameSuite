@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.k_dev_master.R;
+
 
 public class GomokuGame extends AppCompatActivity {
     private Context mContext = null;
@@ -33,8 +35,8 @@ public class GomokuGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mView = new GomokuView(this);
-        setContentView(mView);
+        //mView = new GomokuView(this);
+        setContentView(R.layout.activity_main_gomoku);
 
     }
 
@@ -54,6 +56,7 @@ public class GomokuGame extends AppCompatActivity {
         if (board.isStonesAvailable()) {
             Stone.Color color = turn % 2 == 0 ? Stone.Color.BLACK : Stone.Color.WHITE;
             Stone cell = new Stone(stone_x, stone_y, color);
+
             //만나는 점 가운데로 정렬 필요
             cell.setCoordinateX(board_x);
             cell.setCoordinateY(board_y);
