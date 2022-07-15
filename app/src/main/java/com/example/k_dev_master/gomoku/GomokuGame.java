@@ -64,6 +64,10 @@ public class GomokuGame extends AppCompatActivity {
             if (board.isStoneAvailable(cell)) {
                 spawnCell(cell);
             }
+
+            if (checkWin(cell)) {
+                System.out.println("WIN!!!!!!!!!!!!");
+            }
         }
     }
 
