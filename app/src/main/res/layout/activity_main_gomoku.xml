@@ -13,7 +13,9 @@
 
     <com.example.k_dev_master.gomoku.GomokuView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.example.k_dev_master.gomoku.GomokuView>
+        android:layout_height="match_parent">
+
+    </com.example.k_dev_master.gomoku.GomokuView>
 
 
     <RelativeLayout
