@@ -1,0 +1,140 @@
+Index: app/src/main/res/layout/activity_memorygame.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    tools:context=\".findTheSamePicture.FindTheSamePictureActivity\"\n    android:background=\"@drawable/cardgame_background_edited\">\n\n\n    <androidx.constraintlayout.widget.ConstraintLayout\n        android:id=\"@+id/cardLayout\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\">\n\n        <TextView\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            app:layout_constraintTop_toTopOf=\"@id/ListViewBtnMemory\"\n            app:layout_constraintBottom_toBottomOf=\"@id/ListViewBtnMemory\"\n            app:layout_constraintLeft_toLeftOf=\"parent\"\n            app:layout_constraintRight_toRightOf=\"parent\"\n            android:text=\"Memory Game\"\n            android:textSize=\"25sp\"\n            android:textStyle=\"bold\"\n            android:textColor=\"@android:color/black\"\n            />\n\n        <ImageButton\n            android:id=\"@+id/ListViewBtnMemory\"\n            android:layout_width=\"65dp\"\n            android:layout_height=\"65dp\"\n            android:background=\"@drawable/setting_button_edited\"\n            android:onClick=\"showPopup\"\n            tools:ignore=\"SpeakableTextPresentCheck\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toTopOf=\"parent\"\n            android:layout_marginTop=\"20dp\"\n            android:layout_marginLeft=\"20dp\"/>\n\n        <TextView\n            android:id=\"@+id/stageTxtView\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            app:layout_constraintLeft_toLeftOf=\"@id/ListViewBtnMemory\"\n            app:layout_constraintTop_toBottomOf=\"@id/ListViewBtnMemory\"\n            app:layout_constraintBottom_toTopOf=\"@id/cardViews\"\n            app:layout_constraintVertical_bias=\"0.8\"\n            android:textSize=\"20sp\"\n            android:textStyle=\"bold\"\n            android:textColor=\"@android:color/black\"\n            android:text=\"Stage: #\" />\n\n        <TextView\n            android:id=\"@+id/startTxtView\"\n            android:visibility=\"gone\"\n            android:text=\"start\"\n            android:textStyle=\"bold\"\n            android:textSize=\"72sp\"\n            android:textColor=\"@android:color/black\"\n            android:gravity=\"center\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toTopOf=\"parent\"\n            app:layout_constraintDimensionRatio=\"1:1\"\n            android:layout_width=\"0dp\"\n            android:layout_height=\"0dp\" />\n\n        <TextView\n            android:id=\"@+id/timerTxtView\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            android:gravity=\"center\"\n            android:textColor=\"@android:color/black\"\n            android:textSize=\"25sp\"\n            android:textStyle=\"bold\"\n            android:visibility=\"visible\"\n            android:text=\"timerTxtView\"\n            app:layout_constraintLeft_toLeftOf=\"parent\"\n            app:layout_constraintRight_toRightOf=\"parent\"\n            app:layout_constraintTop_toTopOf=\"parent\"\n            app:layout_constraintBottom_toBottomOf=\"@id/stageTxtView\"\n            app:layout_constraintVertical_bias=\"1\"/>\n        <TextView\n            android:id=\"@+id/recordTxtView\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            android:gravity=\"center\"\n            android:textColor=\"@android:color/black\"\n            android:textSize=\"25sp\"\n            android:textStyle=\"bold\"\n            android:visibility=\"visible\"\n            android:text=\"\"\n            app:layout_constraintLeft_toLeftOf=\"parent\"\n            app:layout_constraintRight_toRightOf=\"parent\"\n            app:layout_constraintTop_toTopOf=\"parent\"\n            app:layout_constraintBottom_toBottomOf=\"@id/stageTxtView\"\n            app:layout_constraintVertical_bias=\"1\"/>\n\n\n        <androidx.recyclerview.widget.RecyclerView\n            android:padding=\"8dp\"\n            android:id=\"@+id/cardViews\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintTop_toTopOf=\"parent\"\n            app:layout_constraintBottom_toBottomOf=\"parent\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            app:layout_constraintDimensionRatio=\"1:1\"\n            app:layout_constraintVertical_bias=\"0.8\"\n            android:overScrollMode=\"never\"\n            android:layout_width=\"0dp\"\n            android:layout_height=\"0dp\"/>\n\n\n        <!--        <TextView-->\n<!--            android:visibility=\"gone\"-->\n<!--            android:text=\"start\"-->\n<!--            android:textStyle=\"bold\"-->\n<!--            android:textSize=\"72sp\"-->\n<!--            android:textColor=\"@android:color/black\"-->\n<!--            android:gravity=\"center\"-->\n<!--            android:id=\"@+id/startTxtView\"-->\n<!--            app:layout_constraintStart_toStartOf=\"parent\"-->\n<!--            app:layout_constraintTop_toTopOf=\"parent\"-->\n<!--            app:layout_constraintEnd_toStartOf=\"@+id/pictureViews\"-->\n<!--            app:layout_constraintDimensionRatio=\"1:1\"-->\n<!--            android:layout_width=\"0dp\"-->\n<!--            android:layout_height=\"0dp\" />-->\n\n<!--        <TextView-->\n<!--            android:visibility=\"gone\"-->\n<!--            android:text=\"1\"-->\n<!--            android:textStyle=\"bold\"-->\n<!--            android:textSize=\"72sp\"-->\n<!--            android:textColor=\"@android:color/black\"-->\n<!--            android:gravity=\"center\"-->\n<!--            android:id=\"@+id/count1TxtView\"-->\n<!--            app:layout_constraintStart_toStartOf=\"parent\"-->\n<!--            app:layout_constraintBottom_toBottomOf=\"parent\"-->\n<!--            app:layout_constraintEnd_toStartOf=\"@+id/pictureViews\"-->\n<!--            app:layout_constraintDimensionRatio=\"1:1\"-->\n<!--            android:layout_width=\"0dp\"-->\n<!--            android:layout_height=\"0dp\" />-->\n\n<!--        <TextView-->\n<!--            android:visibility=\"gone\"-->\n<!--            android:text=\"3\"-->\n<!--            android:textStyle=\"bold\"-->\n<!--            android:textSize=\"72sp\"-->\n<!--            android:textColor=\"@android:color/black\"-->\n<!--            android:gravity=\"center\"-->\n<!--            android:id=\"@+id/count3TxtView\"-->\n<!--            app:layout_constraintEnd_toEndOf=\"parent\"-->\n<!--            app:layout_constraintTop_toTopOf=\"parent\"-->\n<!--            app:layout_constraintStart_toEndOf=\"@+id/pictureViews\"-->\n<!--            app:layout_constraintDimensionRatio=\"1:1\"-->\n<!--            android:layout_width=\"0dp\"-->\n<!--            android:layout_height=\"0dp\" />-->\n\n<!--        <TextView-->\n<!--            android:visibility=\"gone\"-->\n<!--            android:text=\"2\"-->\n<!--            android:textStyle=\"bold\"-->\n<!--            android:textSize=\"72sp\"-->\n<!--            android:textColor=\"@android:color/black\"-->\n<!--            android:gravity=\"center\"-->\n<!--            android:id=\"@+id/count2TxtView\"-->\n<!--            app:layout_constraintEnd_toEndOf=\"parent\"-->\n<!--            app:layout_constraintBottom_toBottomOf=\"parent\"-->\n<!--            app:layout_constraintStart_toEndOf=\"@+id/pictureViews\"-->\n<!--            app:layout_constraintDimensionRatio=\"1:1\"-->\n<!--            android:layout_width=\"0dp\"-->\n<!--            android:layout_height=\"0dp\" />-->\n\n<!--        <Button-->\n<!--            android:id=\"@+id/restartBtn\"-->\n<!--            app:layout_constraintStart_toStartOf=\"parent\"-->\n<!--            app:layout_constraintEnd_toStartOf=\"@id/pictureViews\"-->\n<!--            app:layout_constraintTop_toTopOf=\"parent\"-->\n<!--            app:layout_constraintBottom_toBottomOf=\"parent\"-->\n<!--            android:layout_width=\"0dp\"-->\n<!--            android:text=\"RESET\"-->\n<!--            android:textSize=\"48sp\"-->\n<!--            android:textStyle=\"bold\"-->\n<!--            android:layout_height=\"wrap_content\" />-->\n    </androidx.constraintlayout.widget.ConstraintLayout>\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_memorygame.xml b/app/src/main/res/layout/activity_memorygame.xml
+--- a/app/src/main/res/layout/activity_memorygame.xml	(revision f888d43c79473b219f3e343f242d62a2ab238628)
++++ b/app/src/main/res/layout/activity_memorygame.xml	(date 1657860638837)
+@@ -108,77 +108,5 @@
+             android:layout_width="0dp"
+             android:layout_height="0dp"/>
+ 
+-
+-        <!--        <TextView-->
+-<!--            android:visibility="gone"-->
+-<!--            android:text="start"-->
+-<!--            android:textStyle="bold"-->
+-<!--            android:textSize="72sp"-->
+-<!--            android:textColor="@android:color/black"-->
+-<!--            android:gravity="center"-->
+-<!--            android:id="@+id/startTxtView"-->
+-<!--            app:layout_constraintStart_toStartOf="parent"-->
+-<!--            app:layout_constraintTop_toTopOf="parent"-->
+-<!--            app:layout_constraintEnd_toStartOf="@+id/pictureViews"-->
+-<!--            app:layout_constraintDimensionRatio="1:1"-->
+-<!--            android:layout_width="0dp"-->
+-<!--            android:layout_height="0dp" />-->
+-
+-<!--        <TextView-->
+-<!--            android:visibility="gone"-->
+-<!--            android:text="1"-->
+-<!--            android:textStyle="bold"-->
+-<!--            android:textSize="72sp"-->
+-<!--            android:textColor="@android:color/black"-->
+-<!--            android:gravity="center"-->
+-<!--            android:id="@+id/count1TxtView"-->
+-<!--            app:layout_constraintStart_toStartOf="parent"-->
+-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+-<!--            app:layout_constraintEnd_toStartOf="@+id/pictureViews"-->
+-<!--            app:layout_constraintDimensionRatio="1:1"-->
+-<!--            android:layout_width="0dp"-->
+-<!--            android:layout_height="0dp" />-->
+-
+-<!--        <TextView-->
+-<!--            android:visibility="gone"-->
+-<!--            android:text="3"-->
+-<!--            android:textStyle="bold"-->
+-<!--            android:textSize="72sp"-->
+-<!--            android:textColor="@android:color/black"-->
+-<!--            android:gravity="center"-->
+-<!--            android:id="@+id/count3TxtView"-->
+-<!--            app:layout_constraintEnd_toEndOf="parent"-->
+-<!--            app:layout_constraintTop_toTopOf="parent"-->
+-<!--            app:layout_constraintStart_toEndOf="@+id/pictureViews"-->
+-<!--            app:layout_constraintDimensionRatio="1:1"-->
+-<!--            android:layout_width="0dp"-->
+-<!--            android:layout_height="0dp" />-->
+-
+-<!--        <TextView-->
+-<!--            android:visibility="gone"-->
+-<!--            android:text="2"-->
+-<!--            android:textStyle="bold"-->
+-<!--            android:textSize="72sp"-->
+-<!--            android:textColor="@android:color/black"-->
+-<!--            android:gravity="center"-->
+-<!--            android:id="@+id/count2TxtView"-->
+-<!--            app:layout_constraintEnd_toEndOf="parent"-->
+-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+-<!--            app:layout_constraintStart_toEndOf="@+id/pictureViews"-->
+-<!--            app:layout_constraintDimensionRatio="1:1"-->
+-<!--            android:layout_width="0dp"-->
+-<!--            android:layout_height="0dp" />-->
+-
+-<!--        <Button-->
+-<!--            android:id="@+id/restartBtn"-->
+-<!--            app:layout_constraintStart_toStartOf="parent"-->
+-<!--            app:layout_constraintEnd_toStartOf="@id/pictureViews"-->
+-<!--            app:layout_constraintTop_toTopOf="parent"-->
+-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+-<!--            android:layout_width="0dp"-->
+-<!--            android:text="RESET"-->
+-<!--            android:textSize="48sp"-->
+-<!--            android:textStyle="bold"-->
+-<!--            android:layout_height="wrap_content" />-->
+     </androidx.constraintlayout.widget.ConstraintLayout>
+ </layout>
+\ No newline at end of file
+Index: app/src/main/res/layout/popup_instruction_memory.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<RelativeLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:orientation=\"vertical\"\n    android:background=\"#FFFFFF\"\n    android:theme=\"@android:style/Theme.NoTitleBar.Fullscreen\">\n\n\n\n    <View\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"match_parent\" />\n\n    <TextView\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_centerHorizontal=\"true\"\n        android:layout_marginStart=\"30dp\"\n        android:layout_marginTop=\"30dp\"\n        android:layout_marginEnd=\"30dp\"\n        android:layout_marginBottom=\"30dp\"\n        android:text=\"Memory Instruction\"\n        android:textSize=\"30sp\"\n        android:textStyle=\"bold\" />\n\n    <TextView\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:layout_centerInParent=\"true\"\n        android:layout_margin=\"30dp\"\n        android:textSize=\"24sp\"\n        android:gravity=\"center\"\n        android:text=\" A player makes a match if the two cards turned picture-side-up are identical \\n\\nWin the game matching the cards as fast as you can!\"/>\n\n\n</RelativeLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/popup_instruction_memory.xml b/app/src/main/res/layout/popup_instruction_memory.xml
+--- a/app/src/main/res/layout/popup_instruction_memory.xml	(revision f888d43c79473b219f3e343f242d62a2ab238628)
++++ b/app/src/main/res/layout/popup_instruction_memory.xml	(date 1657860638840)
+@@ -29,10 +29,13 @@
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerInParent="true"
+-        android:layout_margin="30dp"
+-        android:textSize="24sp"
++        android:layout_marginStart="30dp"
++        android:layout_marginTop="30dp"
++        android:layout_marginEnd="30dp"
++        android:layout_marginBottom="30dp"
+         android:gravity="center"
+-        android:text=" A player makes a match if the two cards turned picture-side-up are identical \n\nWin the game matching the cards as fast as you can!"/>
++        android:text=" A player makes a match if the two cards turned picture-side-up are identical \n\nWin the game matching the cards as fast as you can!"
++        android:textSize="24sp" />
+ 
+ 
+ </RelativeLayout>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"DesignSurface\">\n    <option name=\"filePathToZoomLevelMap\">\n      <map>\n        <entry key=\"..\\:/GitHub/K-Dev/app/src/main/res/layout/activity_main_2048game.xml\" value=\"0.1875\" />\n        <entry key=\"..\\:/GitHub/K-Dev/app/src/main/res/layout/activity_memorygame.xml\" value=\"0.22\" />\n        <entry key=\"..\\:/GitHub/K-Dev/app/src/main/res/layout/popup_instruction_memory.xml\" value=\"0.1875\" />\n      </map>\n    </option>\n  </component>\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_11\" default=\"true\" project-jdk-name=\"Android Studio default JDK\" project-jdk-type=\"JavaSDK\">\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\n  </component>\n  <component name=\"ProjectType\">\n    <option name=\"id\" value=\"Android\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision f888d43c79473b219f3e343f242d62a2ab238628)
++++ b/.idea/misc.xml	(date 1657860638839)
+@@ -6,6 +6,12 @@
+         <entry key="..\:/GitHub/K-Dev/app/src/main/res/layout/activity_main_2048game.xml" value="0.1875" />
+         <entry key="..\:/GitHub/K-Dev/app/src/main/res/layout/activity_memorygame.xml" value="0.22" />
+         <entry key="..\:/GitHub/K-Dev/app/src/main/res/layout/popup_instruction_memory.xml" value="0.1875" />
++<!--        <entry key="app/src/main/res/layout/activity_gomokugame.xml" value="0.2078125" />-->
++<!--        <entry key="app/src/main/res/layout/activity_main_2048game.xml" value="0.20885416666666667" />-->
++<!--        <entry key="app/src/main/res/layout/activity_memorygame.xml" value="0.20885416666666667" />-->
++<!--        <entry key="app/src/main/res/layout/activity_show_team_info.xml" value="0.20885416666666667" />-->
++<!--        <entry key="app/src/main/res/layout/popup_instruction_gomoku.xml" value="0.2078125" />-->
++<!--        <entry key="app/src/main/res/layout/popup_instruction_memory.xml" value="0.20885416666666667" />-->
+       </map>
+     </option>
+   </component>
