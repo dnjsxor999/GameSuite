@@ -15,11 +15,37 @@
         android:layout_height="match_parent"></com.example.k_dev_master.game2048.MainView2048>
 
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        tools:layout_editor_absoluteX="25dp"
+        tools:layout_editor_absoluteY="60dp">
+
+        <TextView
+            android:id="@+id/textView000"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="                              "
+            android:textColor="#776e65"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/textView001"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="2048"
+            android:textColor="#776e65"
+            android:textSize="55dp" />
+
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:layout_weight="1"
         android:orientation="horizontal"
@@ -28,9 +54,10 @@
 
         <ImageButton
             android:id="@+id/ListViewBtn2048"
-            android:layout_width="65dp"
+            android:layout_width="20dp"
             android:layout_height="65dp"
-            android:background="@drawable/setting_button_edited"
+            android:layout_weight="2"
+            android:background="@drawable/settingbutton"
             android:onClick="showPopup"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -38,31 +65,62 @@
             android:id="@+id/Title_2048"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_centerInParent="true"
+            android:layout_marginRight="5dp"
+            android:layout_weight="2"
             android:backgroundTint="#bbada0"
-            android:text="2048"
+            android:text="               "
             android:textAlignment="viewStart"
             android:textSize="45dp" />
 
         <TextView
             android:id="@+id/scoretext"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
             android:layout_marginBottom="5dp"
+            android:layout_weight="2"
             android:backgroundTint="#cdc1b5"
             android:text="Score"
             tools:ignore="SpeakableTextPresentCheck" />
-    </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="100dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="        "
+            android:textColor="#776e65"
+            android:textSize="45dp" />
+
+        <TextView
+            android:id="@+id/empty"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:text="         "
+            android:textColor="#776e65"
+            android:textSize="45dp"
+            android:layout_marginRight="5dp"
+            android:backgroundTint="#bbada0"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="250dp"
         android:orientation="horizontal"
         >
 
@@ -70,7 +128,7 @@
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Join the numbers and get to "
+            android:text="Join the number and get to the "
             android:textColor="#776e65"
             android:textSize="15dp" />
 
@@ -79,9 +137,10 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:fontFamily="cursive"
-            android:text="2048! "
+            android:text="2048 tile!"
             android:textColor="#776e65"
             android:textSize="18dp" />
+
     </LinearLayout>
 
 </android.widget.RelativeLayout>

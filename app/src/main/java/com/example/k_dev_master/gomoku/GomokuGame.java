@@ -1,11 +1,23 @@
 package com.example.k_dev_master.gomoku;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.k_dev_master.MainActivity;
 import com.example.k_dev_master.R;
+import com.example.k_dev_master.memorygame.MemoryGame;
 
 
 public class GomokuGame extends AppCompatActivity {
@@ -37,7 +49,39 @@ public class GomokuGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //mView = new GomokuView(this);
         setContentView(R.layout.activity_main_gomoku);
+
+        // popup menu button implementation
+        ImageButton openMenu = findViewById(R.id.ListViewBtnGomoku);
+        openMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(GomokuGame.this, view);
+                popupMenu.getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.pop:
+                                newGame();
+                                break;
+                            case R.id.pop_inst:
+                                break;
+                            case R.id.pop_exit:
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                finish();
+                                break;
+                            default:
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
     }
+
+
+
 
     public void newGame() {
         if (board == null) {
