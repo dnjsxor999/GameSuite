@@ -27,6 +27,7 @@ public class LogicGame2048 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         view = new MainView2048(this);
         setContentView(R.layout.activity_main_2048game);
