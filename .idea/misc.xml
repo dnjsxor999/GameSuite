@@ -3,17 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main_2048game.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_memorygame.xml" value="0.25625" />
-        <entry key="app/src/main/res/layout/frame_1.xml" value="0.16394927536231885" />
-        <entry key="app/src/main/res/layout/frame_2.xml" value="0.16394927536231885" />
-        <entry key="app/src/main/res/layout/frame_3.xml" value="0.16394927536231885" />
-        <entry key="app/src/main/res/layout/game_2048.xml" value="0.1703125" />
-        <entry key="app/src/main/res/layout/item_card.xml" value="0.16394927536231885" />
+        <entry key="app/src/main/res/layout/popup_instruction_2048.xml" value="0.41983695652173914" />
       </map>
     </option>
   </component>
-  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android API 32 Platform" project-jdk-type="Android SDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
