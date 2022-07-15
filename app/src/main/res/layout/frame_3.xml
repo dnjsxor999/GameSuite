@@ -10,7 +10,7 @@
         android:layout_height="280dp"
 
 
-        android:src="@drawable/game2048_fragment"
+        android:src="@drawable/gomoku_fragment"
         tools:ignore="MissingConstraints" />
 
 
