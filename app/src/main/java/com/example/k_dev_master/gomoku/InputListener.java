@@ -29,6 +29,11 @@ public class InputListener implements View.OnTouchListener{
 
             mView.game.turn = mView.game.turn + 1;
 
+            System.out.println("X: " + mView.userX);
+            System.out.println("Y: " + mView.userY);
+            System.out.println("stone_X: " + mView.game.stone_x);
+            System.out.println("stone_Y: " + mView.game.stone_y);
+
         }
         return true;
     }

@@ -27,8 +27,15 @@ public class GomokuView extends View {
     public int userX;
     public int userY;
 
+    private double lowerRange_x;
+    private double higherRange_x;
+
+    private double lowerRange_y;
+    private double higherRange_y;
+
     //Layout variables
     private int cellSize;
+    private double boardWidth;
 
     //Assets
     private Bitmap background = null;
@@ -73,7 +80,8 @@ public class GomokuView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
         super.onSizeChanged(w, h, oldW, oldH);
-        cellSize = 80;
+        cellSize = 70;
+        boardWidth = 69.1;
         createBitmapCells();
     }
 
@@ -84,7 +92,7 @@ public class GomokuView extends View {
 
     private void drawBackground(Canvas canvas) {
         background = BitmapFactory.decodeResource(getResources(), R.drawable.go_board);
-        background = background.createScaledBitmap(background,1330,1330,false);
+        background = background.createScaledBitmap(background,getWidth(),getWidth(),false);
         canvas.drawBitmap(background, 0, 600, paint);
     }
 
@@ -95,19 +103,34 @@ public class GomokuView extends View {
                 Stone currCell = game.board.getStone(xx, yy);
 
                 if (currCell != null) {
-                    int sX = currCell.getCoordinateX() - 40;
-                    int eX = sX + cellSize;
-                    int sY = currCell.getCoordinateY() - 40;
-                    int eY = sY + cellSize;
+                    lowerRange_x = 43 + boardWidth * xx - (boardWidth / 2);
+                    higherRange_x = lowerRange_x + boardWidth;
+                    lowerRange_y = 642 + boardWidth * yy - (boardWidth / 2);
+                    higherRange_y = lowerRange_y + boardWidth;
 
-                    if (currCell.getColor() == Stone.Color.BLACK) {
-                        setDraw(canvas, bitmapCells[0], sX, sY, eX, eY);
-                    } else if (currCell.getColor() == Stone.Color.WHITE) {
-                        setDraw(canvas, bitmapCells[1], sX, sY, eX, eY);
+                    if (InRange(lowerRange_x, higherRange_x, currCell.getCoordinateX())
+                            && InRange(lowerRange_y, higherRange_y, currCell.getCoordinateY())) {
+                        int sX = (int) (lowerRange_x);
+                        int eX = sX + cellSize;
+                        int sY = (int) (lowerRange_y);
+                        int eY = sY + cellSize;
+
+                        if (currCell.getColor() == Stone.Color.BLACK) {
+                            setDraw(canvas, bitmapCells[0], sX, sY, eX, eY);
+                        } else if (currCell.getColor() == Stone.Color.WHITE) {
+                            setDraw(canvas, bitmapCells[1], sX, sY, eX, eY);
+                        }
                     }
                 }
             }
         }
+    }
+
+    public boolean InRange(double low, double high, int num){
+        if (num >= low && num <= high) {
+            return true;
+        }
+        return false;
     }
 
     private void createBitmapCells() {
