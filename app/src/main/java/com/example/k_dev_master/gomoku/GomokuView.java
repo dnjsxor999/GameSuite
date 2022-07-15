@@ -34,8 +34,9 @@ public class GomokuView extends View {
     private double higherRange_y;
 
     //Layout variables
-    private int cellSize;
+    public int cellSize;
     private double boardWidth;
+    public int width;
 
     //Assets
     private Bitmap background = null;
@@ -80,8 +81,9 @@ public class GomokuView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
         super.onSizeChanged(w, h, oldW, oldH);
-        cellSize = (24 * this.getWidth() / 800);
-        boardWidth = 69.1;
+        cellSize = (int) (70.0 / 1328.0 * this.getWidth());
+        boardWidth = this.getWidth() * (69.1 / 1328.0);
+        width = this.getWidth();
         createBitmapCells();
     }
 
@@ -103,9 +105,10 @@ public class GomokuView extends View {
                 Stone currCell = game.board.getStone(xx, yy);
 
                 if (currCell != null) {
-                    lowerRange_x = 43 + boardWidth * xx - (boardWidth / 2);
+
+                    lowerRange_x = (43 * boardWidth / 69.1) + boardWidth * xx - (boardWidth / 2);
                     higherRange_x = lowerRange_x + boardWidth;
-                    lowerRange_y = 642 + boardWidth * yy - (boardWidth / 2);
+                    lowerRange_y = ((42 * boardWidth / 69.1) + 600) + boardWidth * yy - (boardWidth / 2);
                     higherRange_y = lowerRange_y + boardWidth;
 
                     if (InRange(lowerRange_x, higherRange_x, currCell.getCoordinateX())
