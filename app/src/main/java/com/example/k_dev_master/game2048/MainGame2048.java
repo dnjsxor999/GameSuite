@@ -8,7 +8,7 @@ import com.example.k_dev_master.R;
 
 public class MainGame2048 {
 
-    private static final int maxValue = 2048;
+    private static final int maxValue = 16;
     //Odd state = game is not active
     //Even state = game is active
     //Win state = active state + 1
@@ -24,7 +24,6 @@ public class MainGame2048 {
     private final MainView2048 mView;
     public Grid grid = null;
     public boolean canUndo;
-
     public int score = 0;
     public int lastScore = 0;
     public int bufferScore = 0;
@@ -87,6 +86,7 @@ public class MainGame2048 {
     }
 
     public void gameWon() {
+        gameState = GAME_WIN;
         new AlertDialog.Builder(mView.getContext())
                 .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
                     @Override
@@ -101,6 +101,7 @@ public class MainGame2048 {
     }
 
     public void gameLost() {
+        gameState = GAME_LOST;
         new AlertDialog.Builder(mView.getContext())
                 .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
                     @Override
@@ -129,6 +130,7 @@ public class MainGame2048 {
         prepareUndoState();
         //move direction :
         // 0: up, 1: right, 2: down, 3: left
+        boolean merged;
         boolean moved = false; // got input but there is no change on grid
         if (direction == 0 || direction == 3) {
             for (int x = 0; x < 4; x++) {
@@ -138,7 +140,7 @@ public class MainGame2048 {
                         if (direction == 0 && y != 0) { // when press up direction
                             int final_index = 0;
                             int moved_buffer = temp.getY();
-                            boolean merged = false;
+                            merged = false;
                             for (int j = y - 1; j >= 0; j--) {
                                 if (grid.getCellContent(x, j) != null) {
                                     final_index = j + 1;
@@ -163,7 +165,7 @@ public class MainGame2048 {
                         } else if (direction == 3 && x != 0) { // when press left direction
                             int final_index = 0;
                             int moved_buffer = temp.getX();
-                            boolean merged = false;
+                            merged = false;
                             for (int i = x - 1; i >= 0; i--) {
                                 if (grid.getCellContent(i, y) != null) {
                                     final_index = i + 1;
@@ -187,7 +189,6 @@ public class MainGame2048 {
                             }
                             if (!merged && temp.getX() == moved_buffer) moved = false;
                         }
-                        if (temp.getValue() == maxValue) gameWon();
                     }
                 }
             }
@@ -199,7 +200,7 @@ public class MainGame2048 {
                         if (direction == 1 && x != 3) {
                             int final_index = 3;
                             int moved_buffer = temp.getX();
-                            boolean merged = false;
+                            merged = false;
                             for (int i = x + 1; i < 4; i++) {
                                 if (grid.getCellContent(i, y) != null) {
                                     final_index = i - 1;
@@ -224,7 +225,7 @@ public class MainGame2048 {
                         } else if (direction == 2 && y != 3) {
                             int final_index = 3;
                             int moved_buffer = temp.getY();
-                            boolean merged = false;
+                            merged = false;
                             for (int j = y + 1; j < 4; j++) {
                                 if (grid.getCellContent(x, j) != null) {
                                     final_index = j - 1;
@@ -248,8 +249,15 @@ public class MainGame2048 {
                             }
                             if (!merged && temp.getY() == moved_buffer) moved = false;
                         }
-                        if (temp.getValue() == maxValue) gameWon();
                     }
+                }
+            }
+        }
+        if (moved) {
+            for (int x = 0; x < 4; x++) {
+                for (int y = 0; y < 4; y++) {
+                    Cell cell = grid.getCellContent(x, y);
+                    if (cell != null && cell.getValue() == maxValue) gameWon();
                 }
             }
         }

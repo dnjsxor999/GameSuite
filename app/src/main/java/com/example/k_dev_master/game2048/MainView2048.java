@@ -1,6 +1,8 @@
 package com.example.k_dev_master.game2048;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -24,18 +26,12 @@ public class MainView2048 extends View {
     public MainGame2048 game;
     //Internal variables
     private final Paint paint = new Paint();
-    public boolean hasSaveState = false;
-    public boolean continueButtonEnabled = false;
     public int startingX;
     public int startingY;
     public int endingX;
     public int endingY;
-    //Misc
-    boolean showHelp;
-    //Layout variables
     private int cellSize;
     private int gridWidth;
-    //Assets
     private Bitmap background = null;
 
     public MainView2048(Context context) {
@@ -158,6 +154,8 @@ public class MainView2048 extends View {
             bitmapCells[xx] = new BitmapDrawable(resources, cellBitmap);
         }
     }
+
+
 
 
     private int[] getCellRectangleIds() {
