@@ -36,15 +36,15 @@ public class LogicGame2048 extends AppCompatActivity {
             public void onClick(View view) {
 
                 PopupMenu popupMenu = new PopupMenu(LogicGame2048.this, view);
-                popupMenu.getMenuInflater().inflate(R.menu.popup_2048, popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.popup, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.pop_2048:
+                            case R.id.pop:
                                 startActivity(new Intent(getApplicationContext(), LogicGame2048.class));
                                 break;
-                            case R.id.pop_2048_inst:
+                            case R.id.pop_inst:
                                 LayoutInflater inflater = (LayoutInflater)
                                         getSystemService(LAYOUT_INFLATER_SERVICE);
                                 View popupView = inflater.inflate(R.layout.popup_instruction_2048, null);
@@ -67,7 +67,7 @@ public class LogicGame2048 extends AppCompatActivity {
                                     }
                                 });
                                 break;
-                            case R.id.pop_2048_exit:
+                            case R.id.pop_exit:
                                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                                 finish();
                                 break;
