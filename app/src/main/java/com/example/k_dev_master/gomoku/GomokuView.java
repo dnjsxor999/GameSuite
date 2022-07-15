@@ -93,7 +93,7 @@ public class GomokuView extends View {
     private void drawBackground(Canvas canvas) {
         background = BitmapFactory.decodeResource(getResources(), R.drawable.go_board);
         background = background.createScaledBitmap(background,getWidth(),getWidth(),false);
-        canvas.drawBitmap(background, 0, 600, paint);
+        canvas.drawBitmap(background, 0, (int)((this.getHeight()*0.65) - this.getWidth()*0.5), paint);
     }
 
     private void drawStones(Canvas canvas) {
@@ -102,6 +102,19 @@ public class GomokuView extends View {
 
                 Stone currCell = game.board.getStone(xx, yy);
 
+                if (currCell != null) {
+                    int sX = currCell.getCoordinateX() - 40;
+                    int eX = sX + cellSize;
+                    int sY = currCell.getCoordinateY() - 40;
+                    int eY = sY + cellSize;
+
+                    if (currCell.getColor() == Stone.Color.BLACK) {
+                        setDraw(canvas, bitmapCells[0], sX, sY, eX, eY);
+                    } else if (currCell.getColor() == Stone.Color.WHITE) {
+                        setDraw(canvas, bitmapCells[1], sX, sY, eX, eY);
+                    }
+                }
+/*
                 if (currCell != null) {
                     lowerRange_x = 43 + boardWidth * xx - (boardWidth / 2);
                     higherRange_x = lowerRange_x + boardWidth;
@@ -122,6 +135,7 @@ public class GomokuView extends View {
                         }
                     }
                 }
+ */
             }
         }
     }

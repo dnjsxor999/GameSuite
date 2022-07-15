@@ -1,5 +1,8 @@
 package com.example.k_dev_master.gomoku;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -19,7 +22,7 @@ public class InputListener implements View.OnTouchListener{
             mView.userY = (int) event.getY();
 
             mView.game.start = true;
-
+/*
             for(int i = 0; i < mView.game.numSquaresX; i++) {
                 for (int j = 0; j < mView.game.numSquaresY; j++) {
                     double boardWidth = 69.1;
@@ -36,8 +39,11 @@ public class InputListener implements View.OnTouchListener{
                     }
                 }
             }
-
-            mView.game.board_x = (24 * mView.getWidth() / 800) + mView.game.stone_x * (42 * mView.getWidth() / 800);
+*/
+            mView.game.stone_x = Math.round((mView.userX - 40) / 69);
+            mView.game.stone_y = Math.round((mView.userY - 650) / 69);
+            mView.game.board_x = (int)convertDpToPixel(16f, mView.game.getmContext()) + (24 * mView.getWidth() / 800)
+                    + mView.game.stone_x * (42 * mView.getWidth() / 800);
             //mView.game.board_x = mView.userX;
             mView.game.board_y = mView.userY;
 
@@ -47,5 +53,9 @@ public class InputListener implements View.OnTouchListener{
             }
         }
         return true;
+    }
+
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 }

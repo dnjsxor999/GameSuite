@@ -84,6 +84,10 @@ public class GomokuGame extends AppCompatActivity {
                 || checkWinRD(stone) || checkWinD(stone) || checkWinLD(stone) || checkWinL(stone);
     }
 
+    public Context getmContext() {
+        return mContext;
+    }
+
     private boolean checkWinLU(Stone stone) {
         int total;
         //왼위확인
