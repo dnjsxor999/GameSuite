@@ -1,14 +1,25 @@
 package com.example.k_dev_master.memorygame;
 
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.ViewTreeObserver;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,19 +29,20 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.k_dev_master.*;
+import com.example.k_dev_master.R;
+import com.example.k_dev_master.databinding.ActivityMemorygameBinding;
+
 import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
-import com.example.k_dev_master.R;
-import com.example.k_dev_master.databinding.ActivityMemorygameBinding;
-
 public class MemoryGame extends AppCompatActivity {
 
-    private final long TIME_DISPLAY_STAGE1 = 2000;
-    private final long TIME_DISPLAY_STAGE2 = 5000;
-    private final long TIME_DISPLAY_STAGE3 = 3000;
+    private final long TIME_DISPLAY_STAGE1 = 4000;
+    private final long TIME_DISPLAY_STAGE2 = 8000;
+    private final long TIME_DISPLAY_STAGE3 = 5000;
     ActivityMemorygameBinding binding;
     private int stageLevel = 0;
     Vector<Card> cards;
@@ -45,7 +57,10 @@ public class MemoryGame extends AppCompatActivity {
 
     // count 100ms
     TimerTask tt;
+    TextView timerText;
     MemoryGameAdapter adapter;
+    TextView stageText;
+    TextView recordText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +78,13 @@ public class MemoryGame extends AppCompatActivity {
         stageLevel = 1;
         setTask();
         selectedPos = new Vector<>();
+        //Timer
+        timerText = (TextView) findViewById(R.id.timerTxtView);
+        stageText = (TextView) findViewById(R.id.stageTxtView);
+        recordText = (TextView) findViewById(R.id.recordTxtView);
+
         //비교할 후보들 저장
+
         addCards();
         adapter.setUpPicture(cards);
         binding.cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -80,6 +101,55 @@ public class MemoryGame extends AppCompatActivity {
                 Handler handler = new Handler();
                 handler.postDelayed(MemoryGame.this::start, 100); // timer need to be implemented
                 binding.cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+        // popup menu button implementation
+        ImageButton openMenu = findViewById(R.id.ListViewBtnMemory);
+        openMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(MemoryGame.this, view);
+                popupMenu.getMenuInflater().inflate(R.menu.popup_2048, popupMenu.getMenu());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.pop_2048:
+                                startActivity(new Intent(getApplicationContext(), MemoryGame.class));
+                                break;
+                            case R.id.pop_2048_inst:
+                                LayoutInflater inflater = (LayoutInflater)
+                                        getSystemService(LAYOUT_INFLATER_SERVICE);
+                                View popupView = inflater.inflate(R.layout.popup_instruction_memory, null);
+
+                                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                                boolean focusable = true; // lets taps outside the popup also dismiss it
+                                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+                                // show the popup window
+                                // which view you pass in doesn't matter, it is only used for the window tolken
+                                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                                // dismiss the popup window when touched
+                                popupView.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        popupWindow.dismiss();
+                                        return true;
+                                    }
+                                });
+                                break;
+                            case R.id.pop_2048_exit:
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                finish();
+                                break;
+                            default:
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
             }
         });
     }
@@ -204,6 +274,21 @@ public class MemoryGame extends AppCompatActivity {
     }
 
     private void start() {
+        //Stage Text View
+        stageText.setText("Stage: " + stageLevel);
+        //Countdown Timer
+        new CountDownTimer(getTimeDisplay(), 1000) {
+            public void onTick(long millisUntilFinished) {
+                binding.timerTxtView.setVisibility(View.VISIBLE);
+                timerText.setTextColor(Color.RED);
+                timerText.setText("Memorize in: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                timerText.setTextColor(Color.BLACK);
+            }
+        }.start();
+
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             // 정답 보여주기
@@ -221,20 +306,30 @@ public class MemoryGame extends AppCompatActivity {
         //timer implement needed
         //stage 1 2 3 will be initiated in here
         timer = new Timer();
-        timer.schedule(tt, 0,100); // count 100 each 100ms
+        timer.schedule(tt, 0,100); // count 100 each 10ms
     }
 
     private void setTask() { // set TimerTake again 만약 다시 세팅을 안하면 팅김
         tt = new TimerTask() {
             @Override
-            public void run() {
-                Log.e("Counting Time", String.valueOf(currTimer));
-                currTimer += 100;
+            public void run()
+            {
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Log.e("Counting Time", String.valueOf(currTimer));
+                        currTimer += 1;
+                        timerText.setText(getTimerText());
+                    }
+                });
             }
         };
     }
 
     public void stageUp() {
+        binding.timerTxtView.setVisibility(View.GONE);
         if (stageLevel == 1) {
             stageLevel = 2;
             Log.e("Curr time", String.valueOf(currTimer));
@@ -248,6 +343,7 @@ public class MemoryGame extends AppCompatActivity {
             gameState = GAME_DONE;
             recordTime += currTimer;
             currTimer = 0;
+            recordText.setText("Record: " + recordTime);
             Log.e("Total recorded time", String.valueOf(recordTime));
             return ;
         }
@@ -269,7 +365,7 @@ public class MemoryGame extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 // recycleView alert
                 Handler handler = new Handler();
-                handler.postDelayed(MemoryGame.this::start, 2000); // timer need to be implemented
+                handler.postDelayed(MemoryGame.this::start, 0); // timer need to be implemented
                 binding.cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -309,5 +405,20 @@ public class MemoryGame extends AppCompatActivity {
         } else {
             return 0;
         }
+    }
+
+    private String getTimerText()
+    {
+        int rounded = (int) Math.round(currTimer);
+
+        long milliseconds = currTimer % 10;
+        int seconds = rounded / 10;
+
+        return formatTime(milliseconds, seconds);
+    }
+
+    private String formatTime(long milliseconds, int seconds)
+    {
+        return String.format("%02d",seconds) + "." + String.format("%01d",milliseconds);
     }
 }
