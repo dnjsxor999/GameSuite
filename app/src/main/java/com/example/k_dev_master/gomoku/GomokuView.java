@@ -35,8 +35,9 @@ public class GomokuView extends View {
     private double higherRange_y;
 
     //Layout variables
-    private int cellSize;
+    public int cellSize;
     private double boardWidth;
+    public int width;
 
     //Assets
     private Bitmap background = null;
@@ -83,6 +84,7 @@ public class GomokuView extends View {
         super.onSizeChanged(w, h, oldW, oldH);
         cellSize = (int) (24 * this.getWidth() / 800);
         boardWidth = (this.getWidth()  * 42) / 800;
+        width = this.getWidth()
         createBitmapCells();
     }
 
@@ -115,7 +117,6 @@ public class GomokuView extends View {
                         setDraw(canvas, bitmapCells[1], sX, sY, eX, eY);
                     }
                 }
-
             }
         }
     }
@@ -143,9 +144,5 @@ public class GomokuView extends View {
         cellRectangleIds[0] = R.drawable.black_stone;
         cellRectangleIds[1] = R.drawable.white_stone;
         return cellRectangleIds;
-    }
-
-    public static float convertDpToPixel(float dp, Context context){
-        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 }

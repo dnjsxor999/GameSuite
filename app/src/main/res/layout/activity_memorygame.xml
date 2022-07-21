@@ -28,7 +28,7 @@
             android:id="@+id/ListViewBtnMemory"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:background="@drawable/setting_button_edited"
+            android:background="@drawable/settingbutton"
             android:onClick="showPopup"
             tools:ignore="SpeakableTextPresentCheck"
             app:layout_constraintStart_toStartOf="parent"
