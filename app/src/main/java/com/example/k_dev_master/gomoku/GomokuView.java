@@ -84,7 +84,7 @@ public class GomokuView extends View {
         super.onSizeChanged(w, h, oldW, oldH);
         cellSize = (int) (24 * this.getWidth() / 800);
         boardWidth = (this.getWidth()  * 42) / 800;
-        width = this.getWidth()
+        width = this.getWidth();
         createBitmapCells();
     }
 
