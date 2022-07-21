@@ -54,6 +54,7 @@ public class GomokuGame extends AppCompatActivity {
     public void addStone() {
         if (board.isStonesAvailable()) {
             Stone.Color color = turn % 2 == 0 ? Stone.Color.BLACK : Stone.Color.WHITE;
+            System.out.println("sX: " + stone_x + "\nsY: " + stone_y + "\nbX: " + board_x + "\nbY: " + board_y);
             Stone cell = new Stone(stone_x, stone_y, color);
 
             //만나는 점 가운데로 정렬 필요

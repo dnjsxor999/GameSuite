@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -80,8 +81,8 @@ public class GomokuView extends View {
     @Override
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
         super.onSizeChanged(w, h, oldW, oldH);
-        cellSize = (24 * this.getWidth() / 800);
-        boardWidth = 69.1;
+        cellSize = (int) (24 * this.getWidth() / 800);
+        boardWidth = (this.getWidth()  * 42) / 800;
         createBitmapCells();
     }
 
@@ -93,7 +94,7 @@ public class GomokuView extends View {
     private void drawBackground(Canvas canvas) {
         background = BitmapFactory.decodeResource(getResources(), R.drawable.go_board);
         background = background.createScaledBitmap(background,getWidth(),getWidth(),false);
-        canvas.drawBitmap(background, 0, (int)((this.getHeight()*0.65) - this.getWidth()*0.5), paint);
+        canvas.drawBitmap(background, 0, (int)((this.getHeight()*0.65) - 0.5 * this.getWidth()), paint);
     }
 
     private void drawStones(Canvas canvas) {
@@ -101,11 +102,11 @@ public class GomokuView extends View {
             for (int yy = 0; yy < game.numSquaresY; yy++) {
 
                 Stone currCell = game.board.getStone(xx, yy);
-
                 if (currCell != null) {
-                    int sX = currCell.getCoordinateX() - 40;
+
+                    int sX = (int) (currCell.getCoordinateX() - 0.25 * boardWidth);
                     int eX = sX + cellSize;
-                    int sY = currCell.getCoordinateY() - 40;
+                    int sY = (int) (currCell.getCoordinateY() - 0.25 * boardWidth);
                     int eY = sY + cellSize;
 
                     if (currCell.getColor() == Stone.Color.BLACK) {
@@ -114,28 +115,7 @@ public class GomokuView extends View {
                         setDraw(canvas, bitmapCells[1], sX, sY, eX, eY);
                     }
                 }
-/*
-                if (currCell != null) {
-                    lowerRange_x = 43 + boardWidth * xx - (boardWidth / 2);
-                    higherRange_x = lowerRange_x + boardWidth;
-                    lowerRange_y = 642 + boardWidth * yy - (boardWidth / 2);
-                    higherRange_y = lowerRange_y + boardWidth;
 
-                    if (InRange(lowerRange_x, higherRange_x, currCell.getCoordinateX())
-                            && InRange(lowerRange_y, higherRange_y, currCell.getCoordinateY())) {
-                        int sX = (int) (lowerRange_x);
-                        int eX = sX + cellSize;
-                        int sY = (int) (lowerRange_y);
-                        int eY = sY + cellSize;
-
-                        if (currCell.getColor() == Stone.Color.BLACK) {
-                            setDraw(canvas, bitmapCells[0], sX, sY, eX, eY);
-                        } else if (currCell.getColor() == Stone.Color.WHITE) {
-                            setDraw(canvas, bitmapCells[1], sX, sY, eX, eY);
-                        }
-                    }
-                }
- */
             }
         }
     }
@@ -163,5 +143,9 @@ public class GomokuView extends View {
         cellRectangleIds[0] = R.drawable.black_stone;
         cellRectangleIds[1] = R.drawable.white_stone;
         return cellRectangleIds;
+    }
+
+    public static float convertDpToPixel(float dp, Context context){
+        return dp * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 }
