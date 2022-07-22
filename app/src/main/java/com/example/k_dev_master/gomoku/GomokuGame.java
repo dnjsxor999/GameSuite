@@ -1,6 +1,8 @@
 package com.example.k_dev_master.gomoku;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -103,7 +105,20 @@ public class GomokuGame extends AppCompatActivity {
         });
     }
 
-
+    public void gameWon() {
+        String winColor = turn % 2 == 0 ? "Black" : "White";
+        new AlertDialog.Builder(mView.getContext())
+                .setPositiveButton(R.string.reset, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mView.game.newGame();
+                    }
+                })
+                .setNegativeButton(R.string.continue_game, null)
+                .setTitle(R.string.reset_dialog_title)
+                .setMessage(winColor + " has won!")
+                .show();
+    }
 
 
     public void newGame() {
@@ -134,7 +149,7 @@ public class GomokuGame extends AppCompatActivity {
 
             if (checkWin(cell)) {
                 //TODO: What to do when in
-                System.out.println("Win!!!");
+                gameWon();
             }
         }
     }
