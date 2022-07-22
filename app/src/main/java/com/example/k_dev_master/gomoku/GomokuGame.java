@@ -70,7 +70,6 @@ public class GomokuGame extends AppCompatActivity {
                                 LayoutInflater inflater = (LayoutInflater)
                                         getSystemService(LAYOUT_INFLATER_SERVICE);
                                 View popupView = inflater.inflate(R.layout.popup_instruction_gomoku, null);
-
                                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                                 boolean focusable = true; // lets taps outside the popup also dismiss it

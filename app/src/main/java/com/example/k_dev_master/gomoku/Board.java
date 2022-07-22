@@ -23,7 +23,6 @@ public class Board {
             return null;
         }
     }
-
     public void insertStone(Stone stone) {
         field[stone.getX()][stone.getY()] = stone;
     }
