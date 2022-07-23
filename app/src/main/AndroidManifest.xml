@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.k_dev_master">
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <application
         tools:replace="android:appComponentFactory"
         android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
@@ -20,7 +21,6 @@
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,7 +29,11 @@
             android:name=".ShowTeamInfo" android:screenOrientation="portrait"
             android:exported="true"
             android:parentActivityName=".MainActivity">
+        </activity>
 
+        <activity android:name=".user.UserProfile" android:screenOrientation="portrait"
+            android:exported="true"
+            android:parentActivityName=".MainActivity">
         </activity>
 
         <activity
