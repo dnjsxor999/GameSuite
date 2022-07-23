@@ -96,7 +96,7 @@ public class MainGame2048 {
                 })
                 .setNegativeButton(R.string.continue_game, null)
                 .setTitle(R.string.reset_dialog_title)
-                .setMessage(R.string.win)
+                .setMessage("You won!" + "\nYour Score is " + score)
                 .show();
     }
 
