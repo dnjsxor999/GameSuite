@@ -3,15 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
-    android:orientation="landscape">
+    android:orientation="portrait">
+
     <ImageView
-        android:text=""
-        android:layout_width="543dp"
-        android:layout_height="280dp"
-
-
+        android:layout_width="406dp"
+        android:layout_height="491dp"
         android:src="@drawable/gomoku_fragment"
-        tools:ignore="MissingConstraints" />
+
+
+        android:text=""
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="34dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

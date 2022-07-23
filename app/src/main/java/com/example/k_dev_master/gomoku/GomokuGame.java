@@ -70,7 +70,6 @@ public class GomokuGame extends AppCompatActivity {
                                 LayoutInflater inflater = (LayoutInflater)
                                         getSystemService(LAYOUT_INFLATER_SERVICE);
                                 View popupView = inflater.inflate(R.layout.popup_instruction_gomoku, null);
-
                                 int width = LinearLayout.LayoutParams.WRAP_CONTENT;
                                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                                 boolean focusable = true; // lets taps outside the popup also dismiss it
@@ -121,6 +120,7 @@ public class GomokuGame extends AppCompatActivity {
     public void addStone() {
         if (board.isStonesAvailable()) {
             Stone.Color color = turn % 2 == 0 ? Stone.Color.BLACK : Stone.Color.WHITE;
+            System.out.println("sX: " + stone_x + "\nsY: " + stone_y + "\nbX: " + board_x + "\nbY: " + board_y);
             Stone cell = new Stone(stone_x, stone_y, color);
 
             //만나는 점 가운데로 정렬 필요
@@ -149,6 +149,10 @@ public class GomokuGame extends AppCompatActivity {
     private boolean checkWin(Stone stone) {
         return checkWinLU(stone) || checkWinU(stone) || checkWinRU(stone) || checkWinR(stone)
                 || checkWinRD(stone) || checkWinD(stone) || checkWinLD(stone) || checkWinL(stone);
+    }
+
+    public Context getmContext() {
+        return mContext;
     }
 
     private boolean checkWinLU(Stone stone) {
