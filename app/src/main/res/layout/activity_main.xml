@@ -19,6 +19,17 @@
         tools:ignore="MissingConstraints" />
 
     <Button
+        android:id="@+id/userProfile"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="15dp"
+        android:text="User Profile"
+        android:visibility="visible"
+        tools:ignore="MissingConstraints" />
+
+    <Button
         android:id="@+id/exit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
