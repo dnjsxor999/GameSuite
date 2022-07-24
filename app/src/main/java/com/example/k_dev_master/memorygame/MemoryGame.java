@@ -3,6 +3,7 @@ package com.example.k_dev_master.memorygame;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +23,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +52,7 @@ public class MemoryGame extends AppCompatActivity {
     private int stageLevel = 0;
     Vector<Card> cards;
     Timer timer;
+    String curUser = "none";
     private long recordTime = 0;
     private long currTimer = 0;
     private int gameState;
@@ -66,8 +72,14 @@ public class MemoryGame extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
+
+        if (getIntent().getStringExtra("curUser").length() != 0) {
+            curUser = getIntent().getStringExtra("curUser");
+            System.out.println(curUser);
+        }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_memorygame);
-//        binding.restartBtn.setOnClickListener(view -> recreate());
+//      binding.restartBtn.setOnClickListener(view -> recreate());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         binding.cardViews.setLayoutManager(gridLayoutManager);
         adapter = new MemoryGameAdapter(this);

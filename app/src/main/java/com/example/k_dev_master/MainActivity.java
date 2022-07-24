@@ -47,16 +47,11 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        System.out.println("Result: " + result.getResultCode());
-                        //Intent data = result.getData();
-                        //curUser = data.getStringExtra("curUser");
-                        //System.out.println("Cur User: " + curUser);
-
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             // There are no request codes
                             Intent data = result.getData();
                             curUser = data.getStringExtra("curUser");
-                            System.out.println("Cur User: " + curUser);
+                            //System.out.println("Cur User: " + curUser);
                         }
                     }
                 });
@@ -98,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         Button profileCreate = findViewById(R.id.userProfile);
         Button quitButton = findViewById(R.id.exit); // exit button
 
+
         btTeamInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else if (gameSelect == 2) {
                     Intent intent = new Intent(getApplicationContext(), MemoryGame.class);
+                    intent.putExtra("curUser", curUser);
                     startActivity(intent);
                 } else if (gameSelect == 3) {
                     Intent intent = new Intent(getApplicationContext(), GomokuGame.class);
