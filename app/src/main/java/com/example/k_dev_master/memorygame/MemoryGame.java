@@ -6,6 +6,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -29,6 +32,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -38,7 +42,21 @@ import com.example.k_dev_master.*;
 import com.example.k_dev_master.R;
 import com.example.k_dev_master.databinding.ActivityMemorygameBinding;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
@@ -60,13 +78,18 @@ public class MemoryGame extends AppCompatActivity {
     private static final int GAME_DONE = 1;
     Vector<Integer> selectedPos;
     // 골라 놓은 카드들 벡터로 저장
-
+    boolean waitingTouch = false;
     // count 100ms
     TimerTask tt;
     TextView timerText;
     MemoryGameAdapter adapter;
     TextView stageText;
     TextView recordText;
+    public static String name;
+    TextView rank1;
+    TextView rank2;
+    TextView rank3;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,6 +118,9 @@ public class MemoryGame extends AppCompatActivity {
         timerText = (TextView) findViewById(R.id.timerTxtView);
         stageText = (TextView) findViewById(R.id.stageTxtView);
         recordText = (TextView) findViewById(R.id.recordTxtView);
+        rank1 = (TextView) findViewById(R.id.rank1);
+        rank2 = (TextView) findViewById(R.id.rank2);
+        rank3 = (TextView) findViewById(R.id.rank3);
 
         //비교할 후보들 저장
 
@@ -206,6 +232,7 @@ public class MemoryGame extends AppCompatActivity {
                                                      * game logic is here
                                                      * @param animation
                                                      */
+                                                    @RequiresApi(api = Build.VERSION_CODES.N)
                                                     @Override
                                                     public void onAnimationEnd(Animator animation) {
                                                         selectedPos.add(pos);
@@ -249,8 +276,6 @@ public class MemoryGame extends AppCompatActivity {
                     }
                     break;
             }
-
-
             return false;
         }
 
@@ -268,14 +293,10 @@ public class MemoryGame extends AppCompatActivity {
 
     private boolean matchedAll(Vector<Card> cards) {
         for (Card card : cards) {
-//            Log.e("passed the card", card.getTag());
-//            Log.e("check value", "" + card.getCheck());
             if (card.getCheck() != 2) { // if a card is matched, the check value is 2
-//                Log.e("All matched?", "false");
                 return false;
             }
         }
-//        Log.e("All matched?", "true");
         return true;
     }
 
@@ -341,12 +362,14 @@ public class MemoryGame extends AppCompatActivity {
         };
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void stageUp() {
         binding.timerTxtView.setVisibility(View.GONE);
         if (stageLevel == 1) {
             stageLevel = 2;
             Log.e("Curr time", String.valueOf(currTimer));
             recordTime += currTimer;
+            gameState = GAME_DONE;
         } else if (stageLevel == 2) {
             stageLevel = 3;
             Log.e("Curr time", String.valueOf(currTimer));
@@ -360,29 +383,166 @@ public class MemoryGame extends AppCompatActivity {
             Log.e("Total recorded time", String.valueOf(recordTime));
             return ;
         }
-        currTimer = 0;
-        setTask();
-        adapter.setStartAnimate(false);
+        if (gameState == GAME_ONGOING) {
+            currTimer = 0;
+            setTask();
+            adapter.setStartAnimate(false);
+            regame();
+            binding.cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    int width = binding.cardViews.getWidth() / 4 - 10;
+                    int height = binding.cardViews.getHeight() / 4 - 10;
+                    Log.e("width", String.valueOf(width));
+                    Log.e("height", String.valueOf(height));
+                    adapter.setLength(width, height);
+                    // set length
+                    adapter.notifyDataSetChanged();
+                    // recycleView alert
+                    Handler handler = new Handler();
+                    handler.postDelayed(MemoryGame.this::start, 0); // timer need to be implemented
+                    binding.cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            });
+        } else if (gameState == GAME_DONE) {
 
-        regame();
-
-        binding.cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int width = binding.cardViews.getWidth() / 4 - 10;
-                int height = binding.cardViews.getHeight() / 4 - 10;
-                Log.e("width", String.valueOf(width));
-                Log.e("height", String.valueOf(height));
-                adapter.setLength(width, height);
-                // set length
-                adapter.notifyDataSetChanged();
-                // recycleView alert
-                Handler handler = new Handler();
-                handler.postDelayed(MemoryGame.this::start, 0); // timer need to be implemented
-                binding.cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            setContentView(R.layout.leaderboard_memory);
+            String fn = "leaderboard.csv";
+            ArrayList<Player> lists = new ArrayList<>();
+            name = "Jisan"; // get from the user profile
+            File f = new File(MemoryGame.this.getFilesDir(), fn);
+            if (!f.exists()) {
+                f.mkdir();
             }
-        });
+            try {
+                FileWriter writer = new FileWriter(f); // write file
+                writer.append(name + ", " + recordTime);
+                writer.flush();
+                writer.close();
+                Scanner scan = new Scanner(f); // read file
+                while (scan.hasNextLine()) {
+                    String line = scan.nextLine();
+                    String[] words = line.split(",");
+                    String name = words[0];
+                    long time = Long.parseLong(words[1]);
+                    Player player = new Player(name, time);
+                    lists.add(player);
+                }
+
+                Log.e("second : list size=", "" + lists.size());
+                scan.close();
+
+            } catch(Exception e) {
+                Log.e("exception :", "" + lists.size());
+            }
+            Collections.sort(lists);
+            Log.e("list size=",""+lists.size() );
+            if (lists.get(0) != null) {
+                rank1.setText("1. " + lists.get(0).getName() + ", " + lists.get(0).getRecordedTime());
+            }
+            if (lists.get(1) != null) {
+                rank2.setText("2. " + lists.get(1).getName() + ", " + lists.get(1).getRecordedTime());
+            }
+            if (lists.get(2) != null) {
+                rank3.setText("3. " + lists.get(2).getName() + ", " + lists.get(2).getRecordedTime());
+            }
+//            if (!enterText.getText().toString().isEmpty()) {
+//                File file = new File(MemoryGame.this.getFilesDir(), fn);
+//                if (!file.exists()) {
+//                    file.mkdir();
+//                }
+//                try {
+//                    File gtxfile = new File(fn);
+//                    FileWriter writer = new FileWriter(gtxfile);
+//
+//                    writer.append(enterText.getText().toString());
+//                    writer.append(score);
+//                    writer.flush();
+//                    writer.close();
+//                    Toast.makeText(MemoryGame.this, "Saved your text", Toast.LENGTH_LONG).show();
+//                    waitingTouch = true;
+//                } catch (Exception e) { }
+//            }
+
+
+            // show the popup window
+            // which view you pass in doesn't matter, it is only used for the window tolken
+
+
+            // dismiss the popup window when touched
+//            if (waitingTouch) {
+//                view.setOnTouchListener(new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        popupWindow.dismiss();
+//                        return true;
+//                    }
+//                });
+//            }
+            Button back = findViewById(R.id.backbutton);
+            back.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    startActivity(new Intent(getApplicationContext(), MemoryGame.class));
+                }
+            });
+        }
     }
+
+//    private ArrayList<Player> translateLines(String fname)
+//            throws FileNotFoundException {
+//        ArrayList<Player> lists = new ArrayList<>();
+//
+//        File f = new File(MemoryGame.this.getFilesDir(), fname);
+//        Scanner scan = new Scanner(f);
+//        while (scan.hasNextLine()) {
+//            String line = scan.nextLine();
+//            String[] words = line.split(",");
+//            String name = words[0];
+//            long time = Long.parseLong(words[1]);
+//            Player player = new Player(name, time);
+//            lists.add(player);
+//        }
+//        Log.e("second : list size=",""+lists.size() );
+//        scan.close();
+//        return lists;
+//    }
+//
+//    private ArrayList<Player> write(String fname,
+//                                 ArrayList<Player> leaderboard, long time) {
+//        ArrayList<Player> remaining = leaderboard;
+//        try {
+//            remaining = translateLines(fname);
+//            if (remaining != null) {
+//                remaining.addAll(leaderboard);
+//            } else {
+//                remaining = leaderboard;
+//            }
+//            File f = new File(fname);
+//            PrintWriter outWriter = new PrintWriter(f);
+//            for (int i = 0; i < remaining.size(); i++) {
+//                outWriter.println(name + "," + time);
+//            }
+//            outWriter.close();
+//            if (!(f.canWrite())) {
+//                return null;
+//            }
+//        } catch (FileNotFoundException e) {
+//            remaining = leaderboard;
+//            File f = new File(fname);
+//
+////            PrintWriter outWriter = new PrintWriter(f);
+////            for (int i = 0; i < remaining.size(); i++) {
+////                outWriter.println(name + ", " + time);
+////            }
+////            outWriter.close();
+//            if (!(f.canWrite())) {
+//                return null;
+//            }
+//        } finally {
+//            Log.e("Third : list size=",""+remaining.size() );
+//            return remaining;
+//        }
+//    }
 
     private void addCards() {
         cards = new Vector<>();
@@ -434,4 +594,20 @@ public class MemoryGame extends AppCompatActivity {
     {
         return String.format("%02d",seconds) + "." + String.format("%01d",milliseconds);
     }
+
+//    private String readFile() {
+//        File fileEvents = new File(MemoryGame.this.getFilesDir()+"/leaderboard.txt");
+//        StringBuilder text = new StringBuilder();
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader(fileEvents));
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                text.append(line);
+//                text.append('\n');
+//            }
+//            br.close();
+//        } catch (IOException e) { }
+//        String result = text.toString();
+//        return result;
+//    }
 }

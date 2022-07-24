@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
-    android:orientation="landscape">
+    android:orientation="portrait">
 
     <ImageView
         android:layout_width="350dp"
@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="3dp" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
