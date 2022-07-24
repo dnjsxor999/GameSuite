@@ -381,7 +381,6 @@ public class MemoryGame extends AppCompatActivity {
             stageLevel = 2;
             Log.e("Curr time", String.valueOf(currTimer));
             recordTime += currTimer;
-            gameState = GAME_DONE;
         } else if (stageLevel == 2) {
             stageLevel = 3;
             Log.e("Curr time", String.valueOf(currTimer));
@@ -682,16 +681,4 @@ public class MemoryGame extends AppCompatActivity {
 //        String result = text.toString();
 //        return result;
 //    }
-
-    private void writeFile(String fileName, Long time) {
-        try {
-            OutputStreamWriter oSW = new OutputStreamWriter(openFileOutput(fileName, Context.MODE_PRIVATE));
-            String time_string = String.valueOf(time);
-            oSW.close();
-        } catch(FileNotFoundException e) {
-            e.printStackTrace();
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
