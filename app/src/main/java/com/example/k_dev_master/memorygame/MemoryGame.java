@@ -3,6 +3,8 @@ package com.example.k_dev_master.memorygame;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -26,6 +28,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -48,10 +54,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -73,6 +85,7 @@ public class MemoryGame extends AppCompatActivity {
     private int stageLevel = 0;
     Vector<Card> cards;
     Timer timer;
+    String curUser = "none";
     private long recordTime = 0;
     private long currTimer = 0;
     private int gameState;
@@ -80,14 +93,12 @@ public class MemoryGame extends AppCompatActivity {
     private static final int GAME_DONE = 1;
     Vector<Integer> selectedPos;
     // 골라 놓은 카드들 벡터로 저장
-    boolean waitingTouch = false;
     // count 100ms
     TimerTask tt;
     TextView timerText;
     MemoryGameAdapter adapter;
     TextView stageText;
     TextView recordText;
-    public static String name;
     TextView rank1;
     TextView rank2;
     TextView rank3;
@@ -97,8 +108,14 @@ public class MemoryGame extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
+
+        if (getIntent().getStringExtra("curUser").length() != 0) {
+            curUser = getIntent().getStringExtra("curUser");
+            System.out.println(curUser);
+        }
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_memorygame);
-//        binding.restartBtn.setOnClickListener(view -> recreate());
+//      binding.restartBtn.setOnClickListener(view -> recreate());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         binding.cardViews.setLayoutManager(gridLayoutManager);
         adapter = new MemoryGameAdapter(this);
@@ -114,9 +131,7 @@ public class MemoryGame extends AppCompatActivity {
         timerText = (TextView) findViewById(R.id.timerTxtView);
         stageText = (TextView) findViewById(R.id.stageTxtView);
         recordText = (TextView) findViewById(R.id.recordTxtView);
-        rank1 = (TextView) findViewById(R.id.rank1);
-        rank2 = (TextView) findViewById(R.id.rank2);
-        rank3 = (TextView) findViewById(R.id.rank3);
+
 
         //비교할 후보들 저장
 
@@ -358,6 +373,7 @@ public class MemoryGame extends AppCompatActivity {
         };
     }
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void stageUp() {
         binding.timerTxtView.setVisibility(View.GONE);
@@ -401,70 +417,64 @@ public class MemoryGame extends AppCompatActivity {
                 }
             });
         } else if (gameState == GAME_DONE) {
+                setContentView(R.layout.leaderboard_memory);
+                rank1 = findViewById(R.id.rank1);
+                rank2 = findViewById(R.id.rank2);
+                rank3 = findViewById(R.id.rank3);
+                ArrayList<Player> lists = new ArrayList<>();
+                String fname = "userProfiles";
+                writeFile(fname, recordTime);
+                String fileContents = "";
+                try {
+                    InputStream iStream = openFileInput(fname);
+                    if(iStream != null) {
+                        InputStreamReader iStreamReader = new InputStreamReader(iStream);
+                        BufferedReader bufferedReader = new BufferedReader(iStreamReader);
+                        String temp = "";
+                        StringBuffer sBuffer = new StringBuffer();
+                        while ((temp = bufferedReader.readLine()) != null) {
+                            sBuffer.append(temp);
+                            Log.e("temp rn","" + temp );
+                            fileContents = sBuffer.toString();
+                            String[] words = temp.split(",");
+                            Log.e("after words","" + words[0] );
+                            String name = words[0];
+                            Player player;
+                            Log.e("after player","" + words.length);
 
-            setContentView(R.layout.leaderboard_memory);
-//            String fn = "leaderboard.csv";
-            ArrayList<Player> lists = new ArrayList<>();
-//            name = "Jisan"; // get from the user profile
-//            File f = new File(MemoryGame.this.getFilesDir(), fn);
-
-//            if (!f.exists()) {
-//                f.mkdir();
-//            }
-            String fname = "userProfiles";
-            writeFile(fname, recordTime);
-            String fileContents = "";
-            try {
-//                FileWriter writer = new FileWriter(f); // write file
-//                writer.append(name + ", " + recordTime);
-//                writer.flush();
-//                writer.close();
-//                Scanner scan = new Scanner(f); // read file
-//                while (scan.hasNextLine()) {
-//                    String line = scan.nextLine();
-//                    String[] words = line.split(",");
-//                    String name = words[0];
-//                    long time = Long.parseLong(words[1]);
-//                    Player player = new Player(name, time);
-//                    lists.add(player);
-//                }
-//
-//                Log.e("second : list size=", "" + lists.size());
-//                scan.close();
-                InputStream iStream = openFileInput(fname);
-                if(iStream != null) {
-                    InputStreamReader iStreamReader = new InputStreamReader(iStream);
-                    BufferedReader bufferedReader = new BufferedReader(iStreamReader);
-                    String temp = "";
-                    StringBuffer sBuffer = new StringBuffer();
-                    while ((temp = bufferedReader.readLine()) != null) {
-                        sBuffer.append(temp);
-                        fileContents = sBuffer.toString();
-                        String[] words = fileContents.split(",");
-                        String name = words[0];
-                        long time = Long.parseLong(words[1]);
-                        Player player = new Player(name, time);
-                        lists.add(player);
+                            if (words.length == 2) {
+                                long time = Long.parseLong(words[1]);
+                                player = new Player(name, time);
+                                Log.e("or Player dec?","" + 30 );
+                            } else {
+                                player = new Player(name, Long.MAX_VALUE);
+                                Log.e("MAX?","" + 11 );
+                            }
+                            Log.e("after done","" + 4 );
+                            Log.e("list aded","" + lists.size() );
+                            Log.e("playername","" + player.getName() );
+                            Log.e("player","" + player.getRecordedTime() );
+                            lists.add(player);
+                        }
+                        iStream.close();
                     }
-                    iStream.close();
+                } catch (FileNotFoundException e) {
+                    System.out.println((e.getMessage()));
+                } catch(Exception e) {
+                }
+                Collections.sort(lists);
+                Log.e("list size=","" + lists.size() );
+                if (lists.size() >= 1) {
+                    String str = (new Long(lists.get(0).getRecordedTime())).toString();
+                    rank1.setText("1. " + lists.get(0).getName() + ", " + str);
+                }
+                if (lists.size() >= 2) {
+                    rank2.setText("2. " + lists.get(1).getName() + ", " + lists.get(1).getRecordedTime());
+                }
+                if (lists.size() >= 3) {
+                    rank3.setText("3. " + lists.get(2).getName() + ", " + lists.get(2).getRecordedTime());
                 }
 
-            } catch (FileNotFoundException e) {
-                System.out.println((e.getMessage()));
-            } catch(Exception e) {
-                Log.e("exception :", "" + lists.size());
-            }
-            Collections.sort(lists);
-            Log.e("list size=",""+lists.size() );
-            if (lists.get(0) != null) {
-                rank1.setText("1. " + lists.get(0).getName() + ", " + lists.get(0).getRecordedTime());
-            }
-            if (lists.get(1) != null) {
-                rank2.setText("2. " + lists.get(1).getName() + ", " + lists.get(1).getRecordedTime());
-            }
-            if (lists.get(2) != null) {
-                rank3.setText("3. " + lists.get(2).getName() + ", " + lists.get(2).getRecordedTime());
-            }
 //            if (!enterText.getText().toString().isEmpty()) {
 //                File file = new File(MemoryGame.this.getFilesDir(), fn);
 //                if (!file.exists()) {
@@ -501,9 +511,52 @@ public class MemoryGame extends AppCompatActivity {
             Button back = findViewById(R.id.backbutton);
             back.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    startActivity(new Intent(getApplicationContext(), MemoryGame.class));
+                    Intent intent = new Intent(getApplicationContext(), MemoryGame.class);
+                    intent.putExtra("curUser", curUser);
+                    startActivity(intent);
                 }
             });
+        }
+    }
+    private void writeFile(String fileName, Long time) {
+        try {
+//            List<String> lines = new ArrayList<String>();
+            String stack = "";
+            InputStream iStream = openFileInput(fileName);
+            if(iStream != null) {
+                InputStreamReader iStreamReader = new InputStreamReader(iStream);
+                BufferedReader bufferedReader = new BufferedReader(iStreamReader);
+                String temp = "";
+                StringBuffer sBuffer = new StringBuffer();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+                    sBuffer.append(temp);
+                    Log.e("name : ", curUser);
+                    Log.e("what is temp : ", temp);
+                    if (temp != "\n") {
+
+                        String[] words = temp.split(",");
+                        String name = words[0];
+                        if (curUser.equals(name)) {
+                            Log.e("time:", ""+time);
+                            FileOutputStream fOS = openFileOutput(fileName, Context.MODE_APPEND);
+                            String time_string = String.valueOf(time);
+                            fOS.write(time_string.getBytes(Charset.forName("UTF-8")));
+                            fOS.write("\n".getBytes(StandardCharsets.UTF_8));
+                            fOS.close();
+                            break;
+                        }
+
+                    }
+                }
+                iStream.close();
+
+            }
+
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -103,7 +103,7 @@ public class MainView2048 extends View {
         paint.setTextSize(50);
         paint.setTextAlign(Paint.Align.RIGHT);
 
-        paint.setColor(getResources().getColor(R.color.text_black));
+        paint.setColor(getResources().getColor(R.color.text_white));
         canvas.drawText(String.valueOf(game.score), startingX + 220 + (cellSize + gridWidth) * 3 + gridWidth * 6,200, paint);
     }
 
@@ -124,7 +124,7 @@ public class MainView2048 extends View {
             }
         }
     }
-//
+
     private void drawCells(Canvas canvas) {
         for (int xx = 0; xx < game.numSquaresX; xx++) {
             for (int yy = 0; yy < game.numSquaresY; yy++) {

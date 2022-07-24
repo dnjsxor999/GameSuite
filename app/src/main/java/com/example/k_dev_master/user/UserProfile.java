@@ -31,6 +31,7 @@ public class UserProfile extends AppCompatActivity {
     private final String fileName = "userProfiles";
 
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         LayoutInflater inflater = LayoutInflater.from(UserProfile.this);
         View userView = inflater.inflate(R.layout.internalstorage, null);
@@ -51,6 +52,8 @@ public class UserProfile extends AppCompatActivity {
                 }
                 //Need to add user name to intent
                 getIntent().putExtra("curUser", userName.getText().toString().trim());
+                //System.out.println("In UP extra: " + getIntent().getStringExtra("curUser"));
+
                 System.out.println("In UP extra: " + getIntent().getStringExtra("curUser"));
                 setResult(RESULT_OK, getIntent());
             }
@@ -91,6 +94,8 @@ public class UserProfile extends AppCompatActivity {
                 if (line.length() != 0) {
                     if(line.equals(userName.getText().toString().trim())) {
                         ret = true;
+                        Toast.makeText(context, String.format("Welcome %s!", userName.getText().toString().trim())
+                                , Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
@@ -117,10 +122,11 @@ public class UserProfile extends AppCompatActivity {
             fileOutputStream.close();
 
 
-            Toast.makeText(context, String.format("Write to %s successful", fileName), Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(context, String.format("New Profile %s Created!", userName.getText().toString()), Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(context, String.format("Write to %s successful", fileName), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, String.format("Write to %s failed", fileName), Toast.LENGTH_SHORT).show();
         }
     }
 
