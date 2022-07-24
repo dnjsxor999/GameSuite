@@ -45,6 +45,13 @@ import com.example.k_dev_master.R;
 import com.example.k_dev_master.databinding.ActivityMemorygameBinding;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -410,7 +417,6 @@ public class MemoryGame extends AppCompatActivity {
                 }
             });
         } else if (gameState == GAME_DONE) {
-
                 setContentView(R.layout.leaderboard_memory);
                 rank1 = findViewById(R.id.rank1);
                 rank2 = findViewById(R.id.rank2);
@@ -468,6 +474,7 @@ public class MemoryGame extends AppCompatActivity {
                 if (lists.size() >= 3) {
                     rank3.setText("3. " + lists.get(2).getName() + ", " + lists.get(2).getRecordedTime());
                 }
+
 //            if (!enterText.getText().toString().isEmpty()) {
 //                File file = new File(MemoryGame.this.getFilesDir(), fn);
 //                if (!file.exists()) {
@@ -675,4 +682,16 @@ public class MemoryGame extends AppCompatActivity {
 //        String result = text.toString();
 //        return result;
 //    }
+
+    private void writeFile(String fileName, Long time) {
+        try {
+            OutputStreamWriter oSW = new OutputStreamWriter(openFileOutput(fileName, Context.MODE_PRIVATE));
+            String time_string = String.valueOf(time);
+            oSW.close();
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

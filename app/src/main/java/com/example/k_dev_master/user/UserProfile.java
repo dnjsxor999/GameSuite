@@ -53,6 +53,8 @@ public class UserProfile extends AppCompatActivity {
                 //Need to add user name to intent
                 getIntent().putExtra("curUser", userName.getText().toString().trim());
                 //System.out.println("In UP extra: " + getIntent().getStringExtra("curUser"));
+
+                System.out.println("In UP extra: " + getIntent().getStringExtra("curUser"));
                 setResult(RESULT_OK, getIntent());
             }
         });
@@ -118,6 +120,7 @@ public class UserProfile extends AppCompatActivity {
             String basic = ",";
             fileOutputStream.write(basic.getBytes());
             fileOutputStream.close();
+
 
 
             Toast.makeText(context, String.format("New Profile %s Created!", userName.getText().toString()), Toast.LENGTH_SHORT).show();
