@@ -3,9 +3,12 @@ package com.example.k_dev_master.memorygame;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -16,6 +19,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -29,6 +34,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -38,7 +44,34 @@ import com.example.k_dev_master.*;
 import com.example.k_dev_master.R;
 import com.example.k_dev_master.databinding.ActivityMemorygameBinding;
 
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
@@ -60,13 +93,16 @@ public class MemoryGame extends AppCompatActivity {
     private static final int GAME_DONE = 1;
     Vector<Integer> selectedPos;
     // 골라 놓은 카드들 벡터로 저장
-
     // count 100ms
     TimerTask tt;
     TextView timerText;
     MemoryGameAdapter adapter;
     TextView stageText;
     TextView recordText;
+    TextView rank1;
+    TextView rank2;
+    TextView rank3;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,6 +131,7 @@ public class MemoryGame extends AppCompatActivity {
         timerText = (TextView) findViewById(R.id.timerTxtView);
         stageText = (TextView) findViewById(R.id.stageTxtView);
         recordText = (TextView) findViewById(R.id.recordTxtView);
+
 
         //비교할 후보들 저장
 
@@ -206,6 +243,7 @@ public class MemoryGame extends AppCompatActivity {
                                                      * game logic is here
                                                      * @param animation
                                                      */
+                                                    @RequiresApi(api = Build.VERSION_CODES.N)
                                                     @Override
                                                     public void onAnimationEnd(Animator animation) {
                                                         selectedPos.add(pos);
@@ -249,8 +287,6 @@ public class MemoryGame extends AppCompatActivity {
                     }
                     break;
             }
-
-
             return false;
         }
 
@@ -268,14 +304,10 @@ public class MemoryGame extends AppCompatActivity {
 
     private boolean matchedAll(Vector<Card> cards) {
         for (Card card : cards) {
-//            Log.e("passed the card", card.getTag());
-//            Log.e("check value", "" + card.getCheck());
             if (card.getCheck() != 2) { // if a card is matched, the check value is 2
-//                Log.e("All matched?", "false");
                 return false;
             }
         }
-//        Log.e("All matched?", "true");
         return true;
     }
 
@@ -341,6 +373,8 @@ public class MemoryGame extends AppCompatActivity {
         };
     }
 
+    @SuppressLint("SetTextI18n")
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void stageUp() {
         binding.timerTxtView.setVisibility(View.GONE);
         if (stageLevel == 1) {
@@ -360,29 +394,226 @@ public class MemoryGame extends AppCompatActivity {
             Log.e("Total recorded time", String.valueOf(recordTime));
             return ;
         }
-        currTimer = 0;
-        setTask();
-        adapter.setStartAnimate(false);
+        if (gameState == GAME_ONGOING) {
+            currTimer = 0;
+            setTask();
+            adapter.setStartAnimate(false);
+            regame();
+            binding.cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    int width = binding.cardViews.getWidth() / 4 - 10;
+                    int height = binding.cardViews.getHeight() / 4 - 10;
+                    Log.e("width", String.valueOf(width));
+                    Log.e("height", String.valueOf(height));
+                    adapter.setLength(width, height);
+                    // set length
+                    adapter.notifyDataSetChanged();
+                    // recycleView alert
+                    Handler handler = new Handler();
+                    handler.postDelayed(MemoryGame.this::start, 0); // timer need to be implemented
+                    binding.cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            });
+        } else if (gameState == GAME_DONE) {
+                setContentView(R.layout.leaderboard_memory);
+                rank1 = findViewById(R.id.rank1);
+                rank2 = findViewById(R.id.rank2);
+                rank3 = findViewById(R.id.rank3);
+                ArrayList<Player> lists = new ArrayList<>();
+                String fname = "userProfiles";
+                writeFile(fname, recordTime);
+                String fileContents = "";
+                try {
+                    InputStream iStream = openFileInput(fname);
+                    if(iStream != null) {
+                        InputStreamReader iStreamReader = new InputStreamReader(iStream);
+                        BufferedReader bufferedReader = new BufferedReader(iStreamReader);
+                        String temp = "";
+                        StringBuffer sBuffer = new StringBuffer();
+                        while ((temp = bufferedReader.readLine()) != null) {
+                            sBuffer.append(temp);
+                            Log.e("temp rn","" + temp );
+                            fileContents = sBuffer.toString();
+                            String[] words = temp.split(",");
+                            Log.e("after words","" + words[0] );
+                            String name = words[0];
+                            Player player;
+                            Log.e("after player","" + words.length);
 
-        regame();
+                            if (words.length == 2) {
+                                long time = Long.parseLong(words[1]);
+                                player = new Player(name, time);
+                                Log.e("or Player dec?","" + 30 );
+                            } else {
+                                player = new Player(name, Long.MAX_VALUE);
+                                Log.e("MAX?","" + 11 );
+                            }
+                            Log.e("after done","" + 4 );
+                            Log.e("list aded","" + lists.size() );
+                            Log.e("playername","" + player.getName() );
+                            Log.e("player","" + player.getRecordedTime() );
+                            lists.add(player);
+                        }
+                        iStream.close();
+                    }
+                } catch (FileNotFoundException e) {
+                    System.out.println((e.getMessage()));
+                } catch(Exception e) {
+                }
+                Collections.sort(lists);
+                Log.e("list size=","" + lists.size() );
+                if (lists.size() >= 1) {
+                    String str = (new Long(lists.get(0).getRecordedTime())).toString();
+                    rank1.setText("1. " + lists.get(0).getName() + ", " + str);
+                }
+                if (lists.size() >= 2) {
+                    rank2.setText("2. " + lists.get(1).getName() + ", " + lists.get(1).getRecordedTime());
+                }
+                if (lists.size() >= 3) {
+                    rank3.setText("3. " + lists.get(2).getName() + ", " + lists.get(2).getRecordedTime());
+                }
 
-        binding.cardLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int width = binding.cardViews.getWidth() / 4 - 10;
-                int height = binding.cardViews.getHeight() / 4 - 10;
-                Log.e("width", String.valueOf(width));
-                Log.e("height", String.valueOf(height));
-                adapter.setLength(width, height);
-                // set length
-                adapter.notifyDataSetChanged();
-                // recycleView alert
-                Handler handler = new Handler();
-                handler.postDelayed(MemoryGame.this::start, 0); // timer need to be implemented
-                binding.cardLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
+//            if (!enterText.getText().toString().isEmpty()) {
+//                File file = new File(MemoryGame.this.getFilesDir(), fn);
+//                if (!file.exists()) {
+//                    file.mkdir();
+//                }
+//                try {
+//                    File gtxfile = new File(fn);
+//                    FileWriter writer = new FileWriter(gtxfile);
+//
+//                    writer.append(enterText.getText().toString());
+//                    writer.append(score);
+//                    writer.flush();
+//                    writer.close();
+//                    Toast.makeText(MemoryGame.this, "Saved your text", Toast.LENGTH_LONG).show();
+//                    waitingTouch = true;
+//                } catch (Exception e) { }
+//            }
+
+
+            // show the popup window
+            // which view you pass in doesn't matter, it is only used for the window tolken
+
+
+            // dismiss the popup window when touched
+//            if (waitingTouch) {
+//                view.setOnTouchListener(new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        popupWindow.dismiss();
+//                        return true;
+//                    }
+//                });
+//            }
+            Button back = findViewById(R.id.backbutton);
+            back.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), MemoryGame.class);
+                    intent.putExtra("curUser", curUser);
+                    startActivity(intent);
+                }
+            });
+        }
     }
+    private void writeFile(String fileName, Long time) {
+        try {
+//            List<String> lines = new ArrayList<String>();
+            String stack = "";
+            InputStream iStream = openFileInput(fileName);
+            if(iStream != null) {
+                InputStreamReader iStreamReader = new InputStreamReader(iStream);
+                BufferedReader bufferedReader = new BufferedReader(iStreamReader);
+                String temp = "";
+                StringBuffer sBuffer = new StringBuffer();
+
+                while ((temp = bufferedReader.readLine()) != null) {
+                    sBuffer.append(temp);
+                    Log.e("name : ", curUser);
+                    Log.e("what is temp : ", temp);
+                    if (temp != "\n") {
+
+                        String[] words = temp.split(",");
+                        String name = words[0];
+                        if (curUser.equals(name)) {
+                            Log.e("time:", ""+time);
+                            FileOutputStream fOS = openFileOutput(fileName, Context.MODE_APPEND);
+                            String time_string = String.valueOf(time);
+                            fOS.write(time_string.getBytes(Charset.forName("UTF-8")));
+                            fOS.write("\n".getBytes(StandardCharsets.UTF_8));
+                            fOS.close();
+                            break;
+                        }
+
+                    }
+                }
+                iStream.close();
+
+            }
+
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    private ArrayList<Player> translateLines(String fname)
+//            throws FileNotFoundException {
+//        ArrayList<Player> lists = new ArrayList<>();
+//
+//        File f = new File(MemoryGame.this.getFilesDir(), fname);
+//        Scanner scan = new Scanner(f);
+//        while (scan.hasNextLine()) {
+//            String line = scan.nextLine();
+//            String[] words = line.split(",");
+//            String name = words[0];
+//            long time = Long.parseLong(words[1]);
+//            Player player = new Player(name, time);
+//            lists.add(player);
+//        }
+//        Log.e("second : list size=",""+lists.size() );
+//        scan.close();
+//        return lists;
+//    }
+//
+//    private ArrayList<Player> write(String fname,
+//                                 ArrayList<Player> leaderboard, long time) {
+//        ArrayList<Player> remaining = leaderboard;
+//        try {
+//            remaining = translateLines(fname);
+//            if (remaining != null) {
+//                remaining.addAll(leaderboard);
+//            } else {
+//                remaining = leaderboard;
+//            }
+//            File f = new File(fname);
+//            PrintWriter outWriter = new PrintWriter(f);
+//            for (int i = 0; i < remaining.size(); i++) {
+//                outWriter.println(name + "," + time);
+//            }
+//            outWriter.close();
+//            if (!(f.canWrite())) {
+//                return null;
+//            }
+//        } catch (FileNotFoundException e) {
+//            remaining = leaderboard;
+//            File f = new File(fname);
+//
+////            PrintWriter outWriter = new PrintWriter(f);
+////            for (int i = 0; i < remaining.size(); i++) {
+////                outWriter.println(name + ", " + time);
+////            }
+////            outWriter.close();
+//            if (!(f.canWrite())) {
+//                return null;
+//            }
+//        } finally {
+//            Log.e("Third : list size=",""+remaining.size() );
+//            return remaining;
+//        }
+//    }
 
     private void addCards() {
         cards = new Vector<>();
@@ -434,4 +665,20 @@ public class MemoryGame extends AppCompatActivity {
     {
         return String.format("%02d",seconds) + "." + String.format("%01d",milliseconds);
     }
+
+//    private String readFile() {
+//        File fileEvents = new File(MemoryGame.this.getFilesDir()+"/leaderboard.txt");
+//        StringBuilder text = new StringBuilder();
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader(fileEvents));
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                text.append(line);
+//                text.append('\n');
+//            }
+//            br.close();
+//        } catch (IOException e) { }
+//        String result = text.toString();
+//        return result;
+//    }
 }

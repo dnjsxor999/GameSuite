@@ -29,10 +29,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="30dp"
-        android:textSize="24sp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text=" A player makes a match if the two cards turned picture-side-up are identical \n\nWin the game matching the cards as fast as you can!"/>
+        android:text=" A player makes a match if the two cards turned picture-side-up are identical \n\nWin the game matching the cards as fast as you can!"
+        android:textSize="24sp" />
 
 
 </RelativeLayout>

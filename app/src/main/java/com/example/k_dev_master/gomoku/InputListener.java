@@ -6,7 +6,7 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class InputListener implements View.OnTouchListener{
+public class InputListener implements View.OnTouchListener {
     private final GomokuView mView;
 
 

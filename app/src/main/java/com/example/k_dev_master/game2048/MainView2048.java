@@ -124,7 +124,7 @@ public class MainView2048 extends View {
             }
         }
     }
-//
+
     private void drawCells(Canvas canvas) {
         for (int xx = 0; xx < game.numSquaresX; xx++) {
             for (int yy = 0; yy < game.numSquaresY; yy++) {

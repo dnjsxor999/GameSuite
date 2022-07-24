@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(mainView);
 
 
-        /**         * 가로 슬라이드 뷰 Fragment         */
+        /**         * Horizontal Slide View Fragment         */
         //ViewPager2
         mPager = findViewById(R.id.viewpager);
         //Adapter
@@ -70,11 +70,6 @@ public class MainActivity extends AppCompatActivity {
         mPager.setAdapter(pagerAdapter);
         //ViewPager Setting
         mPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
-        /**
-         * 이 부분 조정하여 처음 시작하는 이미지 설정.
-         * 2000장 생성하였으니 현재위치 1002로 설정하여
-         * 좌 우로 슬라이딩 할 수 있게 함. 거의 무한대로
-         */
         mPager.setCurrentItem(0);
         //시작 지점
         mPager.setOffscreenPageLimit(3);
@@ -88,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         Button btTeamInfo = findViewById(R.id.teamInfo); // TeamInfo button
         Button commonStart = findViewById(R.id.commonStart); // GameStart button
