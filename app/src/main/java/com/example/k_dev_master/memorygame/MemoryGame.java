@@ -3,6 +3,7 @@ package com.example.k_dev_master.memorygame;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -38,6 +39,13 @@ import com.example.k_dev_master.R;
 import com.example.k_dev_master.databinding.ActivityMemorygameBinding;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -395,31 +403,54 @@ public class MemoryGame extends AppCompatActivity {
         } else if (gameState == GAME_DONE) {
 
             setContentView(R.layout.leaderboard_memory);
-            String fn = "leaderboard.csv";
+//            String fn = "leaderboard.csv";
             ArrayList<Player> lists = new ArrayList<>();
-            name = "Jisan"; // get from the user profile
-            File f = new File(MemoryGame.this.getFilesDir(), fn);
-            if (!f.exists()) {
-                f.mkdir();
-            }
+//            name = "Jisan"; // get from the user profile
+//            File f = new File(MemoryGame.this.getFilesDir(), fn);
+
+//            if (!f.exists()) {
+//                f.mkdir();
+//            }
+            String fname = "userProfiles";
+            writeFile(fname, recordTime);
+            String fileContents = "";
             try {
-                FileWriter writer = new FileWriter(f); // write file
-                writer.append(name + ", " + recordTime);
-                writer.flush();
-                writer.close();
-                Scanner scan = new Scanner(f); // read file
-                while (scan.hasNextLine()) {
-                    String line = scan.nextLine();
-                    String[] words = line.split(",");
-                    String name = words[0];
-                    long time = Long.parseLong(words[1]);
-                    Player player = new Player(name, time);
-                    lists.add(player);
+//                FileWriter writer = new FileWriter(f); // write file
+//                writer.append(name + ", " + recordTime);
+//                writer.flush();
+//                writer.close();
+//                Scanner scan = new Scanner(f); // read file
+//                while (scan.hasNextLine()) {
+//                    String line = scan.nextLine();
+//                    String[] words = line.split(",");
+//                    String name = words[0];
+//                    long time = Long.parseLong(words[1]);
+//                    Player player = new Player(name, time);
+//                    lists.add(player);
+//                }
+//
+//                Log.e("second : list size=", "" + lists.size());
+//                scan.close();
+                InputStream iStream = openFileInput(fname);
+                if(iStream != null) {
+                    InputStreamReader iStreamReader = new InputStreamReader(iStream);
+                    BufferedReader bufferedReader = new BufferedReader(iStreamReader);
+                    String temp = "";
+                    StringBuffer sBuffer = new StringBuffer();
+                    while ((temp = bufferedReader.readLine()) != null) {
+                        sBuffer.append(temp);
+                        fileContents = sBuffer.toString();
+                        String[] words = fileContents.split(",");
+                        String name = words[0];
+                        long time = Long.parseLong(words[1]);
+                        Player player = new Player(name, time);
+                        lists.add(player);
+                    }
+                    iStream.close();
                 }
 
-                Log.e("second : list size=", "" + lists.size());
-                scan.close();
-
+            } catch (FileNotFoundException e) {
+                System.out.println((e.getMessage()));
             } catch(Exception e) {
                 Log.e("exception :", "" + lists.size());
             }
@@ -598,4 +629,16 @@ public class MemoryGame extends AppCompatActivity {
 //        String result = text.toString();
 //        return result;
 //    }
+
+    private void writeFile(String fileName, Long time) {
+        try {
+            OutputStreamWriter oSW = new OutputStreamWriter(openFileOutput(fileName, Context.MODE_PRIVATE));
+            String time_string = String.valueOf(time);
+            oSW.close();
+        } catch(FileNotFoundException e) {
+            e.printStackTrace();
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

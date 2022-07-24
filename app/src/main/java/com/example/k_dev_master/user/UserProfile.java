@@ -112,7 +112,7 @@ public class UserProfile extends AppCompatActivity {
 
             fileOutputStream.write(userName.getText().toString().getBytes(Charset.forName("UTF-8")));
 
-            String basic = "\n2048\n\nMemory Game\n\nGomoku\n\n";
+            String basic = ",";
             fileOutputStream.write(basic.getBytes());
             fileOutputStream.close();
 
