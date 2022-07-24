@@ -26,10 +26,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_margin="30dp"
-        android:textSize="24sp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="Swipe to merge the numbers and reach 2048 \n\nTap anywhere to go back to game!"/>
+        android:text="Swipe to merge the numbers and reach 2048 \n\nTap anywhere to go back to game!"
+        android:textSize="24sp" />
 
 
 </RelativeLayout>

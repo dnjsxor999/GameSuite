@@ -19,7 +19,6 @@ public class ShowTeamInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_team_info);
 
-
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         Button btBack = findViewById(R.id.Back); // TeamInfo button

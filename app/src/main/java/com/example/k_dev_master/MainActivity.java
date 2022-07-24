@@ -1,17 +1,25 @@
 package com.example.k_dev_master;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.k_dev_master.game2048.LogicGame2048;
 import com.example.k_dev_master.gomoku.GomokuGame;
 import com.example.k_dev_master.memorygame.MemoryGame;
+import com.example.k_dev_master.user.UserProfile;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,17 +27,42 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 mPager;
     private FragmentStateAdapter pagerAdapter;
     private int num_page = 3;
+    private String curUser = "";
+
     //private CircleIndicator3 mIndicator;
 
     public static int gameSelect = 0;
 
+    //mPager -> popupview로 넘어가는게 불가능하면
+    //popupview -> mpager로 넘겨야할듯
+    
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        /**         * 가로 슬라이드 뷰 Fragment         */
+        //Child->Parent Data 받기
+        ActivityResultLauncher<Intent> mainResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            // There are no request codes
+                            Intent data = result.getData();
+                            curUser = data.getStringExtra("curUser");
+                            //System.out.println("Cur User: " + curUser);
+                        }
+                    }
+                });
+
+        LayoutInflater inflater = LayoutInflater.from(MainActivity.this); // 1
+        View mainView = inflater.inflate(R.layout.activity_main, null); // 2 and 3
+        setContentView(mainView);
+
+
+        /**         * Horizontal Slide View Fragment         */
         //ViewPager2
         mPager = findViewById(R.id.viewpager);
         //Adapter
@@ -37,11 +70,6 @@ public class MainActivity extends AppCompatActivity {
         mPager.setAdapter(pagerAdapter);
         //ViewPager Setting
         mPager.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
-        /**
-         * 이 부분 조정하여 처음 시작하는 이미지 설정.
-         * 2000장 생성하였으니 현재위치 1002로 설정하여
-         * 좌 우로 슬라이딩 할 수 있게 함. 거의 무한대로
-         */
         mPager.setCurrentItem(0);
         //시작 지점
         mPager.setOffscreenPageLimit(3);
@@ -56,9 +84,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         Button btTeamInfo = findViewById(R.id.teamInfo); // TeamInfo button
         Button commonStart = findViewById(R.id.commonStart); // GameStart button
+        Button profileCreate = findViewById(R.id.userProfile);
         Button quitButton = findViewById(R.id.exit); // exit button
+
 
         btTeamInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +97,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ShowTeamInfo.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        profileCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), UserProfile.class);
+                mainResultLauncher.launch(intent);
             }
         });
 
@@ -77,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else if (gameSelect == 2) {
                     Intent intent = new Intent(getApplicationContext(), MemoryGame.class);
+                    intent.putExtra("curUser", curUser);
                     startActivity(intent);
                 } else if (gameSelect == 3) {
                     Intent intent = new Intent(getApplicationContext(), GomokuGame.class);
@@ -85,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,5 +133,8 @@ public class MainActivity extends AppCompatActivity {
                 System.exit(0);
             }
         });
+
+
     }
+
 }
