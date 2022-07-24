@@ -3,12 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/GitHub/K-Dev/app/src/main/res/layout/activity_main.xml" value="0.1875" />
         <entry key="..\:/GitHub/K-Dev/app/src/main/res/layout/activity_main_2048game.xml" value="0.1875" />
         <entry key="..\:/GitHub/K-Dev/app/src/main/res/layout/activity_main_gomoku.xml" value="0.1828125" />
         <entry key="..\:/GitHub/K-Dev/app/src/main/res/layout/activity_memorygame.xml" value="0.22" />
-        <entry key="..\:/GitHub/K-Dev/app/src/main/res/layout/internalstorage.xml" value="0.35833333333333334" />
         <entry key="..\:/GitHub/K-Dev/app/src/main/res/layout/popup_instruction_memory.xml" value="0.1875" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_main_2048game.xml" value="0.15070921985815602" />
+        <entry key="app/src/main/res/layout/activity_main_gomoku.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/activity_memorygame.xml" value="0.15520833333333334" />
+        <entry key="app/src/main/res/layout/frame_1.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/frame_2.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/frame_3.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/popup_instruction_2048.xml" value="0.1" />
       </map>
     </option>
   </component>
