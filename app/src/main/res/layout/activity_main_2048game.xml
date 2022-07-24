@@ -7,7 +7,8 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:orientation="vertical"
-    android:layout_weight="7">
+    android:layout_weight="7"
+    android:background="#2a2c3e">
 
 
     <com.example.k_dev_master.game2048.MainView2048
@@ -38,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="2048"
-            android:textColor="#776e65"
+            android:textColor="@color/white"
             android:textSize="55dp" />
 
     </LinearLayout>
@@ -57,7 +58,7 @@
             android:layout_width="20dp"
             android:layout_height="65dp"
             android:layout_weight="2"
-            android:background="@drawable/settingbutton"
+            android:background="@drawable/settingsgear"
             android:onClick="showPopup"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -67,7 +68,6 @@
             android:layout_height="match_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="2"
-            android:backgroundTint="#bbada0"
             android:text="               "
             android:textAlignment="viewStart"
             android:textSize="45dp" />
@@ -80,6 +80,7 @@
             android:layout_weight="2"
             android:backgroundTint="#cdc1b5"
             android:text="Score"
+            android:textColor="@color/white"
             tools:ignore="SpeakableTextPresentCheck" />
 
     </LinearLayout>
@@ -129,7 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Join the number and get to the "
-            android:textColor="#776e65"
+            android:textColor="@color/white"
             android:textSize="15dp" />
 
         <TextView
@@ -138,7 +139,7 @@
             android:layout_height="match_parent"
             android:fontFamily="cursive"
             android:text="2048 tile!"
-            android:textColor="#776e65"
+            android:textColor="@color/white"
             android:textSize="18dp" />
 
     </LinearLayout>
